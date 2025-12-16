@@ -1,0 +1,22 @@
+﻿@namespace RootServer.Shared._Core
+
+
+
+<Dropdown @ref="dropdown" Display="Display.InlineBlock" TextSize="TextSize.ExtraSmall">
+    <DropdownToggle Color="@ColorToggle">
+        @if (ShowIconToggle)
+        {
+            <Icon Name="@NameIcon" TextColor="@ColorIcon" Style="width: 5px;" />
+            @:&nbsp;&nbsp;
+        }
+        @if (ShowLabel)
+        {
+            @Label
+        }
+    </DropdownToggle>
+    <DropdownMenu>
+        <ListGroup Mode="ListGroupMode.Selectable" @bind-SelectedItem="SelectedItem">
+            @ChildContent
+        </ListGroup>
+    </DropdownMenu>
+</Dropdown>

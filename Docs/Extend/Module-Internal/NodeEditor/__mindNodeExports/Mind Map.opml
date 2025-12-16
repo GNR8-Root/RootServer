@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+    <head>
+        <title>Mind Map</title>
+    </head>
+    <body>
+        <outline text="Mind Map A">
+            <outline text="a1">
+                <outline text="a1.1"/>
+            </outline>
+            <outline text="a2"/>
+            <outline text="a3">
+                <outline text="a3.1"/>
+                <outline text="a3.2"/>
+                <outline text="a3.3"/>
+            </outline>
+        </outline>
+        <outline text="mind map b">
+            <outline text="b1"/>
+            <outline text="b2">
+                <outline text="b2.1"/>
+                <outline text="b2.2"/>
+            </outline>
+        </outline>
+    </body>
+</opml>

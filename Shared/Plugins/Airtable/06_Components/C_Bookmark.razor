@@ -1,0 +1,35 @@
+﻿@namespace RootServer.Shared.Airtable
+
+
+@if (TypeBookmark == SelectionType.table)
+{
+    <DropdownDivider />
+}
+
+<DropdownItem>
+
+    <A_BookmarkDelete Id="@Id" AllowRemoveBookmark="@AllowRemoveBookmark" />
+
+
+    @if (TypeBookmark == SelectionType.table)
+    {
+        <P_Row Id="@Id" Label="@Label" ColorSelector="Color.Light" />
+    }
+    else
+    {
+        <P_Row Id="@Id" Label="@Label" ColorSelector="Color.Default" />
+    }
+
+
+    @if (HasNewItem && TypeBookmark == SelectionType.table)
+    {
+        <A_RowNew />
+    }
+
+</DropdownItem>
+
+
+@if (TypeBookmark == SelectionType.table)
+{
+    <DropdownDivider />
+}

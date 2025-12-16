@@ -1,0 +1,24 @@
+﻿@namespace RootServer.Shared._Core
+@using RootServer.Shared._Core;
+@inherits FieldBase_Toggle;
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+@code
+{
+    string extraClass = "form-control";
+}
+@if (Disabled == true)
+{
+    extraClass += " disabled";
+}
+
+
+
+<FW_Main BadgeColor="Color.Danger" BadgeLabel="@BadgeLabel" ToolTipText="@ToolTipText" NameIcon="IconName.Check">
+    <Div class="@extraClass">
+        <Switch Disabled="@Disabled" ReadOnly="@ReadOnly" TValue="bool" Checked="@Val" CheckedChanged="@OnToggleChanged" />
+    </Div>
+</FW_Main>

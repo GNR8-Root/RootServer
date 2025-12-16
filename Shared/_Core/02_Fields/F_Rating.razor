@@ -1,0 +1,24 @@
+﻿@namespace RootServer.Shared._Core
+@using RootServer.Shared._Core;
+@inherits FieldBase_Rating;
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+@code
+{
+    string extraClass = "form-control";
+}
+@if (Disabled == true)
+{
+    extraClass += " disabled";
+}
+
+
+
+<FW_Main BadgeColor="@BadgeColor" BadgeLabel="@BadgeLabel" ToolTipText="@ToolTipText" NameIcon="IconName.Star">
+    <Div class="@extraClass">
+        <Rating Color="@ColorRating" Disabled="@Disabled" ReadOnly="@ReadOnly" EmptyIcon="@EmptyIcon" EmptyIconStyle="@EmptyIconStyle" FullIcon="@FullIcon" FullIconStyle="@FullIconStyle" @bind-SelectedValue="@Val" MaxValue="@MaxValue" GetTooltip="@GetTooltip" />
+    </Div>
+</FW_Main>

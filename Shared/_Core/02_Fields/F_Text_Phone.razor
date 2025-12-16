@@ -1,0 +1,20 @@
+﻿@namespace RootServer.Shared._Core
+@using RootServer.Shared._Core;
+@inherits FieldBase_String;
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+
+
+<FW_Main BadgeColor="@BadgeColor" BadgeLabel="@BadgeLabel" ToolTipText="@ToolTipText" NameIcon="IconName.Phone">
+    <BaseF_Text
+            Role="TextRole.Telephone"
+            Validator="ValidateInput"
+            ReadOnly="@ReadOnly"
+            Disabled="@Disabled"
+            Val="@Val"
+            Placeholder="@Placeholder"
+            ToolTipText="@ToolTipText" />
+</FW_Main>

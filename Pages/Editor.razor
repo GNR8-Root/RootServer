@@ -1,0 +1,49 @@
+﻿@page "/editor"
+@inject IJSRuntime JS
+@inject NavigationManager navManager
+@using RootServer.Shared.Airtable
+@using RootServer.Shared._Editor
+@using RootServer.Pages
+
+@implements IDisposable
+@inject EditorView_Service editorView_Service;
+@inject EditorVisibility_Service editorVisibility_Service;
+
+
+
+
+<CP_HeadContentWebflow Page="home" />
+
+
+
+<PageTitle>Editor</PageTitle>
+<P_Hidden />
+
+<div class="row">
+    @if (editorVisibility_Service.ShowEditor == true)
+    {
+        <Splitter Style="height: 100vh;">
+            <SplitterSection Style="height: 100%; overflow-x: hidden; overflow-y:scroll" Size="100">
+                <PNL_Website />
+            </SplitterSection>
+            <SplitterSection MinSize="430" Style="height: 100%;">
+                <Splitter Direction="SplitterDirection.Vertical" Style="height: 100%; overflow: hidden; padding: 3px;">
+                    <SplitterSection MinSize="120" Style="@editorUpperSplit">
+                        <PNL_Selection />
+                    </SplitterSection>
+                    <SplitterSection MinSize="250" Style="@editorDownSplit">
+                        <PNL_Structure />
+                    </SplitterSection>
+                </Splitter>
+            </SplitterSection>
+        </Splitter>
+
+    }
+    else
+    {
+        <PNL_Website />
+        <div class="open-editor-container">
+            <A_ToggleEditorVisibility ButtonVariant="StateVisibility.SetVisible" />
+        </div>
+    }
+</div>

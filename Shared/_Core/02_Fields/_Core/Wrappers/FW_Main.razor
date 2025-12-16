@@ -1,0 +1,21 @@
+﻿@namespace  RootServer.Shared._Core
+
+
+
+<Field>
+    <div class="input-group mb-3 field-wrapper-main">
+        <Span class="input-group-text field-left" id="basic-addon2">
+            <Badge Color="@BadgeColor" TextColor="TextColor.White">
+                <Icon Name="@NameIcon" />
+            </Badge>
+        </Span>
+        <span class="field-center">
+            @ChildContent
+        </span>
+        <Span class="input-group-text field-right" id="basic-addon2">
+            <Tooltip Text="@ToolTipText" Placement="TooltipPlacement.Left" Class="label-badge">
+                <Badge Class="bg-white text-black-50">@BadgeLabel</Badge>
+            </Tooltip>
+        </Span>
+    </div>
+</Field>

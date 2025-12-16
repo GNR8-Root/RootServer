@@ -1,0 +1,15 @@
+﻿@namespace RootServer.Shared.Airtable
+
+@inherits ABase;
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+<Button Color="Color.Primary" Clicked="@OnSyncAirtable">
+    <Icon Name="@iconActive" />
+</Button>
+
+
+
+

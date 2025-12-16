@@ -1,0 +1,19 @@
+﻿@namespace RootServer.Shared._Core
+@using RootServer.Shared._Core;
+@inherits FieldBase_Time;
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+
+
+<FW_Main BadgeColor="Color.Default" BadgeLabel="@BadgeLabel" ToolTipText="@ToolTipText" NameIcon="IconName.Clock">
+        <TimeEdit
+                    TValue="TimeSpan?"
+                    Time="@Val"
+                    TimeChanged="@OnTimeChanged"
+                    ReadOnly="@ReadOnly"
+                    Disabled="@Disabled"
+        />
+</FW_Main>

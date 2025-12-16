@@ -1,0 +1,18 @@
+﻿@namespace RootServer.Shared.Airtable
+
+
+@{
+    Visible.TryAdd("table a", false);
+    Visible.TryAdd("table b", false);
+    Visible.TryAdd("table c", false);
+}
+
+<C_DividerSticky />
+<div>
+    <Accordion Class="tables-accordion">
+        <C_TableAir IdParentMenu="@IdParentMenu" IdMenuItem="table a" AccVisible="@Visible["table a"]" Label="table a" SetAccordion="ToggleAccordion" />
+        <C_TableAir IdParentMenu="@IdParentMenu" IdMenuItem="table b" AccVisible="@Visible["table b"]" Label="table b" SetAccordion="ToggleAccordion" />
+        <C_TableAir IdParentMenu="@IdParentMenu" IdMenuItem="table c" AccVisible="@Visible["table c"]" Label="table c" SetAccordion="ToggleAccordion" />
+    </Accordion>
+</div>
+<Divider DividerType="DividerType.Dashed"/>

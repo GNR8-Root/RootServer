@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "FvcgCtGcUMw=",
+  "success": true,
+  "projectFilePath": "/Users/znzr/Documents/Dropbox/gits-_root/RootServer/RootServer.csproj",
+  "expectedPackageFiles": [
+    "/Users/znzr/.nuget/packages/airtable/1.4.0/airtable.1.4.0.nupkg.sha512",
+    "/Users/znzr/.nuget/packages/blazorise/1.8.7/blazorise.1.8.7.nupkg.sha512",
+    "/Users/znzr/.nuget/packages/blazorise.components/1.8.7/blazorise.components.1.8.7.nupkg.sha512",
+    "/Users/znzr/.nuget/packages/blazorise.icons.fontawesome/1.8.7/blazorise.icons.fontawesome.1.8.7.nupkg.sha512",
+    "/Users/znzr/.nuget/packages/blazorise.licensing/1.3.0/blazorise.licensing.1.3.0.nupkg.sha512",
+    "/Users/znzr/.nuget/packages/blazorise.snackbar/1.8.7/blazorise.snackbar.1.8.7.nupkg.sha512",
+    "/Users/znzr/.nuget/packages/blazorise.splitter/1.8.7/blazorise.splitter.1.8.7.nupkg.sha512",
+    "/Users/znzr/.nuget/packages/blazorise.tailwind/1.8.7/blazorise.tailwind.1.8.7.nupkg.sha512",
+    "/Users/znzr/.nuget/packages/microsoft.aspnetcore.app.internal.assets/10.0.1/microsoft.aspnetcore.app.internal.assets.10.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,8 @@
+﻿@namespace RootServer.Shared._Sites
+@inherits BaseBackground<MediaImageData>
+
+
+
+<div style="width:100%; height:100%; @BackgroundColor()">
+    <img id="@Id" src="@Src()" loading="@Record.Fields.Loading" width="Auto" alt="@Record.Fields.Alt" class="section-background-content + @Class">
+</div>

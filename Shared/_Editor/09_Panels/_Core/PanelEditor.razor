@@ -1,0 +1,54 @@
+﻿@namespace RootServer.Shared._Editor
+
+
+
+<div class="bg-white editor-main-top" Style="overflow: hidden; height: 100%">
+    <Tabs SelectedTab="@SelectedTab" SelectedTabChanged="@SelectedTabChanged">
+        <Items>
+            <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups" style="width : 100%;">
+                <div class="btn-group btn-group-left panel-editor-head-left">
+                    @HeadLeft
+                </div>
+                <div class="btn-group btn-group-center">
+                    <div class="btn-group panel-editor-head-center" role="group" aria-label="Basic example">
+                        @HeadCenter
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <div class="btn-group btn-group-right panel-editor-head-right" role="group" aria-label="Basic example">
+                        @HeadRight
+                    </div>
+                </div>
+            </div>
+        </Items>
+        <Content>
+            <div class="panel-editor-content-pre">
+                @ContentPre
+            </div>
+            <div class="panel-editor-content">
+                @Content
+            </div>  
+            <div class="panel-editor-content-post">
+                @ContentPost
+            </div>
+        </Content>
+    </Tabs>
+<Divider DividerType="DividerType.Dashed" />
+<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups" style="width : 100%;">
+    <div class="btn-group btn-group-left">
+        <div class="btn-group panel-editor-foot-left" role="group" aria-label="tools right">
+            @FootLeft
+        </div>
+    </div>
+    <div class="btn-group btn-group-center">
+        <div class="btn-group panel-editor-foot-center" role="group" aria-label="tools right">
+            @FootCenter
+        </div>
+    </div>
+    <div class="btn-group btn-group-right">
+        <div class="btn-group panel-editor-foot-right" role="group" aria-label="tool left">
+            @FootRight
+        </div>
+    </div>
+</div>
+</div>

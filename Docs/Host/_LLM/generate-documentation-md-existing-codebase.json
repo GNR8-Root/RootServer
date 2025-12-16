@@ -1,0 +1,872 @@
+{
+	"system_name": "Unified Documentation Generator for Existing Projects",
+	"version": "2.0",
+	"description": "Analyzes existing host/plugin/module codebases and generates comprehensive documentation following the phased multi-agent system",
+
+	"user_workflow": {
+		"step_1_initial_prompt": {
+			"user_pastes": "This JSON structure as a prompt to the LLM",
+			"the LLM_responds_with": "Initial questionnaire"
+		},
+		"step_2_user_provides": {
+			"project_source": "Local path | ZIP file | GitHub URL",
+			"project_type": "Host | Plugin | Module",
+			"example_documentation": "Path/ZIP to reference .md files for formatting style",
+			"optional_requirements_json": "If available, provides structure and validation rules"
+		},
+		"step_3_analysis": {
+			"the LLM_analyzes": "Codebase structure, dependencies, patterns, entities",
+			"generates": "plugin-requirements.json (or equivalent)",
+			"validates": "Against phased system requirements"
+		},
+		"step_4_documentation_generation": {
+			"follows": "Phased multi-agent workflow from provided system",
+			"uses": "Formatting style from example documentation",
+			"produces": "Complete documentation bundle"
+		}
+	},
+
+	"initial_interaction": {
+		"greeting": "I'll help you generate comprehensive documentation for your existing project. Let me gather some information first.",
+		"questions": [
+			{
+				"id": "project_source",
+				"question": "Where is your project located?",
+				"prompt": "Please provide one of the following:\n- Local folder path (e.g., C:\\Projects\\MyPlugin)\n- ZIP file (upload it)\n- GitHub repository URL",
+				"required": true,
+				"validation": "Must be accessible path, valid ZIP, or valid GitHub URL"
+			},
+			{
+				"id": "project_type",
+				"question": "What type of component are you documenting?",
+				"options": {
+					"host": {
+						"label": "Host (Main Application)",
+						"description": "The primary application that manages plugins and modules",
+						"documentation_depth": "overview_focused",
+						"file_count": "13-20 files (minimal set)"
+					},
+					"plugin": {
+						"label": "Plugin",
+						"description": "An extension that adds functionality to the host",
+						"documentation_depth": "comprehensive_detailed",
+						"file_count": "43 files (full documentation)",
+						"follows_phased_system": true
+					},
+					"module": {
+						"label": "Module",
+						"description": "A reusable component or library",
+						"documentation_depth": "comprehensive_detailed",
+						"file_count": "30-40 files (technical focus)"
+					}
+				},
+				"required": true
+			},
+			{
+				"id": "project_name",
+				"question": "What is the name of this component?",
+				"note": "This will be used for file naming and titles",
+				"required": true
+			},
+			{
+				"id": "example_docs_source",
+				"question": "Do you have example documentation for formatting reference?",
+				"prompt": "Please provide:\n- Path to folder with .md files\n- ZIP file with example documentation\n- Or type 'none' to use default formatting",
+				"required": false,
+				"default": "Use standard markdown formatting",
+				"purpose": "Extract formatting style: headers, lists, tables, code blocks, emphasis"
+			},
+			{
+				"id": "requirements_json",
+				"question": "Do you have an existing plugin-requirements.json or technical specification?",
+				"prompt": "If yes, please provide the path or paste the content. If no, I'll generate it from your codebase.",
+				"required": false,
+				"purpose": "Use as source of truth if available, otherwise generate from code analysis"
+			},
+			{
+				"id": "validation_strictness",
+				"question": "What level of documentation completeness do you need?",
+				"options": {
+					"strict": {
+						"label": "Strict (95% coverage, production-ready)",
+						"includes": [
+							"All performance targets required",
+							"All diagrams required",
+							"All integration failure policies required",
+							"All audit configuration required",
+							"All error codes documented"
+						]
+					},
+					"lenient": {
+						"label": "Lenient (85% coverage, development/prototyping)",
+						"includes": [
+							"Performance targets optional",
+							"Diagrams optional",
+							"Integration failure policies optional",
+							"Core functionality documented"
+						]
+					}
+				},
+				"default": "lenient",
+				"required": false
+			},
+			{
+				"id": "review_mode",
+				"question": "How would you like to review the documentation generation?",
+				"options": {
+					"interactive": {
+						"label": "Interactive",
+						"description": "Pause after each phase for review and approval",
+						"recommended_for": "First-time users, critical documentation"
+					},
+					"batch": {
+						"label": "Batch",
+						"description": "Generate all phases automatically (stops only on errors)",
+						"recommended_for": "Experienced users, iterative refinement"
+					}
+				},
+				"default": "interactive",
+				"required": false
+			},
+			{
+				"id": "host_reference",
+				"question": "For Plugin documentation: Do you have host architecture reference?",
+				"conditional": "Only asked if project_type == 'plugin'",
+				"prompt": "Please provide:\n- Path to host folder structure\n- ZIP file with host reference\n- Or type 'analyze' to detect from plugin code",
+				"required": false,
+				"purpose": "Understand integration points and folder structure"
+			},
+			{
+				"id": "architectural_conventions",
+				"question": "Does your project use custom naming conventions or architectural hierarchies that should be documented?",
+				"prompt": "Please specify any of the following (or type 'standard' if using conventional patterns):\n\n1. **Naming Conventions with Semantic Meaning:**\n   - Prefix/suffix conventions (e.g., '_' prefix = host internal)\n   - Name patterns that indicate scope/purpose\n   - Example: 'What does underscore prefix mean in your codebase?'\n\n2. **Hierarchical Structures:**\n   - UI hierarchies (e.g., Page > Screen > Widget > Component)\n   - Service layers (e.g., Repository > Service > Manager)\n   - Module/namespace organization\n   - Example: 'We use: Application > Module > Feature > Component'\n\n3. **Inheritance & Composition Patterns:**\n   - Base class hierarchies to document\n   - Interface segregation patterns\n   - Mixin/trait usage\n   - Example: 'All plugins inherit from _BasePlugin'\n\n4. **Folder Structure Semantics:**\n   - What folder names indicate (e.g., '/Internal/', '/Public/', '/Shared/')\n   - File organization rules\n   - Example: '_FolderName means host-only access'\n\n5. **Critical Architectural Boundaries:**\n   - Layer separation rules\n   - Dependency direction requirements\n   - What crosses boundaries and what doesn't\n   - Example: 'Plugins cannot reference other plugins directly'",
+				"required": false,
+				"default": "standard_conventions",
+				"capture_format": {
+					"naming_conventions": [
+						{
+							"pattern": "string (e.g., '_*')",
+							"meaning": "string (e.g., 'host internal only')",
+							"applies_to": "array (e.g., ['classes', 'methods', 'folders'])",
+							"examples": ["string"]
+						}
+					],
+					"hierarchies": [
+						{
+							"type": "string (e.g., 'UI Hierarchy', 'Service Layer')",
+							"levels": ["array of level names in order"],
+							"purpose": "string (why this hierarchy exists)",
+							"inheritance_flow": "string (top-down, bottom-up, mixed)",
+							"examples": ["string"]
+						}
+					],
+					"inheritance_patterns": [
+						{
+							"base_class": "string",
+							"purpose": "string",
+							"required_overrides": ["array"],
+							"location": "string (file path pattern)"
+						}
+					],
+					"folder_semantics": [
+						{
+							"pattern": "string (e.g., '_*/', 'Internal/')",
+							"meaning": "string",
+							"access_rules": "string"
+						}
+					],
+					"architectural_boundaries": [
+						{
+							"boundary": "string (e.g., 'Plugin <-> Host')",
+							"allowed_interactions": ["array"],
+							"forbidden_interactions": ["array"],
+							"enforcement": "string (compile-time, runtime, convention)"
+						}
+					]
+				},
+				"purpose": "Document non-standard but intentional architectural decisions as design patterns rather than code smells",
+				"documentation_impact": [
+					"Creates dedicated section in -02-base-concepts.md for conventions",
+					"Adds 'Naming Conventions' section to -13-arch.md",
+					"Documents hierarchies with diagrams in -43-diagrams.md",
+					"Adds validation rules in -21-arch-validation.md to enforce conventions",
+					"Includes in -41-appendix-plugin-structure.md with folder-level annotations"
+				]
+			}
+		]
+	},
+
+	"analysis_phase": {
+		"phase_name": "Codebase Analysis & Requirements Generation",
+		"agent": "analysis_agent",
+		"purpose": "Extract all necessary information from existing code to populate plugin-requirements.json",
+
+		"analysis_tasks": {
+			"project_structure_analysis": {
+				"actions": [
+					"Scan folder structure",
+					"Identify entry points",
+					"Map file organization",
+					"Detect framework and language",
+					"Extract project metadata (name, version, description)"
+				],
+				"outputs": ["project_structure_tree.json"]
+			},
+
+			"entity_extraction": {
+				"actions": [
+					"Parse data models/classes",
+					"Extract entity definitions",
+					"Identify relationships",
+					"Detect ID strategies",
+					"Map field types and validation",
+					"Extract lifecycle states"
+				],
+				"sources": [
+					"C# classes (*.cs)",
+					"TypeScript interfaces (*.ts)",
+					"Database schemas (migrations, ORM configs)",
+					"JSON schemas"
+				],
+				"outputs": ["entities.json"]
+			},
+
+			"flow_identification": {
+				"actions": [
+					"Identify primary user flows",
+					"Trace method call sequences",
+					"Extract business logic flows",
+					"Map component interactions",
+					"Identify event handlers"
+				],
+				"sources": [
+					"Controllers/Services",
+					"Event handlers",
+					"API endpoints",
+					"UI components"
+				],
+				"outputs": ["flows.json"]
+			},
+
+			"integration_detection": {
+				"actions": [
+					"Detect external dependencies",
+					"Identify API calls",
+					"Extract integration configurations",
+					"Map authentication methods",
+					"Identify failure handling policies"
+				],
+				"sources": [
+					"Configuration files",
+					"HTTP client usage",
+					"API service classes",
+					"Third-party SDK usage"
+				],
+				"outputs": ["integrations.json"]
+			},
+
+			"validation_rules_extraction": {
+				"actions": [
+					"Extract validation attributes",
+					"Parse validation logic",
+					"Identify error codes and messages",
+					"Map field constraints",
+					"Extract business rule validators"
+				],
+				"sources": [
+					"Data annotation attributes",
+					"FluentValidation rules",
+					"Custom validators",
+					"Error message resources"
+				],
+				"outputs": ["validation_rules.json"]
+			},
+
+			"ui_component_analysis": {
+				"conditional": "If UI components exist",
+				"actions": [
+					"Identify UI framework (React, Blazor, Vue, etc.)",
+					"Extract component hierarchy",
+					"Map component properties",
+					"Identify styling approach",
+					"Extract interaction patterns"
+				],
+				"sources": [
+					"Component files (*.razor, *.tsx, *.vue)",
+					"Style files",
+					"UI state management"
+				],
+				"outputs": ["ui_components.json"]
+			},
+
+			"architecture_pattern_detection": {
+				"actions": [
+					"Identify architectural pattern (MVC, MVVM, Clean, etc.)",
+					"Detect dependency injection usage",
+					"Map service boundaries",
+					"Identify module dependencies",
+					"Detect design patterns in use"
+				],
+				"outputs": ["architecture_patterns.json"]
+			},
+
+			"architectural_conventions_extraction": {
+				"conditional": "If architectural_conventions provided",
+				"actions": [
+					"Parse naming convention patterns",
+					"Map hierarchical structures to code",
+					"Trace inheritance chains",
+					"Validate folder semantics against actual structure",
+					"Document boundary enforcement mechanisms",
+					"Extract examples of each pattern from codebase"
+				],
+				"validation": [
+					"Verify naming patterns exist in codebase",
+					"Confirm hierarchies match actual class structure",
+					"Validate boundary rules aren't violated in existing code"
+				],
+				"outputs": ["architectural_conventions.json"],
+				"impact_on_analysis": {
+					"entity_extraction": "Respects naming conventions (e.g., ignore _ prefixed internal classes in public API docs)",
+					"flow_identification": "Understands hierarchy levels (e.g., Page-level flows vs Component-level interactions)",
+					"architecture_pattern_detection": "Recognizes custom patterns as intentional, not anti-patterns",
+					"validation_rules_extraction": "Adds convention enforcement as validation rules"
+				}
+			},
+
+			"performance_analysis": {
+				"actions": [
+					"Identify performance-critical operations",
+					"Detect caching strategies",
+					"Find optimization patterns",
+					"Extract performance configurations"
+				],
+				"outputs": ["performance_characteristics.json"]
+			}
+		},
+
+		"requirements_json_generation": {
+			"purpose": "Synthesize analysis into plugin-requirements.json format",
+			"template": {
+				"plugin": {
+					"name": "extracted_from_code",
+					"slug": "generated_from_name",
+					"version": "extracted_from_assembly_or_package",
+					"summary": "generated_from_readme_or_code_comments"
+				},
+				"entities": "from entities.json",
+				"flows": "from flows.json",
+				"integrations": "from integrations.json",
+				"validation_rules": "from validation_rules.json",
+				"architectural_conventions": "from architectural_conventions.json (if provided)",
+				"ui_framework": "detected_framework",
+				"host_integration_contract": {
+					"blazor_model": "detected_or_inferred",
+					"plugin_structure_reference": "analyzed_from_code"
+				},
+				"permissions": "extracted_or_default_to_simple_rbac",
+				"performance_targets": "detected_or_mark_as_needs_specification"
+			},
+			"validation": {
+				"required_fields": [
+					"plugin.name",
+					"plugin.slug",
+					"at_least_one_entity",
+					"at_least_one_flow"
+				],
+				"warnings": [
+					"No validation rules found (may need manual specification)",
+					"No performance targets detected",
+					"No integration failure policies found"
+				]
+			},
+			"output": "generated-plugin-requirements.json"
+		},
+
+		"formatting_style_extraction": {
+			"conditional": "If example_docs_source provided",
+			"actions": [
+				"Parse example .md files",
+				"Extract heading hierarchy (H1, H2, H3 usage)",
+				"Identify list styles (bullets, numbers, nested)",
+				"Extract table formatting",
+				"Identify code block conventions (language tags, inline vs block)",
+				"Extract emphasis patterns (bold, italic, code)",
+				"Identify link patterns (relative, absolute, anchor)",
+				"Extract navigation patterns (breadcrumbs, indices)",
+				"Identify section separators and dividers"
+			],
+			"outputs": ["formatting_style.json"],
+			"application": "Apply this style to all generated documentation"
+		},
+
+		"preflight_preparation": {
+			"purpose": "Prepare all inputs for preflight_validator agent",
+			"assembles": [
+				"generated-plugin-requirements.json",
+				"host_structure_reference (if available)",
+				"documentation_formula (standard or adapted)",
+				"formatting_style.json",
+				"validation_strictness setting",
+				"review_mode setting"
+			],
+			"outputs": ["preflight_package.json"],
+			"next_agent": "preflight_validator",
+			"convention_integration": {
+				"if_architectural_conventions_provided": {
+					"add_to_base_layer": {
+						"file": "{slug}-02-base-concepts.md",
+						"new_section": "## Architectural Conventions",
+						"subsections": [
+							"### Naming Conventions",
+							"### Hierarchical Structures",
+							"### Inheritance Patterns",
+							"### Folder Semantics",
+							"### Boundary Rules"
+						],
+						"content_source": "architectural_conventions.json with examples from codebase"
+					},
+					"add_to_architecture_layer": {
+						"file": "{slug}-13-arch.md",
+						"new_section": "## Naming & Structure Conventions",
+						"explains": "Why these conventions exist and how they support the architecture"
+					},
+					"add_to_validation": {
+						"file": "{slug}-21-arch-validation.md",
+						"new_section": "## Convention Validation Rules",
+						"includes": [
+							"Naming pattern validation",
+							"Hierarchy level validation",
+							"Boundary crossing detection",
+							"Examples of valid/invalid patterns"
+						]
+					},
+					"add_to_structure_reference": {
+						"file": "{slug}-41-appendix-plugin-structure.md",
+						"annotations": "Annotate each folder/file with its semantic meaning from conventions",
+						"example": "```\n_Services/        # Host internal services (underscore = host-only)\n  ├─ _BaseService.cs   # Base class for all host services\n  └─ UserService.cs    # Public service (no underscore)\n```"
+					},
+					"add_diagrams": {
+						"file": "{slug}-43-diagrams.md",
+						"new_diagrams": [
+							"Hierarchy structure diagram (e.g., Page > Screen > Widget > Component)",
+							"Inheritance tree showing base classes",
+							"Boundary diagram showing allowed/forbidden interactions"
+						]
+					}
+				}
+			}
+		}
+	},
+
+	"phased_documentation_generation": {
+		"description": "Follows the multi-agent phased system from provided workflow",
+		"integration_note": "This system hands off to the phased workflow after analysis",
+
+		"phase_0_preflight": {
+			"agent": "preflight_validator",
+			"inputs": [
+				"generated-plugin-requirements.json",
+				"host_structure_reference",
+				"formatting_style.json",
+				"validation_strictness",
+				"review_mode"
+			],
+			"validates": "All required inputs from analysis phase",
+			"outputs": ["00-preflight-summary.md"],
+			"on_failure": "Generate questions, return to user for clarification",
+			"on_success": "Proceed to Phase 1"
+		},
+
+		"phase_1_foundation": {
+			"agent": "foundation_generator",
+			"generates": [
+				"01-planned-files.json",
+				"{slug}.md (root entrypoint)",
+				"{slug}-00-base-index.md",
+				"{slug}-12-arch-index.md",
+				"{slug}-26-ui-index.md",
+				"{slug}-39-appendix-index.md"
+			],
+			"applies": "formatting_style.json for all markdown",
+			"validation_gate": "All files generated, no broken links, no placeholders",
+			"review_point": "Interactive mode: Wait for user approval"
+		},
+
+		"phase_2_base_layer": {
+			"agent": "base_layer_generator",
+			"generates": [
+				"11 Base layer files (conceptual, framework-agnostic)",
+				"02-terminology-index.json (canonical terminology)"
+			],
+			"uses": "Entities, flows, concepts from generated-plugin-requirements.json",
+			"applies": "formatting_style.json",
+			"domain_adaptation": "Adjusts file names based on project type (nodes vs models vs services)",
+			"applies_architectural_conventions": "If provided, creates convention documentation sections",
+			"validation_gate": "All entities documented, terminology consistent, conventions explained",
+			"review_point": "Interactive mode: Wait for user approval"
+		},
+
+		"phase_3_architecture_layer": {
+			"agent": "architecture_layer_generator",
+			"generates": ["13 Architecture layer files (implementation details)"],
+			"uses": [
+				"Architecture patterns detected in analysis",
+				"Integration points from integrations.json",
+				"Validation rules from validation_rules.json",
+				"Architectural conventions (if provided)"
+			],
+			"applies": "formatting_style.json",
+			"documents_conventions": "Explains naming patterns, hierarchies, and boundaries in architecture context",
+			"validation_gate": "All integrations documented, no schema divergence, conventions validated",
+			"review_point": "Interactive mode: Wait for user approval"
+		},
+
+		"phase_4_ui_appendix": {
+			"agent": "ui_appendix_generator",
+			"generates": [
+				"12 UI layer files (user-facing documentation)",
+				"4 Appendix files (project-specific implementation)"
+			],
+			"uses": [
+				"UI components from ui_components.json",
+				"Error codes from validation_rules.json",
+				"Project structure from project_structure_tree.json",
+				"Architectural conventions (if provided, annotates structure)"
+			],
+			"applies": "formatting_style.json",
+			"annotates_structure": "If conventions provided, adds semantic meaning to each folder/file",
+			"validation_gate": "All error codes documented, all components mapped, structure annotations complete",
+			"review_point": "Interactive mode: Wait for user approval"
+		},
+
+		"phase_5_diagrams_final": {
+			"agent": "diagram_final_validator",
+			"generates": ["{slug}-43-diagrams.md (if required by strictness)"],
+			"performs": "Comprehensive final validation",
+			"generates_convention_diagrams": "If conventions provided, creates hierarchy and boundary diagrams",
+			"checks": [
+				"File count (43 strict, 42-43 lenient)",
+				"Link integrity across all files",
+				"Terminology consistency",
+				"Schema consistency",
+				"Architectural conventions documented (if provided)",
+				"Completeness score (95% strict, 85% lenient)"
+			],
+			"outputs": {
+				"on_success": [
+					"05-final-validation-report.md",
+					"{slug}-documentation-bundle.zip"
+				],
+				"on_failure": [
+					"05-final-issues.md (with specific fixes needed)"
+				]
+			}
+		}
+	},
+
+	"host_documentation_adaptation": {
+		"when": "project_type == 'host'",
+		"differences": "Host docs are overview-focused, plugin/module details are minimal",
+		"file_reduction": {
+			"foundation": "Same (6 files)",
+			"base_layer": "Reduced to 5 files (concepts, schema, integrations, examples, architecture overview)",
+			"architecture_layer": "Reduced to 6 files (architecture, data layer, plugin system, testing, deployment, resources)",
+			"ui_layer": "Reduced to 4 files (UI spec, UX design, accessibility, examples)",
+			"appendix": "2 files (project structure, task reference)",
+			"diagrams": "1 file (system architecture, plugin lifecycle)",
+			"total": "~20 files"
+		},
+		"plugin_module_coverage": {
+			"style": "Brief summaries only",
+			"includes": [
+				"Plugin name and purpose (1-2 sentences)",
+				"Integration points",
+				"Link to separate plugin documentation"
+			],
+			"excludes": [
+				"Detailed plugin internals",
+				"Plugin-specific APIs",
+				"Plugin implementation details"
+			]
+		}
+	},
+
+	"module_documentation_adaptation": {
+		"when": "project_type == 'module'",
+		"focus": "Technical depth, API completeness, reusability",
+		"file_adaptation": {
+			"foundation": "Same (6 files)",
+			"base_layer": "8 files (concepts, API contracts, data structures, usage patterns, examples, integrations, schema)",
+			"architecture_layer": "10 files (architecture, implementation details, design patterns, performance, error handling, testing, versioning, compatibility, deployment, resources)",
+			"api_documentation": "Comprehensive (all public APIs, all parameters, all return types, all exceptions)",
+			"usage_examples": "Extensive (common use cases, edge cases, anti-patterns)",
+			"appendix": "3 files (internal structure, task reference, migration guide)",
+			"diagrams": "1 file (module architecture, API interaction flows)",
+			"total": "~35 files"
+		}
+	},
+
+	"additional_generators": {
+		"description": "Post-documentation generation tools",
+		"available_after_phase_5": true,
+
+		"test_suite_generator": {
+			"trigger": "User requests 'generate tests'",
+			"uses": [
+				"Entity schemas from -11-base-schema.md",
+				"Validation rules from -21-arch-validation.md",
+				"Flows from plugin-requirements.json"
+			],
+			"generates": [
+				"Unit test templates (xUnit/NUnit/Jest)",
+				"Integration test templates",
+				"Test data factories",
+				"Mock/stub generators"
+			]
+		},
+
+		"api_client_generator": {
+			"trigger": "User requests 'generate API client'",
+			"uses": "API documentation from Architecture layer",
+			"generates": [
+				"REST client code (C#/TypeScript/Python)",
+				"SDK scaffolding",
+				"Authentication helpers"
+			]
+		},
+
+		"type_definition_generator": {
+			"trigger": "User requests 'generate type definitions'",
+			"uses": "Entity schemas",
+			"generates": [
+				"TypeScript .d.ts files",
+				"C# interface files",
+				"OpenAPI/Swagger specs",
+				"JSON Schema files"
+			]
+		},
+
+		"migration_guide_generator": {
+			"trigger": "User provides 'previous version path'",
+			"compares": "Old codebase vs new codebase",
+			"generates": [
+				"Breaking changes document",
+				"Migration steps",
+				"Deprecation notices",
+				"Code transformation examples"
+			]
+		},
+
+		"ci_cd_generator": {
+			"trigger": "User requests 'generate CI/CD'",
+			"uses": "Build/test/deploy information from -24-arch-deployment.md",
+			"generates": [
+				"GitHub Actions workflows",
+				"GitLab CI configuration",
+				"Azure DevOps pipelines",
+				"Docker configurations"
+			]
+		}
+	},
+
+	"review_and_quality_tools": {
+		"code_quality_review": {
+			"trigger": "Automatic after analysis or user request",
+			"analyzes": [
+				"Code complexity (cyclomatic complexity)",
+				"Code duplication",
+				"Code smells (long methods, god classes)",
+				"Naming conventions",
+				"Comment coverage"
+			],
+			"outputs": "code-quality-report.md",
+			"includes_in_docs": "Recommendations in -23-arch-testing.md"
+		},
+
+		"architecture_review": {
+			"trigger": "After Phase 3 generation",
+			"analyzes": [
+				"SOLID principles adherence",
+				"Design pattern usage",
+				"Coupling and cohesion metrics",
+				"Circular dependency detection",
+				"Module boundary violations"
+			],
+			"outputs": "architecture-review.md",
+			"flags": "Issues for documentation clarification"
+		},
+
+		"documentation_coverage_review": {
+			"trigger": "After Phase 5",
+			"analyzes": [
+				"Public API documentation coverage",
+				"XML doc comment coverage (C#)",
+				"JSDoc coverage (JavaScript/TypeScript)",
+				"Example code coverage",
+				"Diagram coverage of flows"
+			],
+			"outputs": "Included in 05-final-validation-report.md"
+		},
+
+		"accessibility_review": {
+			"conditional": "If UI components detected",
+			"trigger": "After Phase 4 generation",
+			"analyzes": [
+				"WCAG compliance (from code attributes)",
+				"ARIA attribute usage",
+				"Keyboard navigation support",
+				"Color contrast (if CSS analyzed)",
+				"Screen reader compatibility hints"
+			],
+			"outputs": "Included in -37-ui-accessibility.md"
+		}
+	},
+
+	"output_formats_and_bundling": {
+		"primary_output": {
+			"format": "ZIP bundle",
+			"filename": "{slug}-documentation-bundle.zip",
+			"contains": [
+				"All Core Documentation Files (.md)",
+				"README.md (pointing to {slug}.md)",
+				"formatting_style.json (for reference)",
+				"generated-plugin-requirements.json (source of truth)",
+				"05-final-validation-report.md"
+			]
+		},
+
+		"alternative_formats": {
+			"static_site": {
+				"trigger": "User requests 'generate website'",
+				"generates": [
+					"Docusaurus site structure",
+					"Navigation config",
+					"Sidebar config",
+					"GitHub Pages-ready output"
+				]
+			},
+			"pdf": {
+				"trigger": "User requests 'generate PDF'",
+				"generates": "Single PDF with all documentation, table of contents, bookmarks"
+			},
+			"confluence": {
+				"trigger": "User requests 'Confluence format'",
+				"generates": "Confluence storage format XML for import"
+			}
+		}
+	},
+
+	"iterative_refinement": {
+		"user_can_request": [
+			{
+				"request": "regenerate section",
+				"action": "Regenerate specific file(s) without triggering full workflow",
+				"requires": "User specifies which file(s) and what to change"
+			},
+			{
+				"request": "add more detail",
+				"action": "Enhance specific section with more examples, diagrams, or explanations"
+			},
+			{
+				"request": "review specific aspect",
+				"action": "Deep dive into validation rules, performance, security, etc."
+			},
+			{
+				"request": "generate missing section",
+				"action": "Add documentation for newly discovered or undocumented features"
+			},
+			{
+				"request": "update from code changes",
+				"action": "Re-analyze code and update affected documentation files"
+			},
+			{
+				"request": "change formatting style",
+				"action": "Apply different markdown formatting style to all files"
+			},
+			{
+				"request": "export to different format",
+				"action": "Convert documentation to website, PDF, Confluence, etc."
+			}
+		]
+	},
+
+	"error_handling_and_recovery": {
+		"analysis_failures": {
+			"cannot_access_source": {
+				"action": "Report specific access issue, request alternative path"
+			},
+			"cannot_determine_framework": {
+				"action": "Ask user to specify framework/language manually"
+			},
+			"no_entities_found": {
+				"action": "Ask if this is a pure service/utility module or if entities are elsewhere"
+			},
+			"conflicting_patterns": {
+				"action": "Report conflicts, ask user to clarify intended pattern"
+			}
+		},
+
+		"generation_failures": {
+			"validation_gate_failure": {
+				"action": "Stop, report issues in XX-phaseX-issues.md, wait for user decision"
+			},
+			"placeholder_leakage": {
+				"action": "Stop, report exact placeholders found, regenerate affected files only"
+			},
+			"link_integrity_failure": {
+				"action": "Report broken links with file and line number, offer to fix automatically"
+			},
+			"terminology_inconsistency": {
+				"action": "Report conflicting terms, offer to resolve from 02-terminology-index.json"
+			}
+		},
+
+		"recovery_options": [
+			"Fix inputs and retry failed phase",
+			"Skip problematic section (mark as TODO for manual completion)",
+			"Lower strictness level and continue",
+			"Restart from scratch with different settings",
+			"Generate minimal viable documentation (13-file set)"
+		]
+	},
+
+	"success_criteria": {
+		"analysis_complete_when": [
+			"generated-plugin-requirements.json created",
+			"All entities extracted with schemas",
+			"All primary flows identified",
+			"Project structure mapped",
+			"Validation rules extracted (or marked as needing specification)",
+			"Architectural conventions documented (if provided)"
+		],
+		"documentation_complete_when": [
+			"All required files generated (based on strictness and project type)",
+			"All validation gates passed",
+			"Final validation report shows ≥threshold coverage",
+			"Zero broken links",
+			"Zero placeholder strings",
+			"Documentation bundle downloadable"
+		],
+		"quality_complete_when": [
+			"A developer unfamiliar with the project could understand and extend it",
+			"All public APIs documented with examples",
+			"All error scenarios documented with recovery steps",
+			"All architecture decisions explained with rationale"
+		]
+	},
+
+	"usage_instructions_for_user": {
+		"step_1": "Paste this entire JSON as your first message to the LLM",
+		"step_2": "Answer the questions the LLM asks (6-8 questions)",
+		"step_3": "the LLM analyzes your codebase and generates plugin-requirements.json",
+		"step_4": "Review the analysis summary and approve",
+		"step_5": "the LLM generates documentation in phases (with review points if interactive mode)",
+		"step_6": "Download the documentation bundle",
+		"step_7_optional": "Request refinements, additional formats, or code generation"
+	},
+
+	"prompt_for_user_to_copy": {
+		"text": "I have an existing [Host/Plugin/Module] project that needs comprehensive documentation. Please guide me through the process of generating complete documentation by:\n\n1. Asking me questions about the project location and requirements\n2. Analyzing my codebase to extract entities, flows, validation rules, and architecture\n3. Generating documentation following a phased, validated approach\n4. Producing a complete documentation bundle\n\nI'm ready to provide the project source and any reference materials you need."
+	}
+}

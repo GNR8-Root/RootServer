@@ -1,0 +1,169 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "RootServer/1.0.0": {
+        "dependencies": {
+          "Airtable": "1.4.0",
+          "Blazorise.Components": "1.8.7",
+          "Blazorise.Icons.FontAwesome": "1.8.7",
+          "Blazorise.Splitter": "1.8.7",
+          "Blazorise.Tailwind": "1.8.7"
+        },
+        "runtime": {
+          "RootServer.dll": {}
+        }
+      },
+      "Airtable/1.4.0": {
+        "runtime": {
+          "lib/netstandard2.0/AirtableApiClient.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        }
+      },
+      "Blazorise/1.8.7": {
+        "dependencies": {
+          "Blazorise.Licensing": "1.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/Blazorise.dll": {
+            "assemblyVersion": "1.8.7.0",
+            "fileVersion": "1.8.7.0"
+          }
+        }
+      },
+      "Blazorise.Components/1.8.7": {
+        "dependencies": {
+          "Blazorise": "1.8.7",
+          "Blazorise.Snackbar": "1.8.7"
+        },
+        "runtime": {
+          "lib/net10.0/Blazorise.Components.dll": {
+            "assemblyVersion": "1.8.7.0",
+            "fileVersion": "1.8.7.0"
+          }
+        }
+      },
+      "Blazorise.Icons.FontAwesome/1.8.7": {
+        "dependencies": {
+          "Blazorise": "1.8.7"
+        },
+        "runtime": {
+          "lib/net10.0/Blazorise.Icons.FontAwesome.dll": {
+            "assemblyVersion": "1.8.7.0",
+            "fileVersion": "1.8.7.0"
+          }
+        }
+      },
+      "Blazorise.Licensing/1.3.0": {
+        "runtime": {
+          "lib/net9.0/Blazorise.Licensing.dll": {
+            "assemblyVersion": "1.3.0.0",
+            "fileVersion": "1.3.0.0"
+          }
+        }
+      },
+      "Blazorise.Snackbar/1.8.7": {
+        "dependencies": {
+          "Blazorise": "1.8.7"
+        },
+        "runtime": {
+          "lib/net10.0/Blazorise.Snackbar.dll": {
+            "assemblyVersion": "1.8.7.0",
+            "fileVersion": "1.8.7.0"
+          }
+        }
+      },
+      "Blazorise.Splitter/1.8.7": {
+        "dependencies": {
+          "Blazorise": "1.8.7"
+        },
+        "runtime": {
+          "lib/net10.0/Blazorise.Splitter.dll": {
+            "assemblyVersion": "1.8.7.0",
+            "fileVersion": "1.8.7.0"
+          }
+        }
+      },
+      "Blazorise.Tailwind/1.8.7": {
+        "dependencies": {
+          "Blazorise": "1.8.7"
+        },
+        "runtime": {
+          "lib/net10.0/Blazorise.Tailwind.dll": {
+            "assemblyVersion": "1.8.7.0",
+            "fileVersion": "1.8.7.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "RootServer/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Airtable/1.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-MjxegrI34wyu06Zl1qJFE1U1glRbTeNTsYzLDVAH5/ba1QcjAipIp7qsZHkTzdjP6MkEQFleaW+71WQ8itniXA==",
+      "path": "airtable/1.4.0",
+      "hashPath": "airtable.1.4.0.nupkg.sha512"
+    },
+    "Blazorise/1.8.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ma79UKFLdZSP2y0JQgnH9lmvrK/Ifw3sy1kmq950hP5nqaQZ1MGCYVqzKAXkpAaGjx0T0cqSEuy8jNQTSB4qJQ==",
+      "path": "blazorise/1.8.7",
+      "hashPath": "blazorise.1.8.7.nupkg.sha512"
+    },
+    "Blazorise.Components/1.8.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+TjGTtOxFgwzUPIbt1+njvZwM8GTE2ETOhLx8zc+Qy4v3BmZ5nQOe5ZSQzbZb8mffakqGP1z6wVRbxACLjy5VA==",
+      "path": "blazorise.components/1.8.7",
+      "hashPath": "blazorise.components.1.8.7.nupkg.sha512"
+    },
+    "Blazorise.Icons.FontAwesome/1.8.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ggY0dqnUCUStEBuO4f0SvuHh/k/vMgLKLxyop8xsSqP32vA2bqNJA1jdtGczkV/X6gmBVc5tQfyWjCHlIJQsfg==",
+      "path": "blazorise.icons.fontawesome/1.8.7",
+      "hashPath": "blazorise.icons.fontawesome.1.8.7.nupkg.sha512"
+    },
+    "Blazorise.Licensing/1.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-NvQlbUgd6jY/ZfkJPlhHLaMVyvfp24OMehFV8Y6mrqLHqC0CfcoE+6+YP9FZMZKNAWmcNZ85WXmYFWVl0UXGfw==",
+      "path": "blazorise.licensing/1.3.0",
+      "hashPath": "blazorise.licensing.1.3.0.nupkg.sha512"
+    },
+    "Blazorise.Snackbar/1.8.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-FROpZqgkpzUh66anu4GZZfIy788QEoQymZ69woBYc7XAdbudt8yYS1MiTczZJhoioIRYnM4y5Z7DNsjWAbQ2Gw==",
+      "path": "blazorise.snackbar/1.8.7",
+      "hashPath": "blazorise.snackbar.1.8.7.nupkg.sha512"
+    },
+    "Blazorise.Splitter/1.8.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-wLN8570f3lTApyROtyCfywl0BxVGkElpj2YMwsAmnzjLFw92XYD1RPsI/QcIqttKQIUFMWYWNgQ5DgK6M1SV/g==",
+      "path": "blazorise.splitter/1.8.7",
+      "hashPath": "blazorise.splitter.1.8.7.nupkg.sha512"
+    },
+    "Blazorise.Tailwind/1.8.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-mQoEUrO3i4gOMgCSxivHcaLVqNbRfQ8XAzr0g/1C1fYmpQeEDnmFb6bwHaHwT3ZJf0OlSOkJz6osOwmuG47U1g==",
+      "path": "blazorise.tailwind/1.8.7",
+      "hashPath": "blazorise.tailwind.1.8.7.nupkg.sha512"
+    }
+  }
+}

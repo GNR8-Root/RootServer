@@ -1,0 +1,23 @@
+﻿@namespace RootServer.Shared.Airtable
+@inherits BasePionter;
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+
+
+<Dropdown @ref="dropdown" Display="Display.InlineBlock" Size="Size.ExtraSmall">
+    <DropdownToggle Color="Color.Light"><Icon Name="IconName.Indent" /></DropdownToggle>
+    <DropdownMenu MaxMenuHeight="300px">
+        <P_Field />
+        <P_Field />
+        <P_Field />
+        <P_Field />
+        <P_Field />
+        <P_Field />
+        <P_Field />
+        <P_Field />
+        <P_Field />
+    </DropdownMenu>
+</Dropdown>

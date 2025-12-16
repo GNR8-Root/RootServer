@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <RestoreSuccess Condition=" '$(RestoreSuccess)' == '' ">True</RestoreSuccess>
+    <RestoreTool Condition=" '$(RestoreTool)' == '' ">NuGet</RestoreTool>
+    <ProjectAssetsFile Condition=" '$(ProjectAssetsFile)' == '' ">$(MSBuildThisFileDirectory)project.assets.json</ProjectAssetsFile>
+    <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">/Users/znzr/.nuget/packages/</NuGetPackageRoot>
+    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">/Users/znzr/.nuget/packages/</NuGetPackageFolders>
+    <NuGetProjectStyle Condition=" '$(NuGetProjectStyle)' == '' ">PackageReference</NuGetProjectStyle>
+    <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">7.0.0</NuGetToolVersion>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <SourceRoot Include="/Users/znzr/.nuget/packages/" />
+  </ItemGroup>
+  <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)microsoft.aspnetcore.app.internal.assets/10.0.1/build/Microsoft.AspNetCore.App.Internal.Assets.props" Condition="Exists('$(NuGetPackageRoot)microsoft.aspnetcore.app.internal.assets/10.0.1/build/Microsoft.AspNetCore.App.Internal.Assets.props')" />
+    <Import Project="$(NuGetPackageRoot)blazorise/1.8.7/buildTransitive/Blazorise.props" Condition="Exists('$(NuGetPackageRoot)blazorise/1.8.7/buildTransitive/Blazorise.props')" />
+    <Import Project="$(NuGetPackageRoot)blazorise.tailwind/1.8.7/buildTransitive/Blazorise.Tailwind.props" Condition="Exists('$(NuGetPackageRoot)blazorise.tailwind/1.8.7/buildTransitive/Blazorise.Tailwind.props')" />
+    <Import Project="$(NuGetPackageRoot)blazorise.splitter/1.8.7/buildTransitive/Blazorise.Splitter.props" Condition="Exists('$(NuGetPackageRoot)blazorise.splitter/1.8.7/buildTransitive/Blazorise.Splitter.props')" />
+    <Import Project="$(NuGetPackageRoot)blazorise.snackbar/1.8.7/buildTransitive/Blazorise.Snackbar.props" Condition="Exists('$(NuGetPackageRoot)blazorise.snackbar/1.8.7/buildTransitive/Blazorise.Snackbar.props')" />
+    <Import Project="$(NuGetPackageRoot)blazorise.icons.fontawesome/1.8.7/buildTransitive/Blazorise.Icons.FontAwesome.props" Condition="Exists('$(NuGetPackageRoot)blazorise.icons.fontawesome/1.8.7/buildTransitive/Blazorise.Icons.FontAwesome.props')" />
+  </ImportGroup>
+</Project>

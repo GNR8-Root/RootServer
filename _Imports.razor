@@ -1,0 +1,36 @@
+@using System.Net.Http
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.JSInterop
+
+@using Blazorise
+@using Blazorise.Splitter
+@using Blazorise.Components
+
+@using RootServer
+@using RootServer.Design
+@using RootServer.Pages
+@using RootServer.Shared
+
+@using RootServer.Shared._Core
+@using RootServer.Shared._Sites
+@using RootServer.Shared._Editor
+@* @using RootServer.Shared._Editor.08_Panels *@
+
+@using RootServer.Shared.Airtable
+@* @using RootServer.Shared.Airtable._Core *@
+@* @using RootServer.Shared.Airtable.03_Pointers *@
+@* @using RootServer.Shared.Airtable.05_Components *@
+@* @using RootServer.Shared.Airtable.06_Widgets *@
+@* @using RootServer.Shared.Airtable.07_View *@
+@* @using RootServer.Shared.Airtable.08_Panels *@
+
+@* Only keep this if you actually have code declaring namespace RootServer.Shared._Sites; *@
+@using RootServer.Shared._Sites
+
+@* Avoid global inject unless you REALLY want it everywhere. Prefer injecting per component. *@
+@inject LogCatcher_Service logCatcher_Service

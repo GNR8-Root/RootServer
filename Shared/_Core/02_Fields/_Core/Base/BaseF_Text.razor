@@ -1,0 +1,28 @@
+﻿@namespace RootServer.Shared._Core
+@using RootServer.Shared._Core;
+
+
+@inherits FieldBase_String;
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+
+
+@if (Validator != null)
+{
+    <Validation Validator="@Validator">
+        <TextEdit Role="@Role" Disabled="@Disabled" ReadOnly="@ReadOnly" Placeholder="@Placeholder" Text="@Val" >
+            <Feedback>
+                <!--<ValidationNone>Please enter the email.</ValidationNone>
+                <ValidationSuccess>Email is good.</ValidationSuccess>
+                <ValidationError>Enter valid email!</ValidationError>-->
+            </Feedback>
+        </TextEdit>
+    </Validation>
+}
+else
+{
+    <TextEdit Disabled="@Disabled" ReadOnly="@ReadOnly" Placeholder="@Placeholder" Text="@Val" />
+}

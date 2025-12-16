@@ -1,0 +1,58 @@
+﻿@namespace RootServer.Shared.Airtable
+@inject Pointer_Service pointer_Service;
+@implements IDisposable
+@inherits BasePanel;
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+
+@*@code{
+    string select = "-";    
+}
+
+@if (pointer_Service.CurrentPointer != null && pointer_Service.CurrentPointer.Self != null)
+{
+    select = @pointer_Service.CurrentPointer.Self.Label;
+}*@
+        
+
+
+<PanelEditor SelectedTab="@SelectedTab" SelectedTabChanged="@OnSelectedTabChanged">
+    <HeadLeft>
+        <P_HomeDropdown Label="home" ShowIconGroup="true"  ShowIconToggle="true"  ShowIconItem="true"  DynamicIcon="true" NameIcon="IconName.Home" ColorIcon="TextColor.Light" ColorBackground="Background.Primary" ColorToggle="Color.Primary"  />
+        <!--loop-->
+        <P_Workspace Label="content" NameIcon="IconName.Shapes" ToolTip="content" />
+        <P_Workspace Label="website" NameIcon="IconName.Globe" ToolTip="website" />
+        <P_Workspace Label="files" NameIcon="IconName.File" ToolTip="files" />
+        <P_Workspace Label="brand" NameIcon="IconName.Shield" ToolTip="brand" />
+        <!--loop end-->
+        <!--@SelectedTab = "content";-->
+    </HeadLeft>
+    <HeadRight>
+        <A_SplitViewBot NameIcon="IconName.SortUp" />
+    </HeadRight>
+
+    <Content>
+        <!--loop-->
+        <V_Workspace IdMenuItem="content" Label="content" IsTabContent="true" />
+        <V_Workspace IdMenuItem="website" Label="website" IsTabContent="true" />
+        <V_Workspace IdMenuItem="files" Label="files" IsTabContent="true" />
+        <V_Workspace IdMenuItem="brand" Label="brand" IsTabContent="true" />
+        <!--loop end-->
+        <!--hidden-->
+        <V_Console Label="console" IsTabContent="true" />
+        <!--end hidden-->
+    </Content>
+
+    <FootLeft>
+        <A_AirtableSync />
+    </FootLeft>
+    <FootCenter>
+        <P_LogCatcher SelectedTabChanged="@OnSelectedTabChanged" Label="console" />
+    </FootCenter>
+    <FootRight>
+        <A_ToggleEditorVisibility ButtonVariant="StateVisibility.SetHidden" />
+    </FootRight>
+</PanelEditor>

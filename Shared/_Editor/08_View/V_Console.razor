@@ -1,0 +1,14 @@
+﻿@using RootServer.Shared.Airtable
+
+@namespace RootServer.Shared._Editor
+
+@inherits BaseView;
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+
+<VW_TabPanel Label="@Label" IsTabContent="@IsTabContent">
+    <W_Console />
+</VW_TabPanel>

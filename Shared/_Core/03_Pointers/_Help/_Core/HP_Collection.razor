@@ -1,0 +1,26 @@
+﻿@namespace RootServer.Shared._Editor
+
+
+
+@*<Row>
+    <Column>
+        <Badge Background="Background.Warning">
+            DICT AllPointers [ <b>@AllPointers.Count</b> ]
+        </Badge>
+        <ListGroup>
+
+            @foreach (KeyValuePair<string, Dictionary<string, Pointer_Service.Pointer>> entry in AllPointers)
+            {
+                <HP__Menu SubPointersEntry="@entry.Value" PointerId="@entry.Key">
+
+                    @foreach (KeyValuePair<string, Pointer_Service.Pointer> p in entry.Value)
+                    {
+                        <HP__Item Pointer="@p.Value" />
+                    }
+
+                </HP__Menu>
+            }
+
+        </ListGroup>
+    </Column>
+</Row>*@

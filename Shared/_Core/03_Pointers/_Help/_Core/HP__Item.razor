@@ -1,0 +1,26 @@
+﻿@namespace RootServer.Shared._Editor
+
+
+
+@*@if(Pointer.Self != null) { 
+    @if (Pointer.Self.IsFocused)
+    {
+        <ListGroupItem Color="Color.Dark">
+            @Pointer.Self.IdMenuItem
+        </ListGroupItem>
+    }
+
+    else if (Pointer.Self.IsActive)
+    {
+        <ListGroupItem Color="Color.Primary">
+            @Pointer.Self.IdMenuItem
+        </ListGroupItem>
+    }
+
+    else
+    {
+        <ListGroupItem>
+            @Pointer.Self.IdMenuItem
+        </ListGroupItem>
+    }
+}*@

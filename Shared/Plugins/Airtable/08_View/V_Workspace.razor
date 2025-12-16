@@ -1,0 +1,12 @@
+﻿@using RootServer.Shared.Airtable
+@namespace RootServer.Shared.Airtable
+@inherits BaseView;
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+
+<VW_TabPanel Label="@Label" IsTabContent="@IsTabContent">
+    <W_Tables IdParentMenu="@IdMenuItem" />
+</VW_TabPanel>

@@ -1,0 +1,23 @@
+﻿@namespace RootServer.Shared._Core
+@using RootServer.Shared._Core;
+@inherits FieldBase_String;
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+
+
+<FW_Main BadgeColor="@BadgeColor" BadgeLabel="@BadgeLabel" ToolTipText="@ToolTipText" NameIcon="IconName.Mail">
+    <!--<input type="text" class="form-control" placeholder="@Placeholder" aria-label="@Placeholder" aria-describedby="basic-addon2">-->
+    <BaseF_Text
+            Role="TextRole.Email"
+            Validator="ValidateInput"
+            ReadOnly="@ReadOnly"
+            Disabled="@Disabled"
+            Val="@Val"
+            Placeholder="@Placeholder"
+            ToolTipText="@ToolTipText"
+                
+    />
+</FW_Main>

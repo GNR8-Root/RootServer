@@ -1,0 +1,24 @@
+﻿@namespace RootServer.Shared.Airtable
+@inherits ABase;
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+
+
+@if (ReadyToDelete == true)
+{
+    <Button Color="Color.Light" Clicked="@OnCancel">
+        <Icon Name="IconName.Ban" />
+    </Button>
+    <Button Color="Color.Danger" Clicked="@OnDelete">
+        <Icon Name="IconName.Delete" />
+    </Button>
+}
+else
+{
+    <Button Color="Color.Warning" Clicked="@OnInvoke">
+        <Icon Name="IconName.Remove" />
+    </Button>
+}

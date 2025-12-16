@@ -1,0 +1,30 @@
+﻿@namespace RootServer.Shared.Airtable
+@inherits BasePionter;
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+
+<Tooltip Text="@ToolTip">
+    <Dropdown @ref="dropdown" Display="Display.InlineBlock" Size="Size.ExtraSmall">
+        <DropdownToggle Color="Color.Light"><Icon Name="IconName.Star" /></DropdownToggle>
+        <DropdownMenu>
+            <C_Bookmark Id="#id" Label="bookmark tabel" TypeBookmark="SelectionType.table" AllowRemoveBookmark="false" HasNewItem="true" />
+            <C_Bookmark Id="#id" Label="bookmark label" TypeBookmark="SelectionType.row" AllowRemoveBookmark="false" HasNewItem="true" />
+            <C_Bookmark Id="#id" Label="bookmark label" TypeBookmark="SelectionType.row" AllowRemoveBookmark="false" HasNewItem="true" />
+            <C_Bookmark Id="#id" Label="bookmark label" TypeBookmark="SelectionType.row" AllowRemoveBookmark="false" HasNewItem="true" />
+
+            <C_Bookmark Id="#id" Label="bookmark tabel" TypeBookmark="SelectionType.table" AllowRemoveBookmark="true" HasNewItem="true" />
+            <C_Bookmark Id="#id" Label="bookmark row" TypeBookmark="SelectionType.row" AllowRemoveBookmark="true" HasNewItem="true" />
+            <C_Bookmark Id="#id" Label="bookmark row" TypeBookmark="SelectionType.row" AllowRemoveBookmark="true" HasNewItem="true" />
+            <C_Bookmark Id="#id" Label="bookmark row" TypeBookmark="SelectionType.row" AllowRemoveBookmark="false" HasNewItem="true" />
+
+            <C_Bookmark Id="#id" Label="bookmark tabel" TypeBookmark="SelectionType.table" AllowRemoveBookmark="false" HasNewItem="true" />
+            <C_Bookmark Id="#id" Label="bookmark row" TypeBookmark="SelectionType.row" AllowRemoveBookmark="false" HasNewItem="true" />
+            <C_Bookmark Id="#id" Label="bookmark row" TypeBookmark="SelectionType.row" AllowRemoveBookmark="true" HasNewItem="true" />
+            <C_Bookmark Id="#id" Label="bookmark row" TypeBookmark="SelectionType.row" AllowRemoveBookmark="false" HasNewItem="true" />
+
+        </DropdownMenu>
+    </Dropdown>
+</Tooltip>

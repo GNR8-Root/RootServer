@@ -1,0 +1,14 @@
+﻿@page "/"
+@inject IJSRuntime JS
+@inject NavigationManager navManager
+@using RootServer.Shared._Core;
+
+
+
+<PageTitle>Index</PageTitle>
+
+<PNL_Website />
+
+<div class="open-editor-container">
+    <a href="/editor"><Button Color="Color.Primary"><Icon Name="IconName.ArrowLeft" /></Button></a>
+</div>

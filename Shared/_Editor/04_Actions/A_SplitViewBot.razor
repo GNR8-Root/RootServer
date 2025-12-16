@@ -1,0 +1,13 @@
+﻿@namespace RootServer.Shared._Editor
+
+@inherits APreBase_EditorView;
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+
+
+<Button Color="Color.Light" Size="Size.ExtraSmall" Clicked="@OnInvoke">
+    <Icon Name="@NameIcon" />
+</Button>

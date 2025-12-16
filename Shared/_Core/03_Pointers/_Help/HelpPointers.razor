@@ -1,0 +1,9 @@
+﻿@namespace RootServer.Shared._Editor
+@inject Pointer_Service pointerS;
+
+
+
+@*<HP_CurrentItem CurrentMenuItem="@pointerS.CurrentMenuItem" CurrentParentMenu="@pointerS.CurrentParentMenu" />
+<HP_CurrentPath CurrentPath="@pointerS.CurrentPath" PathDepth="@pointerS.PathDepth.ToString()"/>
+<HP_Structure AllPointers="@pointerS.AllPointers" RootStructureMenuId="root"/>
+<HP_Collection AllPointers="@pointerS.AllPointers"/>*@

@@ -1,0 +1,1662 @@
+{
+  "system_version": "1.0",
+  "system_name": "Phased Documentation Generation System",
+  "agent_orchestration_model": "sequential_with_gates",
+  "description": "Multi-agent system for generating complete plugin documentation with validation gates between phases",
+
+  "global_configuration": {
+    "execution_modes": {
+      "review_mode": {
+        "type": "enum",
+        "values": ["interactive", "batch"],
+        "default": "interactive",
+        "description": "Whether to pause for user review between phases"
+      },
+      "validation_strictness": {
+        "type": "enum",
+        "values": ["strict", "lenient"],
+        "default": "strict",
+        "description": "Level of validation enforcement"
+      }
+    },
+    "strictness_rules": {
+      "strict": {
+        "performance_targets_required": true,
+        "diagrams_required": true,
+        "completeness_threshold": 0.95,
+        "integration_failure_policies_required": true,
+        "audit_config_required": true
+      },
+      "lenient": {
+        "performance_targets_required": false,
+        "diagrams_required": false,
+        "completeness_threshold": 0.85,
+        "integration_failure_policies_required": false,
+        "audit_config_required": false
+      },
+      "always_enforced": [
+        "no_placeholders",
+        "no_broken_links",
+        "terminology_consistency",
+        "schema_consistency",
+        "all_entities_have_schemas",
+        "all_flows_documented"
+      ]
+    },
+    "file_definitions": {
+      "core_documentation_files": {
+        "count": 43,
+        "description": "The numbered .md files that constitute the plugin documentation deliverable",
+        "included_in_bundle": true
+      },
+      "generation_artifacts": {
+        "description": "Files produced during generation for validation, tracking, and QA",
+        "included_in_bundle": false,
+        "examples": [
+          "00-preflight-summary.md",
+          "01-planned-files.json",
+          "02-terminology-index.json",
+          "XX-phaseX-validation.md"
+        ]
+      }
+    },
+    "source_of_truth_precedence": [
+      "plugin-requirements.json (highest)",
+      "host_architecture_docs",
+      "reference_docset_zip",
+      "natural_language_brief (lowest)"
+    ],
+    "global_content_rules": {
+      "forbidden_strings": [
+        "{...}",
+        "TODO",
+        "TBD",
+        "FIXME",
+        "???",
+        "[placeholder]",
+        "<insert X here>",
+        "// to be determined"
+      ],
+      "link_rules": [
+        "Use relative paths only",
+        "All links must resolve to files in planned-files list",
+        "No external links without approval"
+      ],
+      "code_validation": "All code examples must be syntactically valid and consistent with documented APIs"
+    },
+    "regeneration_policy": {
+      "no_silent_regeneration": true,
+      "description": "Previously generated Core Documentation Files MUST NOT be silently regenerated",
+      "allowed_actions": [
+        "fix_inputs_and_regenerate_failed_phase",
+        "manual_edit_and_revalidate",
+        "full_regeneration_from_scratch"
+      ],
+      "artifact_versioning": true
+    }
+  },
+
+  "agents": [
+    {
+      "agent_id": "preflight_validator",
+      "phase": "preflight",
+      "role": "Pre-Flight Validation Agent",
+      "responsibility": "Verify all required inputs exist before generation begins",
+      "inputs_required": [
+        {
+          "name": "plugin-requirements.json",
+          "type": "json",
+          "required": true,
+          "validation": "Must conform to plugin-requirements schema"
+        },
+        {
+          "name": "host_structure_reference",
+          "type": "zip|tree|inline",
+          "required": true,
+          "description": "Host folder structure for plugin integration"
+        },
+        {
+          "name": "documentation_formula",
+          "type": "json",
+          "required": true,
+          "description": "File naming and numbering conventions"
+        },
+        {
+          "name": "example_docset",
+          "type": "zip",
+          "required": true,
+          "description": "Reference documentation (e.g., node-editor.zip)"
+        },
+        {
+          "name": "validation_strictness",
+          "type": "enum",
+          "required": false,
+          "default": "strict"
+        }
+      ],
+      "validation_checklist": {
+        "blocking_requirements": {
+          "plugin_identity": [
+            "plugin.name is defined",
+            "plugin.slug is defined (lowercase, hyphenated)",
+            "plugin.summary exists (50-500 chars)"
+          ],
+          "core_domain": [
+            "At least 1 entity defined in entities[]",
+            "Each entity has: name, id_strategy, at least 3 fields",
+            "At least 1 primary flow defined"
+          ],
+          "host_integration": [
+            "ui_framework is defined",
+            "blazor_model is defined",
+            "plugin_structure_reference exists"
+          ],
+          "technical_constraints": [
+            "At least 1 validation rule per entity OR explicit 'no validation' statement",
+            "Permissions model defined (rbac|abac|custom)"
+          ]
+        },
+        "warning_requirements": {
+          "strict_mode_errors": [
+            "No performance targets defined",
+            "No integration failure policies defined",
+            "No audit configuration defined"
+          ],
+          "lenient_mode_warnings": [
+            "No performance targets defined (warning only)",
+            "No integration failure policies defined (warning only)",
+            "No audit configuration defined (warning only)"
+          ]
+        }
+      },
+      "outputs": {
+        "on_pass": [
+          {
+            "file": "00-preflight-summary.md",
+            "contains": [
+              "confirmed_inputs",
+              "warnings_by_strictness_mode",
+              "proposed_file_list",
+              "active_validation_strictness_mode"
+            ]
+          }
+        ],
+        "on_fail": [
+          {
+            "file": "00-preflight-questions.md",
+            "contains": [
+              "specific_missing_items",
+              "targeted_questions"
+            ],
+            "action": "STOP and wait for user"
+          }
+        ]
+      },
+      "success_criteria": "All blocking requirements pass",
+      "failure_action": "Generate questions file and STOP",
+      "next_agent": "foundation_generator"
+    },
+
+    {
+      "agent_id": "foundation_generator",
+      "phase": 1,
+      "role": "Foundation Generator Agent",
+      "responsibility": "Generate structural skeleton (root + index files)",
+      "depends_on": ["preflight_validator"],
+      "pre_generation_task": {
+        "task": "Generate planned file list",
+        "output": "01-planned-files.json",
+        "description": "Deterministic list of all files to be generated, including domain adaptations"
+      },
+      "files_to_generate": {
+        "count": 6,
+        "files": [
+          {
+            "filename": "{slug}.md",
+            "type": "root_entrypoint",
+            "required_sections": [
+              "H1: Plugin name",
+              "Purpose (2-3 paragraphs)",
+              "Glossary (5-10 terms)",
+              "Tech Split table",
+              "Guiding Principle",
+              "Scope Definition",
+              "Non-Goals",
+              "Success Criteria",
+              "Documentation Index (links to 5 indices)"
+            ]
+          },
+          {
+            "filename": "{slug}-00-base-index.md",
+            "type": "layer_index",
+            "required_sections": [
+              "H1: Base Layer",
+              "Purpose (2-3 sentences)",
+              "File list with links and 1-line descriptions",
+              "Backlink to root",
+              "Global navigation"
+            ]
+          },
+          {
+            "filename": "{slug}-12-arch-index.md",
+            "type": "layer_index",
+            "template": "same as base-index"
+          },
+          {
+            "filename": "{slug}-26-ui-index.md",
+            "type": "layer_index",
+            "template": "same as base-index"
+          },
+          {
+            "filename": "{slug}-39-appendix-index.md",
+            "type": "layer_index",
+            "template": "same as base-index"
+          }
+        ]
+      },
+      "content_templates": {
+        "root_file_template": "See markdown template in system docs",
+        "index_file_template": "See markdown template in system docs"
+      },
+      "validation_gate": {
+        "checks": [
+          "All 6 files generated",
+          "All links reference files in 01-planned-files.json",
+          "No broken links",
+          "No placeholder strings",
+          "All required sections present",
+          "Terminology consistent across all 6 files"
+        ],
+        "outputs": {
+          "on_pass": [
+            "01-phase1-validation.md"
+          ],
+          "on_fail": [
+            "01-phase1-issues.md"
+          ]
+        }
+      },
+      "outputs": [
+        "01-planned-files.json",
+        "6 Core Documentation Files",
+        "01-phase1-validation.md"
+      ],
+      "success_criteria": "All 6 files generated, all validation checks pass",
+      "gate_behavior": {
+        "interactive": "Request user approval before Phase 2",
+        "batch": "Proceed automatically if validation passes"
+      },
+      "next_agent": "base_layer_generator"
+    },
+
+    {
+      "agent_id": "base_layer_generator",
+      "phase": 2,
+      "role": "Base Layer Generator Agent",
+      "responsibility": "Generate conceptual, framework-agnostic documentation",
+      "depends_on": ["foundation_generator"],
+      "domain_adaptation": {
+        "description": "Adapt file content based on plugin type",
+        "node_based_plugins": {
+          "use_files": [
+            "-03-base-basenodes.md",
+            "-04-base-nodetypes.md",
+            "-05-base-structure-generator.md",
+            "-07-base-flow-type.md"
+          ]
+        },
+        "non_node_plugins": {
+          "replace_with_equivalents": true,
+          "keep_numbering": true,
+          "examples": {
+            "-03-base-basenodes.md": "-03-base-models.md",
+            "-04-base-nodetypes.md": "-04-base-entity-types.md",
+            "-05-base-structure-generator.md": "-05-base-builders.md",
+            "-07-base-flow-type.md": "-07-base-lifecycle.md"
+          },
+          "action": "Update 01-planned-files.json to reflect substitutions"
+        }
+      },
+      "files_to_generate": {
+        "count": 11,
+        "generation_order": [
+          "{slug}-02-base-concepts.md (defines terminology)",
+          "{slug}-11-base-schema.md (defines data structures)",
+          "EXTRACT to 02-terminology-index.json",
+          "{slug}-01-base-vision.md (uses terminology)",
+          "{slug}-03 through -10 (reference both)"
+        ],
+        "files": [
+          {
+            "filename": "{slug}-01-base-vision.md",
+            "required_sections": ["Vision", "Design Philosophy", "Key Differentiators"]
+          },
+          {
+            "filename": "{slug}-02-base-concepts.md",
+            "required_sections": ["Core Concepts (5-10)", "Each with: Definition, Properties, Example, Relates to"],
+            "post_generation": "Extract to 02-terminology-index.json"
+          },
+          {
+            "filename": "{slug}-03-base-{domain}.md",
+            "note": "Domain-specific, adapt per plugin type"
+          },
+          {
+            "filename": "{slug}-04-base-{domain}.md",
+            "note": "Domain-specific, adapt per plugin type"
+          },
+          {
+            "filename": "{slug}-05-base-{domain}.md",
+            "note": "Domain-specific, adapt per plugin type"
+          },
+          {
+            "filename": "{slug}-06-base-execution.md"
+          },
+          {
+            "filename": "{slug}-07-base-{domain}.md",
+            "note": "Domain-specific, adapt per plugin type"
+          },
+          {
+            "filename": "{slug}-08-base-foundry-airtable.md",
+            "alternate": "{slug}-08-base-integrations.md"
+          },
+          {
+            "filename": "{slug}-09-base-examples.md"
+          },
+          {
+            "filename": "{slug}-10-base-sync.md"
+          },
+          {
+            "filename": "{slug}-11-base-schema.md",
+            "required_content": "All entities from plugin-requirements.json with full schema definitions"
+          }
+        ]
+      },
+      "canonical_artifact": {
+        "name": "02-terminology-index.json",
+        "purpose": "Single source of truth for all terminology",
+        "structure": {
+          "terms": [
+            {
+              "term": "string",
+              "definition": "string",
+              "defined_in": "string (file#anchor)",
+              "synonyms": ["string"],
+              "related_terms": ["string"]
+            }
+          ],
+          "forbidden_terms": [
+            {
+              "term": "string",
+              "use_instead": "string",
+              "reason": "string"
+            }
+          ]
+        },
+        "usage": "All subsequent phases must reference this artifact"
+      },
+      "validation_gate": {
+        "checks": [
+          "All 11 files generated",
+          "Domain-adapted filenames match 01-planned-files.json",
+          "02-terminology-index.json generated",
+          "All terms used consistently across all 11 files",
+          "No undefined terms",
+          "No forbidden terms",
+          "Every entity from JSON has schema definition",
+          "Every field has: type, required flag, validation, example",
+          "All invariants documented",
+          "All internal links resolve",
+          "No placeholder strings"
+        ],
+        "outputs": {
+          "on_pass": ["02-phase2-validation.md"],
+          "on_fail": ["02-phase2-issues.md"]
+        }
+      },
+      "outputs": [
+        "11 Core Documentation Files",
+        "02-terminology-index.json",
+        "02-phase2-validation.md"
+      ],
+      "success_criteria": "All files generated, terminology index created, all validation checks pass",
+      "gate_behavior": {
+        "interactive": "Request user approval before Phase 3",
+        "batch": "Proceed automatically if validation passes"
+      },
+      "next_agent": "architecture_layer_generator"
+    },
+
+    {
+      "agent_id": "architecture_layer_generator",
+      "phase": 3,
+      "role": "Architecture Layer Generator Agent",
+      "responsibility": "Document how the plugin is built and integrated",
+      "depends_on": ["base_layer_generator"],
+      "critical_dependencies": [
+        "Must reference 02-terminology-index.json for all terms",
+        "Must use schemas from {slug}-11-base-schema.md",
+        "Must not introduce new entities",
+        "Must respect source-of-truth precedence (JSON > prose)"
+      ],
+      "files_to_generate": {
+        "count": 13,
+        "files": [
+          {
+            "filename": "{slug}-13-arch.md",
+            "content": "Architecture overview, boundaries, module dependencies, component diagram"
+          },
+          {
+            "filename": "{slug}-14-arch-blazor.md",
+            "content": "Host integration (UI framework specific)",
+            "source": "host_integration_contract.runtime from JSON"
+          },
+          {
+            "filename": "{slug}-15-arch-data.md",
+            "content": "State/data layer architecture"
+          },
+          {
+            "filename": "{slug}-16-arch-json.md",
+            "content": "JSON model + persistence transport"
+          },
+          {
+            "filename": "{slug}-17-arch-js.md",
+            "content": "JS interop + client responsibilities"
+          },
+          {
+            "filename": "{slug}-18-arch-visual.md",
+            "content": "Rendering separation"
+          },
+          {
+            "filename": "{slug}-19-arch-updates.md",
+            "content": "Patching + propagation"
+          },
+          {
+            "filename": "{slug}-20-arch-macro.md",
+            "content": "Macro/subgraph composition"
+          },
+          {
+            "filename": "{slug}-21-arch-validation.md",
+            "content": "Structural validation rules",
+            "source": "All validation rules from plugin-requirements.json"
+          },
+          {
+            "filename": "{slug}-22-arch-performance.md",
+            "content": "Performance constraints",
+            "strictness": {
+              "strict": "Required",
+              "lenient": "Optional (warning if missing)"
+            }
+          },
+          {
+            "filename": "{slug}-23-arch-testing.md",
+            "content": "Testing strategy"
+          },
+          {
+            "filename": "{slug}-24-arch-deployment.md",
+            "content": "Packaging/deploy"
+          },
+          {
+            "filename": "{slug}-25-arch-resources.md",
+            "content": "References"
+          }
+        ]
+      },
+      "validation_gate": {
+        "checks": [
+          "All 13 files generated",
+          "All filenames match 01-planned-files.json",
+          "All terms match 02-terminology-index.json exactly",
+          "No new conceptual terms (only implementation terms)",
+          "No forbidden terms",
+          "All entities reference schemas from -11-base-schema.md",
+          "No schema divergence",
+          "Blazor model from JSON documented in -14-arch-blazor.md",
+          "All integrations from JSON appear in appropriate files",
+          "Failure policies match JSON exactly",
+          "No plugin-to-plugin dependencies",
+          "All module dependencies documented",
+          "No circular dependencies",
+          "No placeholder strings",
+          "All code examples syntactically valid"
+        ],
+        "outputs": {
+          "on_pass": ["03-phase3-validation.md"],
+          "on_fail": ["03-phase3-issues.md"]
+        }
+      },
+      "outputs": [
+        "13 Core Documentation Files",
+        "03-phase3-validation.md"
+      ],
+      "success_criteria": "All files generated, all validation checks pass",
+      "gate_behavior": {
+        "interactive": "Request user approval before Phase 4",
+        "batch": "Proceed automatically if validation passes"
+      },
+      "next_agent": "ui_appendix_generator"
+    },
+
+    {
+      "agent_id": "ui_appendix_generator",
+      "phase": 4,
+      "role": "UI & Appendix Generator Agent",
+      "responsibility": "Document user-facing behavior and project-specific implementation",
+      "depends_on": ["architecture_layer_generator"],
+      "files_to_generate": {
+        "count": 16,
+        "ui_layer": {
+          "count": 12,
+          "files": [
+            {
+              "filename": "{slug}-27-ui-spec.md",
+              "content": "UI goals, constraints, architecture pattern",
+              "references": ["-22-arch-performance.md for performance constraints"]
+            },
+            {
+              "filename": "{slug}-28-ui-uxd.md",
+              "content": "Mental model + UX rationale"
+            },
+            {
+              "filename": "{slug}-29-ui-design.md",
+              "content": "Visual language"
+            },
+            {
+              "filename": "{slug}-30-ui-layout.md",
+              "content": "Canvas/panels layout"
+            },
+            {
+              "filename": "{slug}-31-ui-navigation.md",
+              "content": "Pan/zoom/focus"
+            },
+            {
+              "filename": "{slug}-32-ui-components.md",
+              "content": "Components catalog"
+            },
+            {
+              "filename": "{slug}-33-ui-interactions.md",
+              "content": "Mouse/keyboard gestures"
+            },
+            {
+              "filename": "{slug}-34-ui-motion.md",
+              "content": "Animation/timing"
+            },
+            {
+              "filename": "{slug}-35-ui-validation.md",
+              "content": "Error/warn UX",
+              "critical": "All error messages must match plugin-requirements.json exactly (no paraphrasing)",
+              "references": ["-21-arch-validation.md for validation rules"]
+            },
+            {
+              "filename": "{slug}-36-ui-sync.md",
+              "content": "UI reaction to external changes"
+            },
+            {
+              "filename": "{slug}-37-ui-accessibility.md",
+              "content": "A11y rules"
+            },
+            {
+              "filename": "{slug}-38-ui-examples.md",
+              "content": "Walkthroughs"
+            }
+          ]
+        },
+        "appendix_layer": {
+          "count": 4,
+          "files": [
+            {
+              "filename": "{slug}-40-appendix-ui.md",
+              "content": "How UI is built (project specific)"
+            },
+            {
+              "filename": "{slug}-41-appendix-plugin-structure.md",
+              "content": "How files fit into host plugin folders",
+              "source": "host_integration_contract.plugin_structure_reference",
+              "required": "Cross-reference all entities/components/services to their documentation"
+            },
+            {
+              "filename": "{slug}-42-appendix-task-reference.md",
+              "content": "Task->doc cross reference"
+            }
+          ]
+        }
+      },
+      "validation_gate": {
+        "checks": [
+          "All 16 files generated",
+          "All filenames match 01-planned-files.json",
+          "All validation rules in -35-ui-validation.md match -21-arch-validation.md",
+          "All error codes from JSON appear in -35-ui-validation.md",
+          "All error messages match JSON exactly (character-for-character)",
+          "All components reference schemas from Base layer",
+          "Performance constraints from -22 appear in -27-ui-spec.md",
+          "All entities from Base schema appear in -41-appendix-plugin-structure.md",
+          "All components from UI layer mapped in structure",
+          "All services from Architecture layer mapped in structure",
+          "All files have cross-references to documentation",
+          "All terms match 02-terminology-index.json",
+          "No placeholder strings",
+          "All code examples syntactically valid"
+        ],
+        "outputs": {
+          "on_pass": ["04-phase4-validation.md"],
+          "on_fail": ["04-phase4-issues.md"]
+        }
+      },
+      "outputs": [
+        "16 Core Documentation Files",
+        "04-phase4-validation.md"
+      ],
+      "success_criteria": "All files generated, all validation checks pass",
+      "gate_behavior": {
+        "interactive": "Request user approval before Phase 5",
+        "batch": "Proceed automatically if validation passes"
+      },
+      "next_agent": "diagram_final_validator"
+    },
+
+    {
+      "agent_id": "diagram_final_validator",
+      "phase": 5,
+      "role": "Diagram & Final Validation Agent",
+      "responsibility": "Add visual documentation and perform final consistency checks",
+      "depends_on": ["ui_appendix_generator"],
+      "files_to_generate": {
+        "count": 1,
+        "strictness_note": "In lenient mode, this file is optional. If skipped, update 01-planned-files.json and remove Diagrams links from navigation.",
+        "files": [
+          {
+            "filename": "{slug}-43-diagrams.md",
+            "required_diagrams": [
+              "Entity Relationships (mermaid ERD)",
+              "Component Architecture (mermaid graph)",
+              "Primary Flows (mermaid sequence, one per flow from JSON)"
+            ],
+            "required_sections": [
+              "Diagram Legend (node types, edge types)",
+              "References to related documentation for each diagram"
+            ]
+          }
+        ]
+      },
+      "final_validation": {
+        "comprehensive_checks": {
+          "file_count": {
+            "strict_mode": "43 Core Documentation Files",
+            "lenient_mode": "42-43 Core Documentation Files (diagrams optional)"
+          },
+          "link_integrity": [
+            "Run automated link checker across all files",
+            "Verify all internal links resolve",
+            "Verify all anchor links point to real headings",
+            "No broken references",
+            "All links in diagrams resolve"
+          ],
+          "terminology_consistency": [
+            "All terms match 02-terminology-index.json",
+            "No term defined differently in different files",
+            "All acronyms defined on first use per file",
+            "No forbidden terms used"
+          ],
+          "schema_consistency": [
+            "Every entity in -11-base-schema.md",
+            "Every persisted entity in -16-arch-json.md",
+            "Every C# model in -41-appendix-plugin-structure.md",
+            "No schema divergence",
+            "All field types consistent",
+            "All validation rules consistent"
+          ],
+          "validation_consistency": [
+            "Every validation rule in -21-arch-validation.md has user message in -35-ui-validation.md",
+            "Every validation rule has error code in plugin-requirements.json",
+            "No orphaned error codes",
+            "All error messages match JSON exactly"
+          ],
+          "flow_completeness": [
+            "Every flow in JSON has diagram in -43-diagrams.md",
+            "Every flow has example in -09 or -38",
+            "Every flow has architectural coverage",
+            "Every flow has user documentation"
+          ],
+          "integration_coverage": [
+            "Every integration in JSON appears in -08-base-foundry-airtable.md",
+            "Every integration has implementation in arch layer",
+            "Every integration with external docs in -25-arch-resources.md",
+            "All failure policies documented",
+            "All auth methods documented"
+          ],
+          "permission_coverage": [
+            "Every role in JSON appears in docs",
+            "All sensitive data handling documented"
+          ],
+          "placeholder_check": [
+            "No {..} placeholders in any Core Documentation File",
+            "No TODO, TBD, FIXME, ??? strings",
+            "No <insert X here> patterns",
+            "All code examples syntactically valid",
+            "All file paths concrete"
+          ]
+        },
+        "completeness_score": {
+          "calculation": "documented_requirements / total_requirements_from_json",
+          "threshold": {
+            "strict_mode": 0.95,
+            "lenient_mode": 0.85
+          },
+          "breakdown_categories": [
+            "entities",
+            "flows",
+            "integrations",
+            "permissions",
+            "validation_rules",
+            "error_codes"
+          ]
+        }
+      },
+      "outputs": {
+        "on_pass": {
+          "threshold": "≥95% strict or ≥85% lenient, no broken links, no placeholders",
+          "files": [
+            {
+              "file": "05-final-validation-report.md",
+              "contains": [
+                "completeness_score",
+                "link_integrity_report",
+                "terminology_consistency_report",
+                "schema_consistency_report",
+                "active_validation_strictness_mode",
+                "list_of_all_core_documentation_files_with_sizes"
+              ]
+            },
+            {
+              "file": "{slug}-documentation-bundle.zip",
+              "contains": [
+                "All Core Documentation Files (43 strict, 42-43 lenient)",
+                "README.md pointing to {slug}.md"
+              ]
+            }
+          ],
+          "status": "COMPLETE",
+          "message": "Success with download link"
+        },
+        "on_fail": {
+          "threshold": "<95% strict or <85% lenient OR broken links OR placeholders",
+          "files": [
+            {
+              "file": "05-final-issues.md",
+              "contains": [
+                "detailed_list_of_broken_links_with_line_numbers",
+                "list_of_missing_requirements_by_category",
+                "list_of_inconsistencies_with_files_involved",
+                "list_of_placeholders_with_line_numbers",
+                "recommended_fixes"
+              ]
+            }
+          ],
+          "status": "INCOMPLETE",
+          "action": {
+            "interactive": "Request user to fix issues",
+            "batch": "Exit with error code"
+          }
+        }
+      },
+      "success_criteria": "≥threshold coverage, all links valid, no placeholders, validation report passes",
+      "next_agent": null
+    }
+  ],
+
+  "orchestration_flow": {
+    "start": "preflight_validator",
+    "sequence": [
+      {
+        "agent": "preflight_validator",
+        "on_success": "foundation_generator",
+        "on_failure": "STOP"
+      },
+      {
+        "agent": "foundation_generator",
+        "on_success": "base_layer_generator",
+        "on_failure": "STOP",
+        "gate": "Phase 1 validation"
+      },
+      {
+        "agent": "base_layer_generator",
+        "on_success": "architecture_layer_generator",
+        "on_failure": "STOP",
+        "gate": "Phase 2 validation"
+      },
+      {
+        "agent": "architecture_layer_generator",
+        "on_success": "ui_appendix_generator",
+        "on_failure": "STOP",
+        "gate": "Phase 3 validation"
+      },
+      {
+        "agent": "ui_appendix_generator",
+        "on_success": "diagram_final_validator",
+        "on_failure": "STOP",
+        "gate": "Phase 4 validation"
+      },
+      {
+        "agent": "diagram_final_validator",
+        "on_success": "COMPLETE",
+        "on_failure": "STOP",
+        "gate": "Phase 5 final validation"
+      }
+    ]
+  },
+
+  "common_failure_modes": [
+    {
+      "failure": "broken_links",
+      "symptom": "Phase validation finds links to non-existent files",
+      "cause": "Links generated before 01-planned-files.json or during domain adaptation",
+      "fix": "Regenerate affected Core Documentation Files only, checking against 01-planned-files.json before writing links",
+      "do_not": "Regenerate previous phases (see no_silent_regeneration rule)"
+    },
+    {
+      "failure": "terminology_drift",
+      "symptom": "Same concept called different names in different layers",
+      "cause": "Not referencing 02-terminology-index.json during generation",
+      "fix": "Load terminology index at start of each phase and validate each Core Documentation File against it",
+      "do_not": "Regenerate Phase 2 (see no_silent_regeneration rule)"
+    },
+    {
+      "failure": "schema_inconsistency",
+      "symptom": "Field types differ between Base and Architecture layers",
+      "cause": "Schemas written from memory instead of referencing -11-base-schema.md",
+      "fix": "Always read Base schema file (-11-base-schema.md) before generating Architecture Core Documentation Files that reference schemas; treat the Base schema as canonical",
+      "do_not": "Regenerate Base layer (see no_silent_regeneration rule)"
+    },
+    {
+      "failure": "placeholder_leakage",
+      "symptom": "{EntityName} or TODO found in validation",
+      "cause": "Template text not replaced with actual values",
+      "fix": "Add placeholder detection to each phase gate and fail immediately if any forbidden placeholder strings remain",
+      "do_not": "Proceed to the next phase with placeholders present; do NOT regenerate previous phases to mask placeholder leakage"
+    },
+    {
+      "failure": "error_code_mismatch",
+      "symptom": "UI shows different error message than plugin-requirements.json specifies",
+      "cause": "Paraphrasing error messages instead of copying exactly",
+      "fix": "Always quote error messages from plugin-requirements.json verbatim, never paraphrase",
+      "do_not": "Paraphrase user_message strings (must match JSON exactly)"
+    },
+    {
+      "failure": "low_completeness_score",
+      "symptom": "Final validation shows coverage below the required threshold",
+      "cause": "Requirements in plugin-requirements.json not documented anywhere",
+      "fix": "Check each requirement category (entities/flows/integrations/permissions/validation rules/error codes) and add missing documentation to the appropriate Core Documentation Files",
+      "do_not": "Regenerate unrelated phases; only regenerate or edit the specific files that need additional content"
+    }
+  ],
+
+
+  "minimal_viable_documentation": {
+    "description": "Reduced 13-file docset for simple plugins",
+    "recommended_strictness": "lenient",
+    "recommended_threshold": 0.85,
+    "files": [
+      "Preflight: 00-preflight-summary.md + 01-planned-files.json",
+      "Phase 1: 6 foundation files",
+      "Phase 2 Minimal: -02-base-concepts.md, -11-base-schema.md, 02-terminology-index.json",
+      "Phase 3 Minimal: -13-arch.md, -21-arch-validation.md",
+      "Phase 4 Minimal: -27-ui-spec.md, -41-appendix-plugin-structure.md",
+      "Phase 5: Skip (no diagrams)"
+    ],
+    "total_files": 13,
+    "use_when": [
+      "Proof-of-concept plugins",
+      "Simple CRUD plugins with <5 entities",
+      "Rapid prototyping",
+      "Internal tools with minimal UI"
+    ],
+    "expansion_path": "Add remaining files as complexity grows, maintain numbering"
+  },
+
+  "success_criteria": {
+    "documentation_complete_when": [
+      "All required Core Documentation Files exist (43 strict, 42-43 lenient)",
+      "01-planned-files.json lists all generated files",
+      "All links resolve (0 broken links)",
+      "All terms match 02-terminology-index.json",
+      "All schemas consistent across Base/Arch/UI",
+      "All requirements from JSON covered (≥95% strict, ≥85% lenient)",
+      "No placeholder strings in any Core Documentation File",
+      "A senior engineer could implement plugin from docs alone",
+      "No undocumented assumptions exist",
+      "Validation report passes all checks for active strictness mode"
+    ]
+  },
+
+  "agent_communication_protocol": {
+    "artifacts_passed_between_agents": [
+      {
+        "from": "preflight_validator",
+        "to": "foundation_generator",
+        "artifacts": ["00-preflight-summary.md", "validated plugin-requirements.json"]
+      },
+      {
+        "from": "foundation_generator",
+        "to": "base_layer_generator",
+        "artifacts": ["01-planned-files.json", "6 foundation files"]
+      },
+      {
+        "from": "base_layer_generator",
+        "to": "architecture_layer_generator",
+        "artifacts": ["02-terminology-index.json", "11 Base layer files"]
+      },
+      {
+        "from": "architecture_layer_generator",
+        "to": "ui_appendix_generator",
+        "artifacts": ["13 Architecture layer files", "references to Base schemas"]
+      },
+      {
+        "from": "ui_appendix_generator",
+        "to": "diagram_final_validator",
+        "artifacts": ["16 UI+Appendix files", "all previous layer files for validation"]
+      }
+    ],
+    "validation_gate_protocol": {
+      "each_agent_must": [
+        "Run its validation checklist",
+        "Generate validation report (XX-phaseX-validation.md or XX-phaseX-issues.md)",
+        "In interactive mode: Wait for user approval",
+        "In batch mode: Proceed if passing, STOP if failing"
+      ],
+      "if_validation_fails": [
+        "Generate issues report with specific problems",
+        "STOP processing (do not proceed to next agent)",
+        "Do NOT regenerate previous phases",
+        "Wait for explicit user action"
+      ]
+    }
+  },
+
+  "implementation_notes": {
+    "suggested_orchestrator": {
+      "type": "sequential_state_machine",
+      "state_tracking": [
+        "current_phase",
+        "validation_results_by_phase",
+        "generated_files_list",
+        "artifacts_registry"
+      ],
+      "error_handling": "Stop on first validation failure, preserve all generated files"
+    },
+    "agent_implementation_options": [
+      "Separate LLM calls per agent (recommended for isolation)",
+      "Single LLM with phase-specific prompts",
+      "Hybrid: separate validators, combined generators"
+    ],
+    "parallelization_opportunities": {
+      "none_in_generation": "Phases must be sequential due to dependencies",
+      "possible_in_validation": "Link checking and terminology checking can run in parallel during gates"
+    }
+  },
+
+  "extensibility": {
+    "adding_new_agents": {
+      "rule": "New agents can be inserted between existing phases (e.g., Phase 2.5)",
+      "requirements": [
+        "Must define clear inputs and outputs",
+        "Must specify validation gate",
+        "Must update orchestration_flow",
+        "Must not break existing agent dependencies"
+      ]
+    },
+    "adding_new_files": {
+      "rule": "New files can be added within number blocks",
+      "requirements": [
+        "Update 01-planned-files.json",
+        "Update appropriate index file",
+        "Maintain numbering scheme",
+        "Add to relevant agent's files_to_generate"
+      ]
+    },
+    "custom_validation_rules": {
+      "can_add": "Custom checks to validation gates",
+      "cannot_remove": "Core validation rules (placeholders, links, consistency)"
+    }
+  },
+
+  "content_templates": {
+    "root_file": {
+      "filename_pattern": "{slug}.md",
+      "structure": [
+        "# {PluginName}",
+        "",
+        "## Purpose",
+        "{2-3 paragraphs from plugin.summary}",
+        "",
+        "## Glossary",
+        "{5-10 key terms with brief definitions}",
+        "",
+        "## Tech Split",
+        "| Layer | Contains | Purpose |",
+        "|-------|----------|---------|",
+        "| Base | {...} | {...} |",
+        "| Architecture | {...} | {...} |",
+        "| UI | {...} | {...} |",
+        "",
+        "## Guiding Principle",
+        "{1-2 sentences}",
+        "",
+        "## Scope Definition",
+        "{What's in scope}",
+        "",
+        "## Non-Goals",
+        "{What's explicitly out of scope}",
+        "",
+        "## Success Criteria",
+        "{3-5 measurable outcomes}",
+        "",
+        "## Documentation Index",
+        "- [Base Layer]({slug}-00-base-index.md)",
+        "- [Architecture Layer]({slug}-12-arch-index.md)",
+        "- [UI Layer]({slug}-26-ui-index.md)",
+        "- [Appendix]({slug}-39-appendix-index.md)",
+        "- [Diagrams]({slug}-43-diagrams.md)"
+      ]
+    },
+    "index_file": {
+      "filename_pattern": "{slug}-XX-{layer}-index.md",
+      "structure": [
+        "# {Layer Name}",
+        "",
+        "{2-3 sentences describing layer scope}",
+        "",
+        "## Files",
+        "- [{Title}]({slug}-XX-file.md) - {1-line description}",
+        "{repeat for all files in layer}",
+        "",
+        "---",
+        "← [Back to Root]({slug}.md)",
+        "",
+        "**Navigation**: [Base]({slug}-00-base-index.md) | [Architecture]({slug}-12-arch-index.md) | [UI]({slug}-26-ui-index.md) | [Appendix]({slug}-39-appendix-index.md) | [Diagrams]({slug}-43-diagrams.md)"
+      ]
+    },
+    "base_vision": {
+      "filename_pattern": "{slug}-01-base-vision.md",
+      "structure": [
+        "# Vision",
+        "",
+        "{2-3 paragraphs: Why this plugin exists, what problem it solves}",
+        "",
+        "## Design Philosophy",
+        "{3-5 principles that guide all design decisions}",
+        "",
+        "## Key Differentiators",
+        "{What makes this plugin different from alternatives}",
+        "",
+        "---",
+        "← [Back to Base Index]({slug}-00-base-index.md)",
+        "",
+        "**Navigation**: [Base]({slug}-00-base-index.md) | [Architecture]({slug}-12-arch-index.md) | [UI]({slug}-26-ui-index.md) | [Appendix]({slug}-39-appendix-index.md) | [Diagrams]({slug}-43-diagrams.md)"
+      ]
+    },
+    "base_concepts": {
+      "filename_pattern": "{slug}-02-base-concepts.md",
+      "structure": [
+        "# Concepts",
+        "",
+        "{1-2 paragraphs: Overview of core concepts}",
+        "",
+        "## Core Concepts",
+        "",
+        "### {Concept1}",
+        "**Definition**: {Precise, unambiguous definition}",
+        "",
+        "**Properties**:",
+        "- Property A: {description}",
+        "- Property B: {description}",
+        "",
+        "**Example**:",
+        "```json",
+        "{",
+        "  \"exampleField\": \"exampleValue\"",
+        "}",
+        "```",
+        "",
+        "**Relates to**: [{Concept2}]({slug}-02-base-concepts.md#concept2)",
+        "",
+        "{Repeat for 5-10 concepts}",
+        "",
+        "---",
+        "← [Back to Base Index]({slug}-00-base-index.md)",
+        "",
+        "**Navigation**: [Base]({slug}-00-base-index.md) | [Architecture]({slug}-12-arch-index.md) | [UI]({slug}-26-ui-index.md) | [Appendix]({slug}-39-appendix-index.md) | [Diagrams]({slug}-43-diagrams.md)"
+      ]
+    },
+    "base_schema": {
+      "filename_pattern": "{slug}-11-base-schema.md",
+      "structure": [
+        "# Canonical Schema",
+        "",
+        "{1-2 paragraphs: Purpose of this schema definition}",
+        "",
+        "## Entities",
+        "",
+        "### {EntityName}",
+        "",
+        "**Purpose**: {What this entity represents}",
+        "",
+        "**ID Strategy**: `{id_strategy.type}`",
+        "",
+        "**Lifecycle**: {comma-separated states}",
+        "",
+        "**Schema**:",
+        "",
+        "```json",
+        "{",
+        "  \"id\": \"string (required)\",",
+        "  \"version\": \"number (required)\",",
+        "  \"fieldName\": \"type (required/optional)\"",
+        "}",
+        "```",
+        "",
+        "**Field Definitions**:",
+        "",
+        "| Field | Type | Required | Validation | Example |",
+        "|-------|------|----------|------------|---------|",
+        "| id | string | ✅ | non-empty | `\"01JABCD...\"` |",
+        "| fieldName | string | ✅ | 1-200 chars | `\"Example\"` |",
+        "",
+        "**Invariants**:",
+        "- {Invariant 1}",
+        "- {Invariant 2}",
+        "",
+        "{Repeat for all entities}",
+        "",
+        "---",
+        "← [Back to Base Index]({slug}-00-base-index.md)",
+        "",
+        "**Navigation**: [Base]({slug}-00-base-index.md) | [Architecture]({slug}-12-arch-index.md) | [UI]({slug}-26-ui-index.md) | [Appendix]({slug}-39-appendix-index.md) | [Diagrams]({slug}-43-diagrams.md)"
+      ]
+    },
+    "arch_overview": {
+      "filename_pattern": "{slug}-13-arch.md",
+      "structure": [
+        "# Architecture Overview",
+        "",
+        "{2-3 paragraphs: High-level architecture description}",
+        "",
+        "## Boundaries",
+        "",
+        "### Plugin Boundary",
+        "- **Owns**: {List of components/services}",
+        "- **Depends on**: {Modules and host services}",
+        "- **Does NOT depend on**: {Other plugins}",
+        "",
+        "### Module Dependencies",
+        "",
+        "| Module | Purpose | Required Operations |",
+        "|--------|---------|---------------------|",
+        "| ModuleA | {purpose} | {operations used} |",
+        "",
+        "## Component Diagram",
+        "",
+        "{Mermaid or reference to diagrams file}",
+        "",
+        "---",
+        "← [Back to Architecture Index]({slug}-12-arch-index.md)",
+        "",
+        "**Navigation**: [Base]({slug}-00-base-index.md) | [Architecture]({slug}-12-arch-index.md) | [UI]({slug}-26-ui-index.md) | [Appendix]({slug}-39-appendix-index.md) | [Diagrams]({slug}-43-diagrams.md)"
+      ]
+    },
+    "arch_validation": {
+      "filename_pattern": "{slug}-21-arch-validation.md",
+      "structure": [
+        "# Validation Rules",
+        "",
+        "{1-2 paragraphs: Validation philosophy}",
+        "",
+        "## Entity Validation",
+        "",
+        "### {EntityName}",
+        "",
+        "**Structural Rules**:",
+        "- Rule 1: {description + violation message}",
+        "- Rule 2: {description + violation message}",
+        "",
+        "**Business Rules**:",
+        "- Rule 1: {description + violation message}",
+        "",
+        "**Example Valid Instance**:",
+        "```json",
+        "{",
+        "  \"id\": \"01JABCD...\",",
+        "  \"field\": \"valid value\"",
+        "}",
+        "```",
+        "",
+        "**Example Invalid Instances**:",
+        "",
+        "```json",
+        "// Violation: {specific rule}",
+        "{",
+        "  \"id\": \"\",",
+        "  \"field\": \"value\"",
+        "}",
+        "// Error: \"ID cannot be empty\"",
+        "```",
+        "",
+        "{Repeat for all entities}",
+        "",
+        "## Runtime Validation",
+        "",
+        "**When validation occurs**:",
+        "- On entity creation",
+        "- On entity update",
+        "- Before save/sync",
+        "",
+        "**Validation response**:",
+        "- Blocking errors: {list}",
+        "- Warnings: {list}",
+        "",
+        "---",
+        "← [Back to Architecture Index]({slug}-12-arch-index.md)",
+        "",
+        "**Navigation**: [Base]({slug}-00-base-index.md) | [Architecture]({slug}-12-arch-index.md) | [UI]({slug}-26-ui-index.md) | [Appendix]({slug}-39-appendix-index.md) | [Diagrams]({slug}-43-diagrams.md)"
+      ]
+    },
+    "ui_spec": {
+      "filename_pattern": "{slug}-27-ui-spec.md",
+      "structure": [
+        "# UI Specification",
+        "",
+        "{2-3 paragraphs: UI goals and constraints}",
+        "",
+        "## Design Goals",
+        "",
+        "1. **Goal 1**: {description + rationale}",
+        "2. **Goal 2**: {description + rationale}",
+        "",
+        "## Constraints",
+        "",
+        "- **Performance**: {from -22-arch-performance.md}",
+        "- **Accessibility**: {WCAG level, assistive tech}",
+        "- **Browser Support**: {list}",
+        "- **Responsive**: {breakpoints if applicable}",
+        "",
+        "## UI Architecture Pattern",
+        "",
+        "{Component hierarchy, state management}",
+        "",
+        "---",
+        "← [Back to UI Index]({slug}-26-ui-index.md)",
+        "",
+        "**Navigation**: [Base]({slug}-00-base-index.md) | [Architecture]({slug}-12-arch-index.md) | [UI]({slug}-26-ui-index.md) | [Appendix]({slug}-39-appendix-index.md) | [Diagrams]({slug}-43-diagrams.md)"
+      ]
+    },
+    "ui_validation": {
+      "filename_pattern": "{slug}-35-ui-validation.md",
+      "structure": [
+        "# UI Validation & Error Handling",
+        "",
+        "{1-2 paragraphs: How errors appear to users}",
+        "",
+        "## Validation UX",
+        "",
+        "### Inline Validation",
+        "- **When**: {on blur, on change, on submit}",
+        "- **Style**: {error message placement, color, icon}",
+        "",
+        "### Error Summary",
+        "- **When shown**: {on form submit, on save}",
+        "- **Content**: {list of errors, links to fields}",
+        "",
+        "## Error States",
+        "",
+        "### {ErrorCode}",
+        "- **User Message**: \"{exact message from JSON}\"",
+        "- **Visual Treatment**: {color, icon, position}",
+        "- **Recovery Action**: {what user should do}",
+        "",
+        "{Repeat for all error codes}",
+        "",
+        "## Validation Timing",
+        "",
+        "| Event | Validation Performed | UX Response |",
+        "|-------|---------------------|-------------|",
+        "| Field blur | Field-level rules | Inline error/success |",
+        "| Form submit | All rules | Error summary + block |",
+        "",
+        "---",
+        "← [Back to UI Index]({slug}-26-ui-index.md)",
+        "",
+        "**Navigation**: [Base]({slug}-00-base-index.md) | [Architecture]({slug}-12-arch-index.md) | [UI]({slug}-26-ui-index.md) | [Appendix]({slug}-39-appendix-index.md) | [Diagrams]({slug}-43-diagrams.md)"
+      ]
+    },
+    "appendix_structure": {
+      "filename_pattern": "{slug}-41-appendix-plugin-structure.md",
+      "structure": [
+        "# Plugin Folder Structure",
+        "",
+        "{1-2 paragraphs: How files map to host folders}",
+        "",
+        "## Host Plugin Root",
+        "",
+        "```",
+        "{host_structure_reference}",
+        "└── {PluginName}/",
+        "    ├── Components/",
+        "    │   ├── {Component1}.razor",
+        "    ├── Services/",
+        "    │   ├── {Service1}.cs",
+        "    ├── Models/",
+        "    │   ├── {Entity1}.cs",
+        "    └── wwwroot/",
+        "        └── js/",
+        "            └── {plugin-slug}.js",
+        "```",
+        "",
+        "## File Responsibilities",
+        "",
+        "### Components/",
+        "- **{Component1}.razor**: {purpose, refs to UI docs}",
+        "",
+        "### Services/",
+        "- **{Service1}.cs**: {purpose, DI lifetime, refs to arch}",
+        "",
+        "### Models/",
+        "- **{Entity1}.cs**: {maps to schema in -11}",
+        "",
+        "## Cross-Reference to Documentation",
+        "",
+        "| File | Primary Documentation |",
+        "|------|----------------------|",
+        "| {Component1}.razor | [{slug}-32-ui-components.md]({slug}-32-ui-components.md#component1) |",
+        "| {Service1}.cs | [{slug}-15-arch-data.md]({slug}-15-arch-data.md#service1) |",
+        "",
+        "---",
+        "← [Back to Appendix Index]({slug}-39-appendix-index.md)",
+        "",
+        "**Navigation**: [Base]({slug}-00-base-index.md) | [Architecture]({slug}-12-arch-index.md) | [UI]({slug}-26-ui-index.md) | [Appendix]({slug}-39-appendix-index.md) | [Diagrams]({slug}-43-diagrams.md)"
+      ]
+    },
+    "diagrams": {
+      "filename_pattern": "{slug}-43-diagrams.md",
+      "structure": [
+        "# Diagrams",
+        "",
+        "This page contains all architectural and flow diagrams for {PluginName}.",
+        "",
+        "---",
+        "",
+        "## Entity Relationships",
+        "",
+        "**Purpose**: Shows how entities relate",
+        "",
+        "```mermaid",
+        "erDiagram",
+        "    Entity1 ||--o{ Entity2 : contains",
+        "    Entity1 {",
+        "        string id",
+        "        string name",
+        "    }",
+        "```",
+        "",
+        "**References**:",
+        "- [Entity1 Schema]({slug}-11-base-schema.md#entity1)",
+        "",
+        "---",
+        "",
+        "## Component Architecture",
+        "",
+        "**Purpose**: Shows component/service interactions",
+        "",
+        "```mermaid",
+        "graph TD",
+        "    A[Component1] --> B[Service1]",
+        "    B --> C[External]",
+        "```",
+        "",
+        "**References**:",
+        "- [Architecture Overview]({slug}-13-arch.md)",
+        "",
+        "---",
+        "",
+        "## Primary Flow: {Flow1Name}",
+        "",
+        "**Purpose**: {Flow purpose from JSON}",
+        "",
+        "```mermaid",
+        "sequenceDiagram",
+        "    actor User",
+        "    participant UI",
+        "    participant Svc",
+        "    User->>UI: Action",
+        "    UI->>Svc: Command",
+        "    Svc-->>UI: Update",
+        "```",
+        "",
+        "**References**:",
+        "- [User Flow]({slug}.md#flow1)",
+        "",
+        "{Repeat for all flows}",
+        "",
+        "---",
+        "",
+        "## Diagram Legend",
+        "",
+        "### Node Types",
+        "- **Rectangle**: Component or Service",
+        "- **Cylinder**: Data store",
+        "- **Cloud**: External system",
+        "",
+        "### Edge Types",
+        "- **Solid arrow**: Synchronous call",
+        "- **Dashed arrow**: Asynchronous/event",
+        "",
+        "---",
+        "← [Back to Root]({slug}.md)",
+        "",
+        "**Navigation**: [Base]({slug}-00-base-index.md) | [Architecture]({slug}-12-arch-index.md) | [UI]({slug}-26-ui-index.md) | [Appendix]({slug}-39-appendix-index.md) | [Diagrams]({slug}-43-diagrams.md)"
+      ]
+    }
+  },
+
+  "validation_reports": {
+    "preflight_summary": {
+      "filename": "00-preflight-summary.md",
+      "structure": {
+        "confirmed_inputs": [
+          "plugin.name",
+          "plugin.slug",
+          "entity_count",
+          "flow_count",
+          "integration_count"
+        ],
+        "warnings": [
+          "{category}: {specific warning}"
+        ],
+        "proposed_file_list": [
+          "{slug}.md",
+          "{slug}-00-base-index.md",
+          "..."
+        ],
+        "validation_strictness": "strict|lenient",
+        "review_mode": "interactive|batch"
+      }
+    },
+    "phase_validation": {
+      "filename_pattern": "0X-phaseX-validation.md",
+      "structure": {
+        "phase": "X",
+        "mode": "interactive|batch",
+        "validation_strictness": "strict|lenient",
+        "files_generated": [
+          "{filename} ({size})"
+        ],
+        "validation_results": {
+          "links_valid": "pass|fail (X broken)",
+          "terminology_consistent": "pass|fail",
+          "no_placeholders": "pass|fail (X found)",
+          "user_approved": "yes|no|pending"
+        },
+        "statistics": {
+          "files_generated": "X",
+          "total_size": "X KB",
+          "links_checked": "X",
+          "terms_validated": "X"
+        },
+        "next_steps": "Description of next phase",
+        "issues": [
+          "{specific issue with file and line number}"
+        ]
+      }
+    },
+    "final_validation_report": {
+      "filename": "05-final-validation-report.md",
+      "structure": {
+        "completeness_score": {
+          "total_requirements": "X",
+          "documented_requirements": "X",
+          "coverage_percentage": "X%",
+          "threshold": "95%|85%",
+          "status": "pass|fail",
+          "breakdown": {
+            "entities": "X/Y (Z%)",
+            "flows": "X/Y (Z%)",
+            "integrations": "X/Y (Z%)",
+            "permissions": "X/Y (Z%)",
+            "validation_rules": "X/Y (Z%)",
+            "error_codes": "X/Y (Z%)"
+          }
+        },
+        "link_integrity": {
+          "total_links": "X",
+          "broken_links": "X",
+          "status": "pass|fail"
+        },
+        "terminology_consistency": {
+          "total_terms": "X",
+          "inconsistencies": "X",
+          "status": "pass|fail"
+        },
+        "schema_consistency": {
+          "entities_checked": "X",
+          "inconsistencies": "X",
+          "status": "pass|fail"
+        },
+        "validation_strictness": "strict|lenient",
+        "core_documentation_files": [
+          "{slug}-XX-file.md (X KB)"
+        ],
+        "overall_status": "COMPLETE|INCOMPLETE"
+      }
+    },
+    "final_issues_report": {
+      "filename": "05-final-issues.md",
+      "structure": {
+        "broken_links": [
+          {
+            "file": "{slug}-XX-file.md",
+            "line": "X",
+            "link": "{broken link}",
+            "target": "{missing target}"
+          }
+        ],
+        "missing_requirements": [
+          {
+            "category": "entities|flows|integrations|...",
+            "item": "{specific requirement}",
+            "expected_location": "{where it should be documented}"
+          }
+        ],
+        "inconsistencies": [
+          {
+            "type": "terminology|schema|validation",
+            "files_involved": ["{file1}", "{file2}"],
+            "description": "{nature of conflict}"
+          }
+        ],
+        "placeholders_found": [
+          {
+            "file": "{slug}-XX-file.md",
+            "line": "X",
+            "placeholder": "{...}|TODO|TBD"
+          }
+        ],
+        "recommended_fixes": [
+          "{step-by-step fix instructions}"
+        ]
+      }
+    }
+  },
+
+  "usage_example": {
+    "scenario": "Generate documentation for a Task Management plugin",
+    "steps": [
+      {
+        "step": 1,
+        "agent": "preflight_validator",
+        "input": {
+          "plugin-requirements.json": "{...}",
+          "host_structure_reference": "RootServer.zip",
+          "validation_strictness": "strict",
+          "review_mode": "interactive"
+        },
+        "output": "00-preflight-summary.md",
+        "user_action": "Review summary, approve to proceed"
+      },
+      {
+        "step": 2,
+        "agent": "foundation_generator",
+        "input": "Approved preflight summary",
+        "output": [
+          "01-planned-files.json",
+          "task-mgmt.md",
+          "task-mgmt-00-base-index.md",
+          "task-mgmt-12-arch-index.md",
+          "task-mgmt-26-ui-index.md",
+          "task-mgmt-39-appendix-index.md",
+          "01-phase1-validation.md"
+        ],
+        "user_action": "Review foundation files, approve to proceed"
+      },
+      {
+        "step": 3,
+        "agent": "base_layer_generator",
+        "input": "01-planned-files.json + foundation files",
+        "output": [
+          "11 Base layer files",
+          "02-terminology-index.json",
+          "02-phase2-validation.md"
+        ],
+        "user_action": "Review Base layer, check terminology, approve to proceed"
+      },
+      {
+        "step": 4,
+        "agent": "architecture_layer_generator",
+        "input": "02-terminology-index.json + Base layer files",
+        "output": [
+          "13 Architecture layer files",
+          "03-phase3-validation.md"
+        ],
+        "user_action": "Review Architecture layer, check dependencies, approve to proceed"
+      },
+      {
+        "step": 5,
+        "agent": "ui_appendix_generator",
+        "input": "All previous layer files",
+        "output": [
+          "16 UI + Appendix files",
+          "04-phase4-validation.md"
+        ],
+        "user_action": "Review UI and structure mapping, approve to proceed"
+      },
+      {
+        "step": 6,
+        "agent": "diagram_final_validator",
+        "input": "All 42 files generated so far",
+        "output": [
+          "task-mgmt-43-diagrams.md",
+          "05-final-validation-report.md",
+          "task-mgmt-documentation-bundle.zip"
+        ],
+        "user_action": "Download bundle, verify completeness"
+      }
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+﻿@namespace RootServer.Shared.Airtable
+
+@inherits ABaseBookmark;
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+
+
+<Button Color="@IconColor" Clicked="@OnInvoke">
+    <Icon Name="IconName.Star" />
+</Button>

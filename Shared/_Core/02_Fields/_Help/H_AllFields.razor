@@ -1,0 +1,220 @@
+﻿@using RootServer.Shared._Core
+
+@namespace RootServer.Shared.Airtable
+
+
+
+<FW_Group HeaderLabel="Text" RowLabel="All Inputs">
+    <FW_GroupSub>
+        <F_Text_Short Placeholder="text" Val="valueToPlace" ToolTipText="tooltip text" BadgeLabel="Field Text" />
+    </FW_GroupSub>
+    <FW_GroupSub>
+        <F_Text_Email Placeholder="email" Val="name@website.com" ToolTipText="tooltip email" BadgeLabel="Field Email" />
+        <F_Text_Url Placeholder="url" Val="www.website.com" ToolTipText="tooltip url" BadgeLabel="Field Url" />
+        <F_Text_Phone Placeholder="phone number" Val="+312012345678" ToolTipText="tooltip phone" BadgeLabel="Field Phone" />
+    </FW_GroupSub>
+    <FW_GroupSub>
+        <F_Text_Search Placeholder="search..." ToolTipText="tooltip search" BadgeLabel="Field Search" />
+        <F_Text_Password ToolTipText="tooltip password" BadgeLabel="Field Password" />
+    </FW_GroupSub>
+</FW_Group>
+
+<FW_Group HeaderLabel="Text Disable" RowLabel="All Inputs">
+    <FW_GroupSub>
+        <F_Text_Short Disabled="true" Placeholder="text" Val="valueToPlace" ToolTipText="tooltip text" BadgeLabel="Field Text" />
+    </FW_GroupSub>
+    <FW_GroupSub>
+        <F_Text_Email Disabled="true" Placeholder="email" Val="name@website.com" ToolTipText="tooltip email" BadgeLabel="Field Email" />
+        <F_Text_Url Disabled="true" Placeholder="url" Val="www.website.com" ToolTipText="tooltip text" BadgeLabel="Field Url" />
+        <F_Text_Phone Disabled="true" Placeholder="phone number" Val="+312012345678" ToolTipText="tooltip text" BadgeLabel="Field Phone" />
+    </FW_GroupSub>
+</FW_Group>
+
+<FW_Group HeaderLabel="Text ReadOnly" RowLabel="All Inputs">
+    <FW_GroupSub>
+        <F_Text_Short ReadOnly="true" Placeholder="text" Val="valueToPlace" ToolTipText="tooltip text" BadgeLabel="Field Text" />
+    </FW_GroupSub>
+    <FW_GroupSub>
+        <F_Text_Email ReadOnly="true" Placeholder="email" Val="name@website.com" ToolTipText="tooltip email" BadgeLabel="Field Email" />
+        <F_Text_Url ReadOnly="true" Placeholder="url" Val="www.website.com" ToolTipText="tooltip text" BadgeLabel="Field Url" />
+        <F_Text_Phone ReadOnly="true" Placeholder="phone number" Val="+312012345678" ToolTipText="tooltip text" BadgeLabel="Field Phone" />
+    </FW_GroupSub>
+</FW_Group>
+
+<FW_Group HeaderLabel="Text Long" RowLabel="All Inputs">
+    <FW_GroupSub>
+        <F_Text_Long Placeholder="text" Val="valueToPlace" ToolTipText="tooltip text long" BadgeLabel="Field Text Long" />
+    </FW_GroupSub>
+    <FW_GroupSub>
+        <F_Text_Long AutoSize="true" Rows="3" ReplaceTab="true" TabSize="4" Placeholder="text" Val="valueToPlace" ToolTipText="tooltip text long" BadgeLabel="Field Text Long" />
+    </FW_GroupSub>
+</FW_Group>
+
+<FW_Group HeaderLabel="Number Int" RowLabel="All Inputs">
+    <FW_GroupSub>
+        @code{
+            int valInt = 50;
+            int minInt = 0;
+            int maxInt = 127;
+
+        }
+        <F_Numeric_Int ToolTipText="midi min max int" BadgeLabel="field int"
+                       Val="@valInt" Min="@minInt" Max="@maxInt" />
+
+        <F_Numeric_Int ToolTipText="endless int" BadgeLabel="endless int"
+                       Val="@valInt"  ShowSlider="false"
+                       MinMaxLimitsOverride="@NumericMinMaxLimitsOverride.Ignore" />
+    </FW_GroupSub>
+    <FW_GroupSub>
+        <F_Numeric_Int Disabled="true" ToolTipText="disabled int" BadgeLabel="disabled int"
+                       ShowStepButtons="false" Val="@valInt"/>
+    </FW_GroupSub>
+</FW_Group>
+
+<FW_Group HeaderLabel="Number Decimal" RowLabel="All Inputs">
+    <FW_GroupSub>
+        @code{
+            decimal valDec = (decimal)0.55500;
+            decimal minDec = (decimal)-1.11100;
+            decimal maxDec = (decimal)1.11100;
+
+        }
+        <F_Numeric_Decimal ToolTipText="5 decimals / 0.01 step" BadgeLabel="field deci"
+                           Val="@valDec" Min="@minDec" Max="@maxDec" Decimals="5" Step="(decimal)0.01"/>
+
+        <F_Numeric_Decimal ToolTipText="endless decimals" BadgeLabel="2dec-1stp"
+                           Val="@valDec" Decimals="2" Step="(decimal)0.1" ShowSlider="false"
+                           MinMaxLimitsOverride="@NumericMinMaxLimitsOverride.Ignore" />
+    </FW_GroupSub>
+    <FW_GroupSub>
+        <F_Numeric_Decimal Disabled="true" ToolTipText="disabled decimals" BadgeLabel="disabled deci"
+                           ShowStepButtons="false" Val="@valDec" />
+    </FW_GroupSub>
+</FW_Group>
+
+
+<FW_Group HeaderLabel="Number Currency" RowLabel="All Inputs">
+    <FW_GroupSub>
+        @code{
+            decimal valCur = (decimal)0.55;
+            decimal minCur = (decimal)-110.11;
+            decimal maxCur = (decimal)110.11;
+            string currency = "$";
+
+        }
+        <F_Numeric_Currency ToolTipText="2 decimals / 0.01 step" BadgeLabel="field currency"
+                            Val="@valCur" Min="@minCur" Max="@maxCur" Decimals="2" Step="(decimal)0.01" />
+
+        <F_Numeric_Currency ToolTipText="endless currency" BadgeLabel="endless currency"
+                            Val="@valCur" Decimals="2" Step="(decimal)1" ShowSlider="false"
+                            MinMaxLimitsOverride="@NumericMinMaxLimitsOverride.Ignore" RoundingMethod="NumericRoundingMethod.ToNearest05" />
+    </FW_GroupSub>
+    <FW_GroupSub>
+        <F_Numeric_Currency Disabled="true" ToolTipText="disabled decimals" BadgeLabel="disabled currency"
+                            CurrencySymbol="@currency" ShowStepButtons="false" Val="@valCur" />
+    </FW_GroupSub>
+</FW_Group>
+
+
+
+<FW_Group HeaderLabel="Time" RowLabel="All Inputs">
+    <FW_GroupSub>
+        <F_Time_Field ToolTipText="tooltip time" BadgeLabel="field time" />
+    </FW_GroupSub>
+    <FW_GroupSub>
+        @code{TimeSpan t = new TimeSpan(12, 10, 08, 06, 04);}
+        <F_Time_Field Disabled="true" Val="@t"  ToolTipText="tooltip time disabled" BadgeLabel="time disabled"/>
+    </FW_GroupSub>
+</FW_Group>
+
+<FW_Group HeaderLabel="Date" RowLabel="All Inputs">
+    <FW_GroupSub>
+        <F_Date_Field ToolTipText="tooltip date" BadgeLabel="field date" />
+    </FW_GroupSub>
+    <FW_GroupSub>
+        @code{DateTime d = new DateTime(2012, 12, 21);}
+        <F_Date_Field Disabled="true" Val="@d" ToolTipText="tooltip date disabled" BadgeLabel="date disabled" />
+    </FW_GroupSub>
+</FW_Group>
+
+<FW_Group HeaderLabel="Date Time" RowLabel="All Inputs">
+    <FW_GroupSub>
+        <F_DateTime_Field ToolTipText="tooltip date time" BadgeLabel="field date time" />
+    </FW_GroupSub>
+    <FW_GroupSub>
+        @code{DateTime dt = new DateTime(2012, 12, 21, 11, 11, 00);}
+        <F_DateTime_Field Disabled="true" Val="@dt" ToolTipText="tooltip date time disabled" BadgeLabel="date time disabled" />
+    </FW_GroupSub>
+</FW_Group>
+
+<FW_Group HeaderLabel="Color" RowLabel="All Inputs">
+    <FW_GroupSub>
+        <F_Color InitVal="#FF00FF" Placeholder="color" ToolTipText="tooltip text" BadgeLabel="All Color" ShowHueSlider="true" ShowPalette="true" ShowCancelButton="true" ShowClearButton="true" ShowInputField="true" ShowOpacitySlider="true" />
+        <F_Color Placeholder="color" Val="#FF00FF" ToolTipText="tooltip text" BadgeLabel="Basic Color" />
+        <F_Color Placeholder="color" Val="#FF00FF" ToolTipText="tooltip text" BadgeLabel="Field Hue" ShowHueSlider="true" ShowPalette="true" />
+    </FW_GroupSub>
+    <FW_GroupSub>
+        <F_Color Placeholder="color" Val="#FF00FF" ToolTipText="tooltip text" BadgeLabel="Bootstrap Color" />
+    </FW_GroupSub>
+    <FW_GroupSub>
+        <F_Color Disabled="true" Placeholder="color" Val="#FF00FF" ToolTipText="tooltip text" BadgeLabel="Disabled Color" />
+        <F_Color ReadOnly="true" Placeholder="color" Val="#FF00FF" ToolTipText="tooltip text" BadgeLabel="ReadOnly Color" />
+    </FW_GroupSub>
+</FW_Group>
+
+<FW_Group HeaderLabel="Toggle" RowLabel="All Inputs">
+    <FW_GroupSub>
+        <F_Toggle_CheckBox ToolTipText="tooltip text" BadgeLabel="Field Toggle" Val="true"/>
+    </FW_GroupSub>
+    <FW_GroupSub>
+        <F_Toggle_Switch ToolTipText="tooltip text" BadgeLabel="Field Toggle" Val="true" />
+    </FW_GroupSub>
+</FW_Group>
+
+<FW_Group HeaderLabel="Toggle Disabled" RowLabel="All Inputs">
+    <FW_GroupSub>
+        <F_Toggle_CheckBox Disabled="true" ToolTipText="tooltip text" BadgeLabel="Field Toggle" Val="true" />
+    </FW_GroupSub>
+    <FW_GroupSub>
+        <F_Toggle_Switch Disabled="true" ToolTipText="tooltip text" BadgeLabel="Field Toggle" Val="true" />
+    </FW_GroupSub>
+</FW_Group>
+
+<FW_Group HeaderLabel="Single Select" RowLabel="All Inputs">
+    <FW_GroupSub>
+
+    </FW_GroupSub>
+    <FW_GroupSub>
+
+    </FW_GroupSub>
+</FW_Group>
+
+<FW_Group HeaderLabel="Multi Select" RowLabel="All Inputs">
+    <FW_GroupSub>
+
+    </FW_GroupSub>
+    <FW_GroupSub>
+
+    </FW_GroupSub>
+</FW_Group>
+
+<FW_Group HeaderLabel="Rating" RowLabel="All Inputs">
+    <FW_GroupSub>
+        <F_Rating InitVal="5" ColorRating="Color.Danger" ToolTipText="tooltip text" BadgeLabel="Field Rating" ToolTip_Show="true" />
+        @code{string[] ttt = { "bad", "ok", "good", "", "", "", "", "", "", "" }; }
+        <F_Rating ColorRating="Color.Danger" ToolTipText="tooltip text" BadgeLabel="Field Rating" MaxValue="3" ToolTip_Text="@ttt" ToolTip_Show="true" Tooltip_ShowArrow="false" />
+    </FW_GroupSub>
+    <FW_GroupSub>
+        <F_Rating Disabled="true" BadgeLabel="Rating Disabled" ToolTipText="tooltip text" />
+        <F_Rating ReadOnly="true" BadgeLabel="Rating ReadOnly" ToolTipText="tooltip text" />
+    </FW_GroupSub>
+</FW_Group>
+
+<FW_Group HeaderLabel="File" RowLabel="All Inputs">
+    <FW_GroupSub>
+
+    </FW_GroupSub>
+    <FW_GroupSub>
+
+    </FW_GroupSub>
+</FW_Group>

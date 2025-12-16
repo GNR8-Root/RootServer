@@ -1,0 +1,9 @@
+﻿@namespace RootServer.Shared._Sites
+@inherits BaseBackground<MediaVideoData>
+
+
+<div style="width:100%; height:100%; @BackgroundColor()">
+    <div id="@Id" class="section-background-content w-video w-embed + @Class">
+        @Src()
+    </div>
+</div>

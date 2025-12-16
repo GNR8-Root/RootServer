@@ -1,0 +1,15 @@
+﻿@namespace RootServer.Shared.Airtable
+@inherits BasePionter
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+
+
+<Heading Size="HeadingSize.Is1">
+    <AccordionToggle Background="Background.Light" Clicked="OnInvoke">
+        <Icon Name="IconName.Table" IconSize="IconSize.Small" />
+        <b>&nbsp;&nbsp;@Label.ToUpper()</b>
+    </AccordionToggle>
+</Heading>

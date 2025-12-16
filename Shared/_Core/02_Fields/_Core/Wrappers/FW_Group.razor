@@ -1,0 +1,18 @@
+﻿@namespace  RootServer.Shared._Core
+
+
+
+<ListGroup Class="field-group">
+    <C_DividerSticky />
+    <Container Fluid="true" Background="Background.Light"  Class="rounded-top field-group-header">
+        <Row >
+            <Column Flex="Flex.JustifyContent.Start" Class="field-group-header-badge-container">   
+                <Badge Class="bg-white text-black">@HeaderLabel</Badge>
+            </Column>
+            <Column Flex="Flex.JustifyContent.End" Class="field-group-header-badge-container">
+                <Badge Class="bg-white text-black">@RowLabel</Badge>
+            </Column>
+        </Row>
+    </Container>
+    @ChildContent
+</ListGroup>

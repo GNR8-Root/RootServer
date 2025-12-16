@@ -1,0 +1,20 @@
+﻿@namespace RootServer.Shared._Core
+@using RootServer.Shared._Core;
+@inherits FieldBase_Date;
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+
+
+<FW_Main BadgeColor="Color.Default" BadgeLabel="@BadgeLabel" ToolTipText="@ToolTipText" NameIcon="IconName.CalendarDay">
+        <DateEdit
+                    TValue="DateTime?"
+                    Date="@Val"
+                    DateChanged="@OnDateChanged"
+                    ReadOnly="@ReadOnly"
+                    Disabled="@Disabled"
+                    InputMode="DateInputMode.DateTime"
+        />
+</FW_Main>

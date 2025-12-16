@@ -1,0 +1,11 @@
+﻿@namespace RootServer.Shared._Editor
+@implements IDisposable
+@inject LogCatcher_Service logCatcher_Service;
+
+
+<Button Clicked="OnClickLog" Class="btn-open-log">
+    <Alert Color="@logCatcher_Service.LogColor" Visible>
+        <AlertMessage>@logCatcher_Service.LogMessage</AlertMessage>
+        <AlertDescription>@logCatcher_Service.LogDescription</AlertDescription>
+    </Alert>
+</Button>

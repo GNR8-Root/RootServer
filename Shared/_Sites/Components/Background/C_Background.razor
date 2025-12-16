@@ -1,0 +1,43 @@
+﻿@namespace RootServer.Shared._Sites
+@using System
+
+
+
+@if (Record.MediaType == "Color")
+{
+    <Background_Color Record="@Air.Table.colors.RowById(Record.Color[0])" />
+}
+else if (Record.MediaType == "Image")
+{
+    <Background_Image Record="@Air.Table.mediaImage.RowById(Record.Image[0])" />
+}
+else if (Record.MediaType == "Lottie")
+{
+    <Background_Lottie Record="@Air.Table.mediaLottie.RowById(Record.Lottie[0])" />
+}
+else if (Record.MediaType == "Spline")
+{
+    <Background_Spline Record="@Air.Table.mediaSpline.RowById(Record.Spline[0])" />
+}
+else if (Record.MediaType == "Video")
+{
+    <Background_Video Record="@Air.Table.mediaVideo.RowById(Record.Video[0])" />
+    <br />
+    <p>Record: @Record</p>
+    <br />
+    <p>Record.Video: @Record.Video[0]</p>
+    <br />
+    <p>Record.Video.Length: @Record.Video.Length</p>
+    <br />
+    <p>mediaVideo: @Air.Table.mediaVideo.RowById(Record.Video[0])</p>
+    <p>mediaVideo: @Air.Table.mediaVideo.rows.Count</p>
+    <br />
+}
+else if (Record.MediaType == "Youtube")
+{
+    <Background_Youtube Record="@Air.Table.mediaYoutube.RowById(Record.Youtube[0])" />
+}
+else if (Record.MediaType == "Background_Slider")
+{
+    <!--<Background_Slider />-->
+}

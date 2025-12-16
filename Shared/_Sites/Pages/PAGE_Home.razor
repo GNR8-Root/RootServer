@@ -1,0 +1,86 @@
+﻿@using AirtableApiClient;
+@using RootServer.Shared._Projects;
+@using RootServer.Shared.Airtable;
+@namespace RootServer.Shared._Sites
+@inject Pointer_Service pointer_Service;
+@inherits BasePage;
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+
+
+@code{
+    string pageName = "home";
+}
+
+
+<CP_HeadContentWebflow Page="@pageName" />
+<FE_Style />
+
+
+<N_Section>
+
+    @foreach (AirtableRecord<SectionData> s in Air.Table.sections.rows)
+        {
+        @foreach (string p in s.Fields.Pages)
+            {
+                @if (Air.Table.pages.RowById(p) != null && Air.Table.pages.RowById(p).Fields.Name == @pageName)
+                    {
+                <N_SectionItem Record="@s.Fields" />
+                }
+            }
+        }
+
+</N_Section>
+
+
+
+
+
+<C_WelcomeSection Id="welcome" Section="@Air.Table.sections.GetRecord("welcome")" />
+
+
+<C_AboutSection Id="about" Section="@Air.Table.sections.GetRecord("about")" />
+
+
+    <C_Galleries Id="served" Section="@Air.Table.sections.GetRecord("served")" Records="Air.Table.gallery">
+
+        @foreach (AirtableRecord<GalleryData> r in Air.Table.gallery.rows)
+        {
+        <C_Gallery Record="@r.Fields">
+
+            @foreach (string id in r.Fields.Items)
+            {
+            <C_GalleryItem Record="@Air.Table.galleryItem.RowById(id)" />
+            }
+
+        </C_Gallery>
+        }
+
+    </C_Galleries>
+
+
+
+<C_DishSection Id="okonomiyaki" Section="@Air.Table.sections.GetRecord("okonomiyaki")" Records="Air.Table.dishIngredients">
+
+    @foreach (AirtableRecord<DishIngredientsData> r in Air.Table.dishIngredients.rows)
+    {
+        <C_DishIngredient Record="@r.Fields" />
+    }
+
+</C_DishSection>
+
+
+<C_AgendaSection Id="agenda" Section="@Air.Table.sections.GetRecord("agenda")" Records="Air.Table.agenda">
+
+    @foreach (AirtableRecord<AgendaData> r in Air.Table.agenda.rows)
+    {
+        <C_AgendaItem Record="@r.Fields" />
+    }
+
+</C_AgendaSection>
+
+
+<C_ContactSection Id="contact" Section="@Air.Table.sections.GetRecord("contact")" />

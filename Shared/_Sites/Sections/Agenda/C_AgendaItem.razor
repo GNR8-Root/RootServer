@@ -1,0 +1,64 @@
+﻿@using RootServer.Shared.Airtable
+
+@namespace RootServer.Shared._Sites
+
+
+@if (@Record.Type == "music_festival")
+    {
+
+
+
+
+<div id="w-node-c83707fb-ead0-be49-a796-3232fc38826d-25b8dcb8" data-w-id="d5c28b36-5333-2195-f5fc-2de125b8dcb8"  class="agenda-item-music">
+    <div class="agenda-item-left">
+        <a href="@Record.Link" target="_blank" class="agenda-event-music">@Record.Name</a>
+        <p class="agenda-organizer-music">@Record.Organizer</p>
+    </div>
+    <div class="agenda-item-center">
+        <svg data-w-id="d5c28b36-5333-2195-f5fc-2de125b8dcbf" class="agenda-icon-music-fest" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 18.939C14.2091 18.939 16 17.1482 16 14.939C16 12.7299 14.2091 10.939 12 10.939C9.79086 10.939 8 12.7299 8 14.939C8 17.1482 9.79086 18.939 12 18.939ZM12 16.939C13.1046 16.939 14 16.0436 14 14.939C14 13.8345 13.1046 12.939 12 12.939C10.8954 12.939 10 13.8345 10 14.939C10 16.0436 10.8954 16.939 12 16.939Z" fill="currentColor"></path>
+            <path d="M12 9.04401C13.1046 9.04401 14 8.14858 14 7.04401C14 5.93944 13.1046 5.04401 12 5.04401C10.8954 5.04401 10 5.93944 10 7.04401C10 8.14858 10.8954 9.04401 12 9.04401Z" fill="currentColor"></path>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M7 1C5.34315 1 4 2.34315 4 4V20C4 21.6569 5.34315 23 7 23H17C18.6569 23 20 21.6569 20 20V4C20 2.34315 18.6569 1 17 1H7ZM17 3H7C6.44772 3 6 3.44772 6 4V20C6 20.5523 6.44772 21 7 21H17C17.5523 21 18 20.5523 18 20V4C18 3.44772 17.5523 3 17 3Z" fill="currentColor"></path>
+        </svg>
+    </div>
+    <div class="agenda-item-right">
+        <p class="agenda-location">@Record.Location</p>
+        <p class="agenda-date">@Record.DateFrom</p>
+    </div>
+</div>
+
+
+
+
+    }
+    else if (@Record.Type == "foodtruck_festival")
+    {
+
+
+
+
+
+<div data-w-id="9e54f062-5ddc-0153-01ea-489b1a91d709" class="agenda-item-food">
+    <div class="agenda-item-left">
+        <p class="agenda-location">@@Record.Location</p>
+        <p class="agenda-date">@Record.DateFrom</p>
+    </div>
+    <div class="agenda-item-center">
+        <svg data-w-id="9e54f062-5ddc-0153-01ea-489b1a91d710" class="agenda-icon-food-fest" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 11h.01"></path>
+            <path d="M11 15h.01"></path>
+            <path d="M16 16h.01"></path>
+            <path d="m2 16 20 6-6-20A20 20 0 0 0 2 16"></path>
+            <path d="M5.71 17.11a17.04 17.04 0 0 1 11.4-11.4"></path>
+        </svg>
+    </div>
+    <div class="agenda-item-right">
+        <a href="@Record.Link" class="agenda-event-food">@Record.Name</a>
+        <p class="agenda-organizer-food">@Record.Organizer</p>
+    </div>
+</div>
+
+
+
+
+    }

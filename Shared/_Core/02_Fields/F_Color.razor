@@ -1,0 +1,35 @@
+﻿@namespace RootServer.Shared._Core
+@using RootServer.Shared._Core;
+@inherits FieldBase_Color;
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+@code
+{
+    string extraClass = "form-control form-control-color";
+}
+@if (Disabled == true)
+{
+    extraClass += " disabled";
+}
+
+
+
+<FW_Main BadgeColor="@BadgeColor" BadgeLabel="@BadgeLabel" ToolTipText="@ToolTipText" NameIcon="IconName.Palette">
+    <Div class="@extraClass">
+        <ColorPicker
+                     Disabled="@Disabled"
+                     ReadOnly="@ReadOnly"
+                     @bind-Color="@Val"
+                     ShowHueSlider="@ShowHueSlider"
+                     ShowCancelButton="@ShowCancelButton"
+                     ShowClearButton="@ShowClearButton"
+                     ShowInputField="@ShowInputField"
+                     ShowOpacitySlider="@ShowOpacitySlider"
+                     ShowPalette="@ShowPalette"
+
+                     />
+    </Div>
+</FW_Main>

@@ -1,0 +1,20 @@
+﻿@namespace RootServer.Shared._Editor
+
+@inherits ABase;
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+
+
+<Button Color="Color.Light" Size="Size.ExtraSmall" Clicked="@OnInvoke">
+
+    @if(DataEditor.AccordionSingle == false) { 
+        <Icon Name="IconName.CheckDouble" />
+    }
+        else
+    {
+        <Icon Name="IconName.Check" />
+    }
+</Button>

@@ -1,0 +1,48 @@
+﻿@namespace RootServer.Shared.Airtable
+
+
+
+<div class="row align-items-start table-sticky">
+    <div class="table-sticky-divider">
+        <Divider DividerType="DividerType.Dashed" Background="Background.Light" />
+    </div>
+    <div class="btn-group" role="group" aria-label="table controls">
+
+        <div class="col-1">
+            <div class="row align-items-start">
+                <div class="btn-group" role="group" aria-label="row bookmark">
+                    <A_TableBookmark />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-8">
+            <A_TableSearch />
+        </div>
+
+        <div class="col-2">
+            <div class="row align-items-start">
+                <div class="btn-group" role="group" aria-label="row add">
+                    <A_RowNew />
+                    <P_FieldsSelector />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-sticky-divider">
+        <Divider DividerType="DividerType.Dashed" Background="Background.Light" />
+    </div>
+</div>
+<div class="table-rows-accordion">
+    <C_RowSingle IdParentMenu="@IdParentMenu" IdMenuItem="row a"></C_RowSingle>
+    <C_RowSingle IdParentMenu="@IdParentMenu" IdMenuItem="row b"></C_RowSingle>
+    <C_RowSingle IdParentMenu="@IdParentMenu" IdMenuItem="row c"></C_RowSingle>
+    <C_RowSingle IdParentMenu="@IdParentMenu" IdMenuItem="row d"></C_RowSingle>
+</div>
+<Divider DividerType="DividerType.Dashed" />
+
+
+
+
+
+

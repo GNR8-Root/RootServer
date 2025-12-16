@@ -1,0 +1,15 @@
+﻿@using RootServer.Shared.Airtable
+@namespace RootServer.Shared._Editor
+
+
+
+@if (IsTabContent == true)
+{
+    <TabPanel Name="@Label">
+        @ChildContent
+    </TabPanel>
+}
+else
+{
+    @ChildContent
+}

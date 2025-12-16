@@ -1,0 +1,26 @@
+﻿@using AirtableApiClient;
+@namespace RootServer.Shared.Airtable
+@inherits BasePionter_Dropdown;
+
+@{
+base.BuildRenderTree(__builder);
+}
+
+
+
+<CP_Dropdown SelectedItem="@SelectedItem" NameIcon="@NameIcon" ColorIcon="@ColorIcon" ShowLabel="@ShowLabel" Label="@Label" ShowIconToggle="@ShowIconToggle" ColorToggle="@ColorToggle">
+    <CP_DropdownGroup Label="app" NameIcon="IconName.Folder" ShowIconGroup="@ShowIconGroup">
+
+        @foreach (AirtableRecord<AppsData> r in Air.Table.apps.rows)
+        {
+            <CP_DropdownItem Label="@r.Fields.Name" NameIconStr="@r.Fields.Icon" AirtableParentId="@Air.Table.apps.tableService.TABLE_ID" AirtableId="@r.Id" Callback="@NewItemSelected" ShowIconItem="@ShowIconItem" />
+        }
+
+    </CP_DropdownGroup>
+    <CP_DropdownGroup Label="development" NameIcon="IconName.Wrench" ShowIconGroup="@ShowIconGroup">
+        <CP_DropdownItem Label="todo" NameIcon="IconName.CalendarCheck" Callback="@NewItemSelected" ShowIconItem="@ShowIconItem" />
+        <CP_DropdownItem Label="help" NameIcon="IconName.QuestionCircle" Callback="@NewItemSelected" ShowIconItem="@ShowIconItem" />
+        <CP_DropdownItem Label="code" NameIcon="IconName.Code" Callback="@NewItemSelected" ShowIconItem="@ShowIconItem" />
+        <CP_DropdownItem Label="fields" NameIcon="IconName.ListUl" Callback="@NewItemSelected" ShowIconItem="@ShowIconItem" />
+    </CP_DropdownGroup>
+</CP_Dropdown>

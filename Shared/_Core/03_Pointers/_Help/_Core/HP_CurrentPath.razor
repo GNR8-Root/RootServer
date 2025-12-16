@@ -1,0 +1,37 @@
+﻿@namespace RootServer.Shared._Editor
+
+
+
+<Row>
+    <Column>
+        <Breadcrumb>
+            <BreadcrumbItem>
+                <Badge Background="Background.Warning">
+                    CurrentPath [ <b>@PathDepth</b> ]
+                </Badge>
+            </BreadcrumbItem>
+
+            @*@foreach (Pointer_Service.Pointer p in CurrentPath)
+            {
+                @if (@p.Self != null)
+                {
+                    @if (p.Self.IsFocused)
+                    {
+                        <BreadcrumbItem Active>
+                            <Badge Background="Background.Dark">@p.Self.IdMenuItem</Badge>
+                        </BreadcrumbItem>
+
+                    }
+                    else
+                    {
+
+                        <BreadcrumbItem>
+                            <Badge Background="Background.Primary">@p.Self.IdMenuItem</Badge>
+                        </BreadcrumbItem>
+
+                    }
+                }
+            }*@
+        </Breadcrumb>
+    </Column>
+</Row>

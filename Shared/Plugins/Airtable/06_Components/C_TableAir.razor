@@ -1,0 +1,11 @@
+﻿@namespace RootServer.Shared.Airtable
+
+
+<AccordionItem @bind-Visible="@AccVisible" Class="table-accordion">
+    <AccordionHeader>
+        <P_Table IdMenuItem="@IdMenuItem" IdParentMenu="@IdParentMenu" Label="@Label" SetTable="SetAccordion"/>
+    </AccordionHeader>
+    <AccordionBody>
+        <C_Rows IdParentMenu="@IdMenuItem" />
+    </AccordionBody>
+</AccordionItem>

@@ -1,0 +1,138 @@
+﻿@namespace RootServer.Shared._Editor
+
+
+
+<!--<Row>
+    <Column>
+        <Badge Background="Background.Warning">
+            STRUCTURE AllPointers TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        </Badge>
+        <ListGroup>
+
+            <HP__Menu SubPointersEntry="@AllPointers[RootStructureMenuId]" PointerId="@RootStructureMenuId">
+
+                @foreach (KeyValuePair<string, Pointer_Service.Pointer> lvl1 in AllPointers[RootStructureMenuId])
+                {
+                    <HP__Item Pointer="@lvl1.Value" />
+
+                    @if (AllPointers != null) {
+                        @if (lvl1.Value.Self != null && AllPointers.ContainsKey(lvl1.Value.Self.IdMenuItem))
+                            {
+                            <HP__Menu SubPointersEntry="@AllPointers[lvl1.Value.Self.IdMenuItem]" PointerId="@lvl1.Value.Self.IdMenuItem">
+
+                                @foreach (KeyValuePair<string, Pointer_Service.Pointer> lvl2 in AllPointers[lvl1.Value.Self.IdMenuItem])
+                                {
+
+                                    <HP__Item Pointer="@lvl2.Value" />
+
+                                    @if (lvl2.Value.Self != null && AllPointers.ContainsKey(lvl2.Value.Self.IdMenuItem))
+                                    {
+
+                                        <HP__Menu SubPointersEntry="@AllPointers[lvl2.Value.Self.IdMenuItem]" PointerId="@lvl2.Value.Self.IdMenuItem">
+                                            @foreach (KeyValuePair<string, Pointer_Service.Pointer> lvl3 in AllPointers[lvl2.Value.Self.IdMenuItem])
+                                            {
+
+                                                <HP__Item Pointer="@lvl3.Value" />
+
+                                                @if (lvl3.Value.Self != null && AllPointers.ContainsKey(lvl3.Value.Self.IdMenuItem))
+                                                {
+
+                                                    <HP__Menu SubPointersEntry="@AllPointers[lvl3.Value.Self.IdMenuItem]" PointerId="@lvl3.Value.Self.IdMenuItem">
+                                                        @foreach (KeyValuePair<string, Pointer_Service.Pointer> lvl4 in AllPointers[lvl3.Value.Self.IdMenuItem])
+                                                        {
+
+                                                            <HP__Item Pointer="@lvl4.Value" />
+
+                                                            @if (lvl4.Value.Self != null && AllPointers.ContainsKey(lvl4.Value.Self.IdMenuItem))
+                                                            {
+
+                                                                <HP__Menu SubPointersEntry="@AllPointers[lvl4.Value.Self.IdMenuItem]" PointerId="@lvl4.Value.Self.IdMenuItem">
+                                                                    @foreach (KeyValuePair<string, Pointer_Service.Pointer> lvl5 in AllPointers[lvl4.Value.Self.IdMenuItem])
+                                                                    {
+
+                                                                        <HP__Item Pointer="@lvl5.Value" />
+
+                                                                        @if (lvl5.Value.Self != null && AllPointers.ContainsKey(lvl5.Value.Self.IdMenuItem))
+                                                                        {
+
+                                                                            <HP__Menu SubPointersEntry="@AllPointers[lvl5.Value.Self.IdMenuItem]" PointerId="@lvl5.Value.Self.IdMenuItem">
+                                                                                @foreach (KeyValuePair<string, Pointer_Service.Pointer> lvl6 in AllPointers[lvl5.Value.Self.IdMenuItem])
+                                                                                {
+
+                                                                                    <HP__Item Pointer="@lvl6.Value" />
+
+                                                                                    @if (lvl6.Value.Self != null && AllPointers.ContainsKey(lvl6.Value.Self.IdMenuItem))
+                                                                                    {
+
+                                                                                        <HP__Menu SubPointersEntry="@AllPointers[lvl6.Value.Self.IdMenuItem]" PointerId="@lvl6.Value.Self.IdMenuItem">
+                                                                                            @foreach (KeyValuePair<string, Pointer_Service.Pointer> lvl7 in AllPointers[lvl6.Value.Self.IdMenuItem])
+                                                                                            {
+                                                                                                <HP__Item Pointer="@lvl7.Value" />
+                                                                                                <Badge Background="Background.Danger">-INCREASE NESTING in HP_Structure.razor-</Badge>
+                                                                                            }
+
+                                                                                        </HP__Menu>
+
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <Badge Background="Background.Light" TextColor="TextColor.Black50">-end 3-</Badge>-->
+                                                                                        <!--end lvl 3-->
+                                                                                    <!--}
+                                                                                }
+
+                                                                            </HP__Menu>
+
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <Badge Background="Background.Light" TextColor="TextColor.Black50">-end 3-</Badge>-->
+                                                                            <!--end lvl 3-->
+                                                                        <!--}
+                                                                    }
+
+                                                                </HP__Menu>
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <Badge Background="Background.Light" TextColor="TextColor.Black50">-end 3-</Badge>-->
+                                                                <!--end lvl 3-->
+                                                            <!--}
+                                                        }
+
+                                                    </HP__Menu>
+
+                                                }
+                                                else
+                                                {
+                                                    <Badge Background="Background.Light" TextColor="TextColor.Black50">-end 3-</Badge>-->
+                                                    <!--end lvl 3-->
+                                                <!--}
+
+                                            }
+                                        </HP__Menu>
+
+                                    }
+                                    else
+                                    {
+                                        <Badge Background="Background.Light" TextColor="TextColor.Black50">-end 2-</Badge>-->
+                                        <!--end lvl 2-->
+                                    <!--}
+
+                                }
+                            </HP__Menu>
+
+                            }
+                        else
+                        {
+                            <Badge Background="Background.Light" TextColor="TextColor.Black50">-end 1-</Badge>-->
+                            <!--end lvl 1-->
+                        <!--}
+                    }
+                }
+
+            </HP__Menu>
+        </ListGroup>
+    </Column>
+</Row>-->

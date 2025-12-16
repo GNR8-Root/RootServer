@@ -1,0 +1,201 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>RootServer</RootNamespace>
+<AssemblyName>RootServer</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+  <ItemGroup>
+    <None Remove="Data\Airtable\" />
+    <None Remove="Data\Nav\" />
+    <None Remove="Design\" />
+    <None Remove="Shared\Airtable\" />
+    <None Remove="Shared\_Core\" />
+    <None Remove="Shared\_Site\" />
+    <None Remove="Shared\Airtable\Actions\_Core\" />
+    <None Remove="Shared\Airtable\01_Displays\" />
+    <None Remove="Shared\Airtable\03_Pointers\" />
+    <None Remove="Shared\Airtable\06_Widgets\" />
+    <None Remove="Shared\Airtable\07_View\" />
+    <None Remove="Shared\Airtable\08_Panels\" />
+    <None Remove="Shared\_Core\04_Actions\" />
+    <None Remove="Shared\_Core\08_Panels\" />
+    <None Remove="Shared\_Core\03_Pointers\" />
+    <None Remove="Shared\_Site\Sections\" />
+    <None Remove="Shared\_Core\01_Displays\" />
+    <None Remove="Shared\_Core\06_Widgets\" />
+    <None Remove="Shared\_Core\07_View\" />
+    <None Remove="Shared\_Editor\" />
+    <None Remove="Shared\Airtable\02_Fields\" />
+    <None Remove="Shared\_Editor\01_Displays\" />
+    <None Remove="Shared\_Editor\02_Fields\" />
+    <None Remove="Shared\_Core\06_Widgets\SurveyPrompt\" />
+    <None Remove="Shared\_Core\00_Core\" />
+    <None Remove="Shared\_Core\00_Core\Enums\" />
+    <None Remove="Shared\_Core\03_Pointers\_Core\" />
+    <None Remove="Shared\_Core\00_Core\Events\" />
+    <None Remove="Shared\_Core\03_Pointers\_Help\" />
+    <None Remove="Shared\_Core\03_Pointers\_Help\_Core\" />
+    <None Remove="Shared\_Editor\07_View\_Core\Base\" />
+    <None Remove="Shared\_Editor\07_View\_Core\Wrappers\" />
+    <None Remove="Shared\_Editor\00_Core\Data\" />
+    <None Remove="Shared\_Core\00_Core\BehaviourTree\" />
+    <None Remove="Shared\_Core\00_Core\BehaviourTree\Nodes\" />
+    <None Remove="Shared\_Core\00_Core\BehaviourTree\Tree\" />
+    <None Remove="Shared\_Core\02_Fields\_Help\" />
+    <None Remove="Shared\_Site\Pages\" />
+    <None Remove="Shared\Airtable\00_Core\" />
+    <None Remove="Json\" />
+    <None Remove="Shared\Airtable\00_Core\_Core\" />
+    <None Remove="Shared\_Site\Pages\_Core\" />
+    <None Remove="Shared\_Site\Pages\_Core\Base\" />
+    <None Remove="Shared\_Site\Pages\_Core\Static\" />
+    <None Remove="Shared\Airtable\00_Core\Static\" />
+    <None Remove="Shared\Airtable\00_Core\Enums\" />
+    <None Remove="Shared\_Projects\" />
+    <None Remove="Shared\_Projects\FoodEscape\" />
+    <None Remove="Shared\_Projects\FoodEscape\Style\" />
+    <None Remove="Shared\_Site\Sections\Agenda\" />
+    <None Remove="Shared\_Site\Sections\_Core\" />
+    <None Remove="Shared\_Site\Sections\_Core\Wrappers\" />
+    <None Remove="Shared\_Site\Sections\_Core\Base\" />
+    <None Remove="Shared\_Site\Sections\Welcome\" />
+    <None Remove="Shared\_Site\Sections\About\" />
+    <None Remove="Shared\_Site\Sections\Contact\" />
+    <None Remove="Shared\_Site\Nav\MainPages\" />
+    <None Remove="Shared\_Site\Nav\Section\" />
+    <None Remove="Shared\_Site\Sections\Dish\" />
+    <None Remove="Shared\_Site\Sections\Gallery\" />
+    <None Remove="Shared\Airtable\00_Core\Tables\MediaYoutube\" />
+    <None Remove="Shared\Airtable\00_Core\Tables\MediaCollectionContent\" />
+    <None Remove="Shared\Airtable\00_Core\Tables\MediaCollectionWebsite\" />
+    <None Remove="Shared\_Site\Components\" />
+    <None Remove="Shared\_Site\Components\Background\" />
+    <None Remove="Shared\_Site\Components\Background\_Core\" />
+    <None Remove="Shared\Airtable\00_Core\Tables\MediaImage\" />
+    <None Remove="Shared\Airtable\00_Core\Tables\MediaVideo\" />
+    <None Remove="Shared\Airtable\00_Core\Tables\MediaSpline\" />
+    <None Remove="Shared\Airtable\00_Core\Tables\MediaLottie\" />
+    <None Remove="Shared\Airtable\00_Core\Tables\_Core\" />
+    <None Include="Docs\Extend\newplugin-module.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Docs\gfx\" />
+    <Folder Include="Shared\Plugins\" />
+    <Folder Include="Shared\_Core\05_Nodes\" />
+    <Folder Include="Shared\_Editor\05_Nodes\" />
+    <Folder Include="Shared\_Modules\" />
+    <Folder Include="wwwroot\css\blazorise\" />
+    <Folder Include="Shared\_Sites\" />
+    <Folder Include="Shared\_Core\04_Actions\" />
+    <Folder Include="Shared\_Core\09_Panels\" />
+    <Folder Include="Shared\_Core\03_Pointers\" />
+    <Folder Include="Shared\_Sites\Sections\" />
+    <Folder Include="Shared\_Core\01_Displays\" />
+    <Folder Include="Shared\_Core\07_Widgets\" />
+    <Folder Include="Shared\_Core\08_View\" />
+    <Folder Include="Shared\_Editor\01_Displays\" />
+    <Folder Include="Shared\_Editor\02_Fields\" />
+    <Folder Include="Shared\_Core\07_Widgets\SurveyPrompt\" />
+    <Folder Include="Shared\_Core\00_Core\" />
+    <Folder Include="Shared\_Core\00_Core\Enums\" />
+    <Folder Include="Shared\_Core\03_Pointers\_Core\" />
+    <Folder Include="Shared\_Core\00_Core\Events\" />
+    <Folder Include="Shared\_Core\03_Pointers\_Help\" />
+    <Folder Include="Shared\_Core\03_Pointers\_Help\_Core\" />
+    <Folder Include="Shared\_Editor\08_View\_Core\Base\" />
+    <Folder Include="Shared\_Editor\08_View\_Core\Wrappers\" />
+    <Folder Include="Shared\_Editor\00_Core\Data\" />
+    <Folder Include="Shared\_Core\00_Core\BehaviourTree\" />
+    <Folder Include="Shared\_Core\00_Core\BehaviourTree\Nodes\" />
+    <Folder Include="Shared\_Core\00_Core\BehaviourTree\Tree\" />
+    <Folder Include="Shared\_Core\02_Fields\_Help\" />
+    <Folder Include="wwwroot\css\webflow\" />
+    <Folder Include="wwwroot\js\" />
+    <Folder Include="wwwroot\js\webflow\" />
+    <Folder Include="Shared\_Sites\Pages\" />
+    <Folder Include="wwwroot\gfx\" />
+    <Folder Include="Json\" />
+    <Folder Include="Shared\_Sites\Pages\_Core\" />
+    <Folder Include="Shared\_Sites\Pages\_Core\Base\" />
+    <Folder Include="Shared\_Sites\Pages\_Core\Static\" />
+    <Folder Include="Shared\_Projects\" />
+    <Folder Include="Shared\_Projects\FoodEscape\" />
+    <Folder Include="Shared\_Projects\FoodEscape\Style\" />
+    <Folder Include="wwwroot\lottie\" />
+    <Folder Include="wwwroot\spline\" />
+    <Folder Include="wwwroot\svg\" />
+    <Folder Include="Shared\_Sites\Sections\Agenda\" />
+    <Folder Include="Shared\_Sites\Sections\_Core\" />
+    <Folder Include="Shared\_Sites\Sections\_Core\Wrappers\" />
+    <Folder Include="Shared\_Sites\Sections\_Core\Base\" />
+    <Folder Include="Shared\_Sites\Sections\Welcome\" />
+    <Folder Include="Shared\_Sites\Sections\About\" />
+    <Folder Include="Shared\_Sites\Sections\Contact\" />
+    <Folder Include="Shared\_Sites\Nav\MainPages\" />
+    <Folder Include="Shared\_Sites\Nav\Section\" />
+    <Folder Include="Shared\_Sites\Sections\Dish\" />
+    <Folder Include="Shared\_Sites\Sections\Gallery\" />
+    <Folder Include="Shared\_Sites\Components\" />
+    <Folder Include="Shared\_Sites\Components\Background\" />
+    <Folder Include="Shared\_Sites\Components\Background\_Core\" />
+    <Folder Include="wwwroot\unity\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Airtable" Version="1.4.0" />
+    <PackageReference Include="Blazorise.Tailwind" Version="1.8.7" />
+    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.8.7" />
+    <PackageReference Include="Blazorise.Splitter" Version="1.8.7" />
+    <PackageReference Include="Blazorise.Components" Version="1.8.7" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\css\blazorise\" />
+    <Content Remove="wwwroot\css\webflow\" />
+    <Content Remove="wwwroot\js\" />
+    <Content Remove="wwwroot\js\webflow\" />
+    <Content Remove="wwwroot\gfx\" />
+    <Content Remove="wwwroot\lottie\" />
+    <Content Remove="wwwroot\spline\" />
+    <Content Remove="wwwroot\svg\" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="Shared\Plugins\Airtable\03_Pointers\P_Bookmarks.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\03_Pointers\P_Field.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\03_Pointers\P_FieldsSelector.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\03_Pointers\P_GroupTab.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\03_Pointers\P_HomeDropdown.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\03_Pointers\P_Row.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\03_Pointers\P_SelectorDropdown.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\03_Pointers\P_Table.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\03_Pointers\P_VariableButton.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\03_Pointers\P_Workspace.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\04_Actions\A_AirtableSync.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\04_Actions\A_BookmarkDelete.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\04_Actions\A_RowBookmark.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\04_Actions\A_RowDelete.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\04_Actions\A_RowDuplicate.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\04_Actions\A_RowNew.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\04_Actions\A_RowVars.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\04_Actions\A_TableBookmark.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\04_Actions\A_TableSearch.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\04_Actions\A_TableVars.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\04_Actions\_Core\ABaseBookmark.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\06_Components\C_Bookmark.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\06_Components\C_InspectorHeader.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\06_Components\C_Rows.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\06_Components\C_RowSingle.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\06_Components\C_TableAir.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\07_Widgets\W_Tables.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\08_View\V_Workspace.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\09_Panels\PNL_Selection.razor" />
+    <AdditionalFiles Include="Shared\Plugins\Airtable\09_Panels\PNL_Structure.razor" />
+  </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Docs\Extend\Plugin-External\docgen\inputs\plugin-requirements.json" />
+    <_ContentIncludedByDefault Remove="Docs\Extend\Plugin-External\docgen\templates\01-planned-files.json" />
+  </ItemGroup>
+</Project>

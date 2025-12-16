@@ -1,0 +1,12 @@
+﻿@namespace RootServer.Shared._Core
+
+
+<Button Name="@ButtonName" Clicked="@TabClicked" Background="@BackgroundColor">
+    <Tooltip Text="@Tooltip">
+        <Icon Name="@IconsName" TextColor="@IconColor" />
+        @if (ShowLabel)
+        {
+            @Label
+        }
+    </Tooltip>
+</Button>

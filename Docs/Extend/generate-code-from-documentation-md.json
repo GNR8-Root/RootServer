@@ -1,0 +1,671 @@
+{
+  "system_version": "1.0",
+  "system_name": "Phased Project Generation System",
+  "agent_orchestration_model": "sequential_with_gates",
+  "description": "Multi-agent system that turns a documentation manual into a complete, working Blazor Server solution (Blazorise + Tailwind + .NET + JS + Azure) with strict validation gates, official-doc verification, and final packaging as a zip.",
+
+  "global_configuration": {
+    "execution_modes": {
+      "review_mode": {
+        "type": "enum",
+        "values": ["interactive", "batch"],
+        "default": "interactive",
+        "description": "Whether to stop for user review/approval at each phase gate."
+      },
+      "validation_strictness": {
+        "type": "enum",
+        "values": ["strict", "lenient"],
+        "default": "strict",
+        "description": "How hard we enforce production readiness and evidence requirements."
+      }
+    },
+
+    "strictness_rules": {
+      "strict": {
+        "latest_lts_required": true,
+        "official_docs_verification_required": true,
+        "citations_required": true,
+        "treat_warnings_as_errors": true,
+        "solution_build_required": true,
+        "unit_tests_required": true,
+        "ui_component_tests_required": true,
+        "iac_required": true,
+        "ci_pipeline_required": true,
+        "security_no_secrets_required": true,
+        "completeness_threshold": 0.95
+      },
+      "lenient": {
+        "latest_lts_required": true,
+        "official_docs_verification_required": true,
+        "citations_required": true,
+        "treat_warnings_as_errors": false,
+        "solution_build_required": true,
+        "unit_tests_required": false,
+        "ui_component_tests_required": false,
+        "iac_required": false,
+        "ci_pipeline_required": false,
+        "security_no_secrets_required": true,
+        "completeness_threshold": 0.85
+      },
+      "always_enforced": [
+        "no_placeholders",
+        "no_broken_build",
+        "no_secrets_in_repo",
+        "dependency_version_pinning",
+        "requirements_traceability",
+        "no_fake_apis_or_packages",
+        "manual_is_source_of_truth_for_requirements"
+      ]
+    },
+
+    "source_of_truth_precedence": [
+      "00-app-spec.json (highest; extracted from manual + user-approved)",
+      "manual_docset_zip (the input documentation; functional truth)",
+      "official_vendor_docs (implementation truth; must verify APIs/packages here)",
+      "project_defaults (lowest; only when manual/spec is silent)"
+    ],
+
+    "global_content_rules": {
+      "forbidden_strings": [
+        "{...}",
+        "TODO",
+        "TBD",
+        "FIXME",
+        "???",
+        "[placeholder]",
+        "<insert X here>",
+        "// to be determined"
+      ],
+      "security_rules": [
+        "No hard-coded secrets or keys (no connection strings with passwords, no client secrets, no private keys).",
+        "Use local dev user-secrets for dev, and Managed Identity / Key Vault patterns for Azure.",
+        "Any sample secret values must be clearly fake and non-working (e.g., '00000000-0000-0000-0000-000000000000')."
+      ],
+      "dependency_rules": [
+        "Use latest .NET LTS (verify online at generation time).",
+        "Pin .NET SDK via global.json.",
+        "Pin NuGet packages via Directory.Packages.props.",
+        "Pin NPM dependencies via package-lock.json (or pnpm-lock.yaml).",
+        "Every non-trivial framework/library used must be verified against official docs and recorded with citations in evidence artifacts."
+      ],
+      "code_quality_rules": [
+        "All generated code must compile.",
+        "All public methods/classes must be consistent with the manual/spec terminology.",
+        "No references to non-existent types/APIs/packages (no hallucinated APIs).",
+        "If unsure about a package/API existence or usage, STOP and add a preflight question or a phase issues report."
+      ]
+    },
+
+    "regeneration_policy": {
+      "no_silent_regeneration": true,
+      "description": "Previously generated project files MUST NOT be silently overwritten once a phase is approved/passed, except for explicitly permitted refactors approved at a gate.",
+      "allowed_actions": [
+        "fix_inputs_and_regenerate_failed_phase",
+        "manual_edit_and_revalidate",
+        "explicit_refactor_with_change_plan",
+        "full_regeneration_from_scratch"
+      ],
+      "artifact_versioning": true
+    },
+
+    "tooling_contract": {
+      "required_tools": [
+        "artifact_store.read_text",
+        "artifact_store.write_text",
+        "artifact_store.write_binary",
+        "artifact_store.list",
+        "shell.exec",
+        "web.search_and_cite (for official docs verification)",
+        "zip.bundle"
+      ],
+      "notes": [
+        "The system MUST browse official documentation to confirm: latest .NET LTS, Blazor Server setup guidance, Blazorise setup guidance, Tailwind integration guidance, Azure hosting/IaC guidance.",
+        "All version decisions must be recorded in version-lock artifacts with citations."
+      ]
+    }
+  },
+
+  "file_definitions": {
+    "core_project_output": {
+      "description": "A complete repository containing a working Blazor Server solution with Blazorise + Tailwind + .NET + JS + Azure integration scaffolding.",
+      "included_in_bundle": true
+    },
+    "generation_artifacts": {
+      "description": "Internal generation/validation evidence and audit artifacts (not required for runtime, but shipped in zip under /_evidence by default).",
+      "included_in_bundle": true,
+      "examples": [
+        "_evidence/00-preflight-summary.md",
+        "_evidence/00-app-spec.json",
+        "_evidence/01-planned-files.json",
+        "_evidence/01-version-lock.json",
+        "_evidence/01-official-sources.md",
+        "_evidence/0X-phaseX-validation.md",
+        "_evidence/05-final-validation-report.md",
+        "_evidence/05-build-test-logs.txt"
+      ]
+    }
+  },
+
+  "agents": [
+    {
+      "agent_id": "preflight_spec_extractor",
+      "phase": "preflight",
+      "role": "Preflight + Spec Extraction Master Engineer",
+      "responsibility": "Validate documentation manual input and extract a canonical implementation spec used as source-of-truth for code generation.",
+
+      "inputs_required": [
+        {
+          "name": "manual_docset_zip",
+          "type": "zip|folder|inline",
+          "required": true,
+          "description": "The documentation manual that describes what to build. This is the primary input."
+        },
+        {
+          "name": "target_stack",
+          "type": "json",
+          "required": false,
+          "default": {
+            "dotnet": "latest_lts",
+            "hosting": "blazor_server",
+            "ui": "blazorise",
+            "css": "tailwind",
+            "cloud": "azure",
+            "iac": "bicep"
+          }
+        },
+        {
+          "name": "review_mode",
+          "type": "enum",
+          "required": false,
+          "default": "interactive"
+        },
+        {
+          "name": "validation_strictness",
+          "type": "enum",
+          "required": false,
+          "default": "strict"
+        }
+      ],
+
+      "validation_checklist": {
+        "blocking_requirements": {
+          "manual_completeness": [
+            "Manual includes clear feature list / scope",
+            "Manual includes domain entities + fields (or equivalent data models)",
+            "Manual includes user flows/use-cases (primary flows)",
+            "Manual includes UI pages/screens + navigation expectations (or enough to infer a minimal UI)",
+            "Manual includes validation rules + user-visible error messages (or explicitly says 'none')",
+            "Manual includes integrations (Azure services, external APIs, storage, auth) or explicitly says none",
+            "Manual includes non-functional requirements (performance, security, audit) OR strictness determines if required",
+            "Manual includes deployment target expectation (App Service vs Container vs other) OR asks user"
+          ],
+          "tailwind_blazorise_feasibility": [
+            "Verify (by official docs) the supported integration approach for Blazorise + Tailwind; if not officially supported as a provider, define a safe fallback (e.g., use Blazorise provider + Tailwind for custom styling) and record it explicitly."
+          ]
+        },
+        "warning_requirements": {
+          "strict_mode_errors": [
+            "No auth model described (blocks if app handles sensitive data)",
+            "No persistence decision where data must persist",
+            "No Azure target described where Azure integration is required"
+          ],
+          "lenient_mode_warnings": [
+            "No auth model described (warning; generate stub)",
+            "No persistence decision described (warning; generate in-memory + interface)",
+            "No Azure target described (warning; generate local-only and a placeholder integration plan WITHOUT forbidden placeholder strings)"
+          ]
+        }
+      },
+
+      "outputs": {
+        "on_pass": [
+          {
+            "file": "_evidence/00-preflight-summary.md",
+            "contains": [
+              "confirmed_inputs",
+              "manual_gaps_and_assumptions",
+              "strictness_mode",
+              "review_mode",
+              "proposed_solution_shape (projects, layers)"
+            ]
+          },
+          {
+            "file": "_evidence/00-app-spec.json",
+            "contains": [
+              "app_name",
+              "app_slug",
+              "functional_requirements[] (each with id, description, acceptance_criteria)",
+              "entities[] (fields, types, validation)",
+              "flows[] (steps, errors, outcomes)",
+              "ui.pages[] (routes, components, states)",
+              "ui.components[] (reusable components)",
+              "errors[] (code, exact_user_message, severity)",
+              "integrations[] (azure_services, external_apis)",
+              "security[] (authn, authz, data_protection)",
+              "deployment[] (azure target, iac expectations)",
+              "non_functional[] (perf, accessibility)"
+            ],
+            "note": "This becomes the canonical source of truth for code generation."
+          }
+        ],
+        "on_fail": [
+          {
+            "file": "_evidence/00-preflight-questions.md",
+            "contains": [
+              "specific_missing_items",
+              "targeted_questions",
+              "what_cannot_be_safely_inferred"
+            ],
+            "action": "STOP and wait for user"
+          }
+        ]
+      },
+
+      "success_criteria": "All blocking requirements pass AND a complete 00-app-spec.json is produced.",
+      "failure_action": "Generate questions file and STOP.",
+      "next_agent": "solution_foundation_generator"
+    },
+
+    {
+      "agent_id": "solution_foundation_generator",
+      "phase": 1,
+      "role": "Solution Foundation Master Engineer",
+      "responsibility": "Create a working solution skeleton with pinned versions, verified against official docs, and a deterministic planned file list.",
+
+      "depends_on": ["preflight_spec_extractor"],
+
+      "pre_generation_tasks": [
+        {
+          "task": "Determine latest .NET LTS + compatible package versions",
+          "method": "Browse official docs online and record citations",
+          "outputs": [
+            "_evidence/01-version-lock.json",
+            "_evidence/01-official-sources.md"
+          ]
+        },
+        {
+          "task": "Generate deterministic planned file list",
+          "output": "_evidence/01-planned-files.json",
+          "description": "Deterministic list of all files the repo will contain (solution, projects, key folders)."
+        }
+      ],
+
+      "files_to_generate": {
+        "required_repo_structure": [
+          "global.json",
+          "Directory.Packages.props",
+          ".editorconfig",
+          "README.md",
+          ".gitignore",
+          "src/{AppName}.Web/{AppName}.Web.csproj",
+          "src/{AppName}.Application/{AppName}.Application.csproj",
+          "src/{AppName}.Domain/{AppName}.Domain.csproj",
+          "src/{AppName}.Infrastructure/{AppName}.Infrastructure.csproj",
+          "tests/{AppName}.Tests.Unit/{AppName}.Tests.Unit.csproj",
+          "tests/{AppName}.Tests.UI/{AppName}.Tests.UI.csproj (strict optional / lenient optional)",
+          "src/{AppName}.Web/appsettings.json",
+          "src/{AppName}.Web/appsettings.Development.json",
+          "src/{AppName}.Web/Program.cs",
+          "src/{AppName}.Web/Components/_Imports.razor",
+          "src/{AppName}.Web/Components/Routes.razor or App.razor",
+          "src/{AppName}.Web/wwwroot/",
+          "src/{AppName}.Web/wwwroot/css/tailwind.css",
+          "src/{AppName}.Web/package.json",
+          "src/{AppName}.Web/package-lock.json",
+          "src/{AppName}.Web/tailwind.config.js"
+        ],
+        "notes": [
+          "If the manual/spec demands different layering, the agent may adjust BUT must update 01-planned-files.json and record rationale.",
+          "Blazorise setup must match official documentation; Tailwind integration must match official guidance; if official approach conflicts, STOP with issues."
+        ]
+      },
+
+      "validation_gate": {
+        "checks": [
+          "All planned files exist per _evidence/01-planned-files.json",
+          "No forbidden placeholder strings anywhere",
+          "Versions pinned: global.json, Directory.Packages.props, package-lock.json exist",
+          "Official docs evidence exists: _evidence/01-official-sources.md",
+          "dotnet restore succeeds",
+          "dotnet build succeeds (entire solution)",
+          "In strict mode: build has no warnings (warnings as errors)",
+          "Minimal app boots to a route (smoke test strategy defined in README even if not executed here)"
+        ],
+        "outputs": {
+          "on_pass": ["_evidence/01-phase1-validation.md"],
+          "on_fail": ["_evidence/01-phase1-issues.md"]
+        }
+      },
+
+      "success_criteria": "Solution skeleton compiles and is version-locked with official-doc evidence.",
+      "gate_behavior": {
+        "interactive": "Request user approval before Phase 2",
+        "batch": "Proceed automatically if validation passes"
+      },
+
+      "next_agent": "domain_application_generator"
+    },
+
+    {
+      "agent_id": "domain_application_generator",
+      "phase": 2,
+      "role": "Domain + Application Master Engineer",
+      "responsibility": "Implement domain models, validation, error codes, and application services consistent with 00-app-spec.json and the manual.",
+
+      "depends_on": ["solution_foundation_generator"],
+      "critical_dependencies": [
+        "00-app-spec.json is authoritative for requirements",
+        "Error codes and user messages must match spec exactly",
+        "No new requirements may be invented; raise an issue instead"
+      ],
+
+      "files_to_generate": {
+        "required": [
+          "src/{AppName}.Domain/Entities/*.cs",
+          "src/{AppName}.Domain/ValueObjects/*.cs (if needed)",
+          "src/{AppName}.Domain/Errors/*.cs (error catalog)",
+          "src/{AppName}.Application/Interfaces/*.cs",
+          "src/{AppName}.Application/Services/*.cs",
+          "src/{AppName}.Application/Validation/*.cs",
+          "tests/{AppName}.Tests.Unit/**/*.cs (core business rules)"
+        ],
+        "notes": [
+          "Validation rules must be implemented deterministically (e.g., data annotations or FluentValidation).",
+          "Any library choice must be verified with official docs and recorded in evidence if non-trivial."
+        ]
+      },
+
+      "validation_gate": {
+        "checks": [
+          "All entities/fields/validations from 00-app-spec.json implemented",
+          "Error catalog implemented; messages match exactly",
+          "dotnet build succeeds",
+          "In strict mode: unit tests exist and dotnet test passes",
+          "No forbidden placeholder strings",
+          "No unused or dead code for invented requirements",
+          "Traceability updated: each requirement maps to code locations"
+        ],
+        "outputs": {
+          "on_pass": ["_evidence/02-phase2-validation.md", "_evidence/02-traceability.json"],
+          "on_fail": ["_evidence/02-phase2-issues.md"]
+        }
+      },
+
+      "success_criteria": "Domain/Application layers implemented and validated against spec with passing build/tests (per strictness).",
+      "gate_behavior": {
+        "interactive": "Request user approval before Phase 3",
+        "batch": "Proceed automatically if validation passes"
+      },
+
+      "next_agent": "ui_generator"
+    },
+
+    {
+      "agent_id": "ui_generator",
+      "phase": 3,
+      "role": "Blazor Server UI Master Engineer",
+      "responsibility": "Implement the Blazor Server UI using Blazorise + Tailwind as specified, including pages, components, navigation, and error/validation UX.",
+
+      "depends_on": ["domain_application_generator"],
+      "critical_dependencies": [
+        "UI must match ui.pages and flows from 00-app-spec.json",
+        "Validation messages must match spec exactly",
+        "Blazorise and Tailwind usage must be verified against official docs and recorded in evidence"
+      ],
+
+      "files_to_generate": {
+        "required": [
+          "src/{AppName}.Web/Components/Pages/*.razor",
+          "src/{AppName}.Web/Components/Shared/*.razor",
+          "src/{AppName}.Web/Services/*.cs (UI-facing services)",
+          "src/{AppName}.Web/wwwroot/js/*.js (if JS interop needed)",
+          "tests/{AppName}.Tests.UI/**/*.cs (bUnit or equivalent; strict optional/required depending on profile)"
+        ],
+        "notes": [
+          "If Tailwind integration requires build steps, ensure npm scripts and README instructions are correct.",
+          "If JS interop is used, define contracts in C# and validate they exist."
+        ]
+      },
+
+      "validation_gate": {
+        "checks": [
+          "All routes/pages from spec exist and are reachable",
+          "All UI validations and error UX map to error catalog exactly",
+          "No hardcoded secrets",
+          "dotnet build succeeds",
+          "In strict mode: component tests exist and dotnet test passes",
+          "No forbidden placeholder strings",
+          "No hallucinated UI components/APIs (verify with official docs evidence)"
+        ],
+        "outputs": {
+          "on_pass": ["_evidence/03-phase3-validation.md"],
+          "on_fail": ["_evidence/03-phase3-issues.md"]
+        }
+      },
+
+      "success_criteria": "UI is implemented per spec, compiles, and passes required tests.",
+      "gate_behavior": {
+        "interactive": "Request user approval before Phase 4",
+        "batch": "Proceed automatically if validation passes"
+      },
+
+      "next_agent": "azure_infrastructure_generator"
+    },
+
+    {
+      "agent_id": "azure_infrastructure_generator",
+      "phase": 4,
+      "role": "Azure + Infrastructure Master Engineer",
+      "responsibility": "Implement infrastructure integration and deployment scaffolding (IaC + configuration) consistent with spec and official Azure guidance.",
+
+      "depends_on": ["ui_generator"],
+      "critical_dependencies": [
+        "No secrets committed; use Managed Identity/Key Vault patterns",
+        "Deployment/IaC must be verifiably correct via official docs evidence",
+        "Integrations must match spec; do not invent Azure services"
+      ],
+
+      "files_to_generate": {
+        "required_if_app_uses_persistence_or_external_services": [
+          "src/{AppName}.Infrastructure/**/*.cs",
+          "infra/bicep/**/*.bicep (strict required; lenient optional)",
+          ".github/workflows/*.yml (strict required; lenient optional)",
+          "src/{AppName}.Web/appsettings.*.json (no secrets)"
+        ],
+        "notes": [
+          "If the spec requires auth, implement Entra ID auth with verified official guidance and include setup steps in README.",
+          "Provide a local-dev fallback (e.g., in-memory or local emulator) if feasible and documented."
+        ]
+      },
+
+      "validation_gate": {
+        "checks": [
+          "All specified integrations exist and are wired correctly",
+          "No secrets in repo (scan)",
+          "dotnet build succeeds",
+          "In strict mode: IaC exists and validates (bicep build/lint or equivalent)",
+          "In strict mode: CI pipeline exists and is consistent with repo structure",
+          "Evidence exists: official docs citations for each Azure service + auth mechanism used"
+        ],
+        "outputs": {
+          "on_pass": ["_evidence/04-phase4-validation.md"],
+          "on_fail": ["_evidence/04-phase4-issues.md"]
+        }
+      },
+
+      "success_criteria": "Azure integration is implemented safely, with IaC/CI per strictness, and verified by official docs evidence.",
+      "gate_behavior": {
+        "interactive": "Request user approval before Phase 5",
+        "batch": "Proceed automatically if validation passes"
+      },
+
+      "next_agent": "final_integrator_reviewer"
+    },
+
+    {
+      "agent_id": "final_integrator_reviewer",
+      "phase": 5,
+      "role": "Final Integrator + Code Reviewer Master Engineer",
+      "responsibility": "Perform end-to-end verification: build, test, traceability, official-doc verification audit, refactor/refragment if needed, and package final zip.",
+
+      "depends_on": ["azure_infrastructure_generator"],
+
+      "final_validation": {
+        "comprehensive_checks": {
+          "repo_integrity": [
+            "All files match _evidence/01-planned-files.json OR planned file list updated with rationale",
+            "No forbidden placeholder strings anywhere",
+            "README includes local dev + build/test + deployment instructions",
+            "No secrets committed"
+          ],
+          "build_and_test": [
+            "dotnet restore succeeds",
+            "dotnet build succeeds for entire solution",
+            "dotnet test succeeds for required test suites (strict vs lenient)",
+            "In strict mode: warnings treated as errors and build is clean"
+          ],
+          "traceability": [
+            "Every functional requirement in 00-app-spec.json maps to at least one code location",
+            "Coverage score >= threshold (strict 0.95, lenient 0.85)",
+            "No invented features not present in spec/manual"
+          ],
+          "no_hallucinations_audit": [
+            "Every NuGet package referenced exists and is real",
+            "Every NPM package referenced exists and is real",
+            "Every referenced framework API/component exists (verified with official docs citations)",
+            "Evidence folder includes citations for key decisions (versions, integrations, auth, tailwind workflow)"
+          ],
+          "refragment_if_needed": [
+            "If architecture is inconsistent or duplicated, propose a refactor plan",
+            "Refactor only with explicit change plan recorded in _evidence/05-refactor-plan.md",
+            "After refactor: rerun full build/test validations"
+          ]
+        },
+        "completeness_score": {
+          "calculation": "implemented_requirements / total_requirements_from_00_app_spec",
+          "threshold": {
+            "strict_mode": 0.95,
+            "lenient_mode": 0.85
+          }
+        }
+      },
+
+      "outputs": {
+        "on_pass": {
+          "files": [
+            {
+              "file": "_evidence/05-final-validation-report.md",
+              "contains": [
+                "completeness_score + breakdown",
+                "build_and_test_results (with command outputs summarized)",
+                "official_docs_evidence_summary",
+                "dependency_versions (dotnet + nuget + npm)",
+                "file_tree_overview",
+                "known_limitations (if any, must be explicit)"
+              ]
+            },
+            {
+              "file": "{app_slug}-project-bundle.zip",
+              "contains": [
+                "Full repository (src/, tests/, infra/ as applicable)",
+                "README.md",
+                "_evidence/ folder (unless user requests exclusion)"
+              ]
+            }
+          ],
+          "status": "COMPLETE"
+        },
+        "on_fail": {
+          "files": [
+            {
+              "file": "_evidence/05-final-issues.md",
+              "contains": [
+                "build/test failures with logs",
+                "missing requirements mapping",
+                "hallucination risks (packages/APIs not verifiable) with exact locations",
+                "recommended fixes (file-by-file)",
+                "what must be re-run (which phases) under no_silent_regeneration rules"
+              ]
+            }
+          ],
+          "status": "INCOMPLETE",
+          "action": {
+            "interactive": "STOP and request user action",
+            "batch": "Exit with error code"
+          }
+        }
+      },
+
+      "success_criteria": "Build + tests pass (per strictness), no secrets, no placeholders, coverage >= threshold, and official-doc evidence present.",
+      "next_agent": null
+    }
+  ],
+
+  "orchestration_flow": {
+    "start": "preflight_spec_extractor",
+    "sequence": [
+      { "agent": "preflight_spec_extractor", "on_success": "solution_foundation_generator", "on_failure": "STOP" },
+      { "agent": "solution_foundation_generator", "on_success": "domain_application_generator", "on_failure": "STOP", "gate": "Phase 1 validation" },
+      { "agent": "domain_application_generator", "on_success": "ui_generator", "on_failure": "STOP", "gate": "Phase 2 validation" },
+      { "agent": "ui_generator", "on_success": "azure_infrastructure_generator", "on_failure": "STOP", "gate": "Phase 3 validation" },
+      { "agent": "azure_infrastructure_generator", "on_success": "final_integrator_reviewer", "on_failure": "STOP", "gate": "Phase 4 validation" },
+      { "agent": "final_integrator_reviewer", "on_success": "COMPLETE", "on_failure": "STOP", "gate": "Phase 5 final validation" }
+    ]
+  },
+
+  "common_failure_modes": [
+    {
+      "failure": "dependency_hallucination",
+      "symptom": "Build fails because a package or API doesn't exist",
+      "cause": "Agent referenced a library/API without verifying official docs",
+      "fix": "Search official docs, replace with verified equivalent, update version-lock evidence, re-run build/tests",
+      "do_not": "Invent a new library or type name"
+    },
+    {
+      "failure": "tailwind_pipeline_break",
+      "symptom": "CSS not generated or UI broken",
+      "cause": "Incorrect Tailwind build integration for Blazor Server",
+      "fix": "Align npm scripts + tailwind config with official guidance, document steps in README, validate output files exist",
+      "do_not": "Leave undocumented manual steps"
+    },
+    {
+      "failure": "spec_drift",
+      "symptom": "Implemented features differ from the manual/spec",
+      "cause": "Not using 00-app-spec.json as canonical truth",
+      "fix": "Update code to match spec OR update spec only with user approval; re-run traceability gate",
+      "do_not": "Silently change previously approved phase outputs"
+    },
+    {
+      "failure": "azure_secrets_leak",
+      "symptom": "Repo contains secrets/keys",
+      "cause": "Improper appsettings or committed secrets",
+      "fix": "Remove secrets, rotate credentials, move to user-secrets/Key Vault, add secret scanner note",
+      "do_not": "Proceed with secrets in repo"
+    },
+    {
+      "failure": "tests_missing_or_flaky",
+      "symptom": "Strict mode gate fails on tests",
+      "cause": "Insufficient deterministic tests",
+      "fix": "Add unit tests for domain rules and basic UI component tests; stabilize async timing",
+      "do_not": "Disable tests in strict mode"
+    }
+  ],
+
+  "minimal_viable_project": {
+    "description": "Reduced build-first repo for early iteration",
+    "recommended_strictness": "lenient",
+    "recommended_threshold": 0.85,
+    "required_outputs": [
+      "Working solution that builds",
+      "Core UI pages for primary flows",
+      "In-memory or stubbed infrastructure + interfaces",
+      "README with run steps",
+      "Pinned versions + official docs evidence"
+    ],
+    "skipped_in_lenient": [
+      "IaC (bicep)",
+      "CI pipeline",
+      "UI component tests"
+    ]
+  }
+}

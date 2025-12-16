@@ -1,0 +1,18 @@
+﻿@namespace RootServer.Shared.Airtable
+@inherits BasePionter_Dropdown;
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+
+
+<CP_Dropdown SelectedItem="@SelectedItem" NameIcon="@NameIcon" ColorIcon="@ColorIcon" ShowLabel="@ShowLabel" Label="@Label" ShowIconToggle="@ShowIconToggle" ColorToggle="@ColorToggle">
+    <CP_DropdownGroup Label="@Group1Label" NameIcon="@NameIcon" ShowIconGroup="@ShowIconGroup">
+        <CP_DropdownItem Label="item 1" NameIcon="IconName.Globe" Callback="@NewItemSelected" ShowIconItem="@ShowIconItem" />
+        <CP_DropdownItem Label="item 2" NameIcon="IconName.File" Callback="@NewItemSelected" ShowIconItem="@ShowIconItem" />
+        <CP_DropdownItem Label="item 3" NameIcon="IconName.Shield" Callback="@NewItemSelected" ShowIconItem="@ShowIconItem" />
+    </CP_DropdownGroup>
+</CP_Dropdown>
+
+

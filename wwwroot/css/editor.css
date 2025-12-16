@@ -1,0 +1,351 @@
+﻿.nav-tabs li a, .list-group-item {
+    cursor: pointer;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+.badge {
+    cursor: default;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+.accordion-button:focus {
+    outline: none !important;
+    border-color: none;
+    outline: 0;
+    box-shadow: none;
+}
+
+.alert {
+    --bs-alert-padding-x: 6px;
+    --bs-alert-padding-y: .37rem;
+    --bs-alert-margin-bottom: 1rem;
+    padding: .37rem var(--bs-alert-padding-x) !important;
+    margin-bottom: var(--bs-alert-margin-bottom);
+}
+
+.w-layout-vflex {
+    flex-direction: column;
+    align-items: flex-start;
+    display: flex;
+}
+
+.editor-main {
+    flex-flow: column;
+    height: 100%;
+    min-height: 100%;
+    display: block;
+}
+
+.editor-main-bot .nav-tabs, .editor-main-top .nav-tabs {
+    flex: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    display: flex;
+    width: 100%;
+}
+
+.editor-main-bot .tab-content, .editor-main-top .tab-content {
+    display: flex;
+    flex: 1;
+    overflow: auto;
+    overflow-x : hidden;
+    flex-direction: column;
+    align-items: flex-start;
+    display: flex;
+    width: 100%;
+}
+
+.editor-main-bot .tab-content .tab-pane, .editor-main-top .tab-content .tab-pane {
+    width: 100%;
+}
+
+.editor-main-top {
+    display: flex;
+    flex-flow: column;
+    flex: 1;
+    width: 100%;
+    height: 100%;
+}
+
+.editor-main-bot {
+    flex-flow: column;
+    flex: 1;
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.editor-footer {
+    flex: none;
+    display: block;
+    position: relative;
+    height: 40px;
+    bottom: 27px;
+    width: 100%;
+    z-index: 10000;
+}
+
+
+.editor-footer-bar {
+    width: 100%;
+}
+
+.label-badge {
+    /*margin-top: 0px !important;*/
+}
+
+.input-group {
+    margin-bottom: .25rem !important;
+}
+
+.field-group {
+    cursor: default !important;
+    border-top: none;
+}
+
+.field-group-header {
+    z-index: 100;
+    position : sticky;
+    top: 8px;
+    font-weight: 900;
+    text-transform: uppercase;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+    border: var(--bs-list-group-border-width) solid var(--bs-list-group-border-color);
+    
+}
+
+.field-group-header-badge-container {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 5px;
+}
+
+.sticky-divider {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    z-index: 110;
+    position: sticky;
+    top: 0px;
+    height: 9px !important;
+    border-bottom: 1px solid var(--bs-border-color);
+    margin-bottom: -1px;
+}
+
+.sticky-divider .divider {
+    height: 9px;
+    z-index: 101;
+}
+
+.table-accordion .accordion-header {
+    z-index: 90;
+    position: sticky;
+    top: 9px;
+}
+
+.table-sticky {
+    z-index: 80;
+    position: sticky;
+    top: 44px;
+    padding-left : 4px;
+    padding-right : 4px;
+}
+
+.table-rows-accordion {
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.table-sticky-divider {
+    height: 9px;
+    background-color: white;
+}
+
+.table-sticky-divider .divider {
+    margin-top : 4px;
+    margin-bottom : 4px;
+}
+
+.btn-open-editor {
+    
+}
+
+.open-editor-container {
+    margin: 0;
+    padding: 0;
+    width: 40px;
+    position: fixed;
+    bottom: 20px;
+    right: 22px;
+}
+
+.btn-open-log {
+    padding: 0 !important;
+    vertical-align: middle !important;
+    cursor: pointer !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    user-select: none !important;
+    border: none !important;
+    background-color: none !important;
+}
+
+.btn-open-log .alert{
+    margin : 0;
+}
+
+.btn-group-center {
+    flex-grow: 1;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.panel-editor-head-left {
+}
+.panel-editor-head-center {
+    width: 100%;
+}
+.panel-editor-head-right {}
+.panel-editor-content-pre {}
+.panel-editor-content {
+    width : 100%;
+}
+.panel-editor-content-post {}
+.panel-editor-foot-left {}
+.panel-editor-foot-center {
+    width: 100%;
+}
+.panel-editor-foot-right {}
+
+
+.tab-content .panel-editor-content-pre .tab-pane,
+.tab-content .panel-editor-content .tab-pane,
+.tab-content .panel-editor-content-right .tab-pane {
+    display: none;
+}
+
+.tab-content .panel-editor-content-pre .show,
+.tab-content .panel-editor-content .show,
+.tab-content .panel-editor-content-right .show {
+    display: block;
+}
+
+
+
+/* ############### FIELD WRAPPER ############### */
+
+.field-wrapper-main{
+    display:inline-flex;
+}
+
+.field-left {
+    margin-right: 5px;
+    border-radius: 0.375rem !important;
+}
+
+.field-center {
+    min-width: 50px;
+    width: 50%;
+    flex-grow: 1;
+    margin-right: 5px;
+    display: flex;
+}
+
+.field-center .form-control{
+    width : 100%;
+}
+
+.field-right {
+    width: 28%;
+    border-radius: 0.375rem !important;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    overflow : hidden;
+}
+
+.field-right .label-badge {
+
+}
+
+/* ############### FIELDS ############### */
+
+.rating-disabled, .rating-readonly {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.b-input-color-picker.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.form-control.disabled {
+    background-color: #e9ecef;
+    opacity: 1;
+}
+
+.b-numeric-handler-wrap {
+    position: absolute;
+    top: 0;
+    right: 29%;
+    flex: content;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+}
+
+.b-numeric-handler {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    height: 49%;
+    flex-shrink: 1;
+    width : 32px;
+}
+
+.b-numeric-handler-down i {
+    position: absolute;
+    bottom: 7px;
+    right: 10px;
+}
+
+.b-numeric-handler-up i {
+    position: absolute;
+    top: 7px;
+    right: 10px;
+}
+
+.b-input-color-picker-preview {
+    height: 20px;
+    border-radius: 0.375rem;
+    overflow: hidden;
+}
+
+.b-input-color-picker {
+    padding: 0;
+    border-radius: 0.375rem;
+    overflow: hidden;
+}
+
+.form-control-color, .b-input-color-picker {
+    height: 100%;
+    border-radius: 0.375rem;
+    overflow: hidden;
+}
+
+
+.step-select {
+    width: 85px;
+    margin-right: 30px;
+}
+
+.field-center .b-numeric {
+    margin-right: 4px;
+    flex-grow : .98;
+}

@@ -1,0 +1,69 @@
+﻿@namespace RootServer.Shared.Airtable
+@inject Pointer_Service pointer_Service;
+@implements IDisposable
+@inherits BasePanel;
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+
+
+<PanelEditor SelectedTab="@SelectedTab" SelectedTabChanged="@OnSelectedTabChanged">
+    <HeadLeft>
+        <P_Bookmarks ToolTip="bookmarks" />
+        <!--loop-->
+        <P_GroupTab Label="settings" NameIcon="IconName.Settings" ToolTip="settings" />
+        <P_GroupTab Label="text" NameIcon="IconName.Language" ToolTip="text" />
+        <P_GroupTab Label="media" NameIcon="IconName.Images" ToolTip="media" />
+        <P_GroupTab Label="agenda" NameIcon="IconName.CalendarDay" ToolTip="agenda" />
+        <!--loop end-->
+        <!-- @SelectedTab = "settings";-->
+    </HeadLeft>
+    <HeadRight>
+        <A_SplitViewTop NameIcon="IconName.SortDown" />
+    </HeadRight>
+
+    <Content>
+
+        <!--loop-->
+
+        <TabPanel Name="settings">
+            <H_AllFields />
+        </TabPanel>
+
+        <TabPanel Name="text">
+
+        </TabPanel>
+
+        <TabPanel Name="media">
+
+        </TabPanel>
+
+        <TabPanel Name="agenda">
+
+        </TabPanel>
+        <!--loop end-->
+
+        <!--hidden-->
+        <TabPanel Name="variables">
+            <A_TableVars />
+            <A_RowVars />
+        </TabPanel>
+
+        <TabPanel Name="help-fields">
+            <H_AllFields />
+        </TabPanel>
+        <!--end hidden-->
+    </Content>
+
+    <FootLeft>
+        <P_SelectorDropdown Group1Label="WORKSPACE" ShowLabel="true" ShowIconGroup="true" ShowIconItem="true" NameIcon="IconName.LayerGroup" />
+        <P_SelectorDropdown Group1Label="TABLE" ShowLabel="true" ShowIconGroup="true" ShowIconItem="true" NameIcon="IconName.Table" />
+        <P_SelectorDropdown Group1Label="ROW" ShowLabel="true" ShowIconGroup="true" ShowIconItem="true" NameIcon="IconName.Bars" />
+    </FootLeft>
+    <FootRight>
+        <A_ExpandToggleAccordion />
+        <A_SplitViewCenter NameIcon="IconName.Sort" />
+    </FootRight>
+</PanelEditor>

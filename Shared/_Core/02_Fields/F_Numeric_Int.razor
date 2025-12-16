@@ -1,0 +1,51 @@
+﻿@namespace RootServer.Shared._Core
+@using RootServer.Shared._Core;
+@inherits FieldBase_Numeric;
+@{
+    base.BuildRenderTree(__builder);
+}
+
+
+
+<FW_Main BadgeColor="@BadgeColor" BadgeLabel="@BadgeLabel" ToolTipText="@ToolTipText" NameIcon="IconName.Infinity">
+    <NumericPicker @bind-Value="@Val"
+                   TValue="int?"
+                   Disabled="@Disabled"
+                   ReadOnly="@ReadOnly"
+                   Placeholder="@Placeholder"
+                   Min="@Min"
+                   Max="@Max"
+                   CurrencySymbol="@CurrencySymbol"
+                   Decimals="@Decimals"
+                   EnableStep="@EnableStep"
+                   MinMaxLimitsOverride="@MinMaxLimitsOverride"
+                   WheelOn="@WheelOn"
+                   RoundingMethod="@RoundingMethod"
+                   SelectAllOnFocus="@SelectAllOnFocus"
+                   ShowStepButtons="@ShowStepButtons"
+                   Step="@Step"
+                   ModifyValueOnWheel="true"
+                   Debounce="true" />
+
+    @if (Disabled == false && ReadOnly == false && (ShowStepButtons == true || ShowSlider == true))
+        {
+        <SelectList TItem="StepModel"
+                    TValue="int"x
+                    Data="@IndexedSteps"
+                    TextField="@((item) => item.Name.ToString())"
+                    ValueField="@((item) => item.Id)"
+                    @bind-SelectedValue="@SelectedListValue"
+                    Class="step-select" />
+        }
+    </FW_Main>
+
+@if (ShowSlider == true)
+{
+    <Slider @bind-Value="@Val"
+            Min="@Min"
+            Max="@Max"
+            Step="@Step"
+            TValue="int?"
+            Disabled="@Disabled"
+            ReadOnly="@ReadOnly" />
+}

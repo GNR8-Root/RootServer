@@ -1,0 +1,18 @@
+﻿@namespace RootServer.Shared.Airtable
+
+@inherits ABase;
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+
+
+@if (AllowRemoveBookmark)
+{
+    <Button Color="Color.Light" Size="Size.ExtraSmall" Clicked="OnInvoke"><Icon Name="IconName.Delete" /></Button>
+}
+else
+{
+    <Button Color="Color.Light" Size="Size.ExtraSmall" Disabled="true"><Icon Name="IconName.Star" /></Button>
+}

@@ -1,0 +1,19 @@
+﻿@namespace RootServer.Shared._Sites
+
+
+<div style="width:100%; height:100%; @BackgroundColor()">
+    <div id="@Id" class="w-embed-youtubevideo section-background-content + @Class">
+        <iframe src="https://www.youtube.com/embed/OWrYyIp3Ia4?si=bGr3uMFHolyVBXgNamp;controls=1&amp;autoplay=@GetAutoPlay()&amp;mute=@GetMute()&amp;start=@GetStart()"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen="@GetFullScreen()"
+                style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100vh;width:100vw;position:absolute;top:0px;left:0px;right:0px;bottom:0px"
+                height="100%"
+                width="100%"
+                >
+        </iframe>
+    </div>
+    <iframe src="http://www.youraddress.com" frameborder="0" ></iframe>
+</div>
