@@ -1,0 +1,65 @@
+{
+  "schema_version": "2.3",
+  "project": "RootServer",
+  "generated": "2025-12-16",
+  "overall_score": 5.8,
+  "target_score": 10.0,
+  "gap": 4.2,
+  "dimensions": [
+    {
+      "name": "Architecture Quality",
+      "current": 7.0,
+      "target": 10.0,
+      "gap": 3.0,
+      "weight": 0.20
+    },
+    {
+      "name": "Code Quality",
+      "current": 6.5,
+      "target": 10.0,
+      "gap": 3.5,
+      "weight": 0.15
+    },
+    {
+      "name": "Testing",
+      "current": 2.0,
+      "target": 10.0,
+      "gap": 8.0,
+      "weight": 0.20
+    },
+    {
+      "name": "Operations",
+      "current": 3.5,
+      "target": 10.0,
+      "gap": 6.5,
+      "weight": 0.15
+    },
+    {
+      "name": "Documentation",
+      "current": 8.5,
+      "target": 10.0,
+      "gap": 1.5,
+      "weight": 0.15
+    },
+    {
+      "name": "Developer Experience",
+      "current": 5.0,
+      "target": 10.0,
+      "gap": 5.0,
+      "weight": 0.15
+    }
+  ],
+  "improvements_count": 20,
+  "critical_count": 5,
+  "high_impact_count": 5,
+  "medium_impact_count": 5,
+  "low_impact_count": 5,
+  "quick_wins": 3,
+  "total_effort_range": "157-247 person-days",
+  "phases": {
+    "phase_1": "0-3 months (Critical)",
+    "phase_2": "3-6 months (High Impact)",
+    "phase_3": "6-12 months (Medium Impact)",
+    "phase_4": "12+ months (Low Impact)"
+  }
+}

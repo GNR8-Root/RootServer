@@ -1,0 +1,259 @@
+{
+  "schema_version": "2.2",
+  "project_name": "RootServer",
+  "project_type": "host",
+  "inventory_date": "2025-12-16",
+  "source": "GitHub repository (GNR8-Root/RootServer)",
+  "overall_confidence": 0.85,
+  
+  "top_level_structure": {
+    "entry_point": "Program.cs",
+    "root_component": "App.razor",
+    "pages": ["Editor.razor", "Index.razor", "TestPage.razor", "_Host.cshtml", "Error.cshtml"],
+    "shared_root": "Shared/",
+    "static_assets": "wwwroot/",
+    "json_cache": "Json/",
+    "configuration": ["appsettings.json", "appsettings.Development.json"]
+  },
+  
+  "core_folders": [
+    {
+      "path": "Shared/_Core",
+      "purpose": "Foundation layer with 00-09 structure",
+      "confidence": 0.98,
+      "layers": [
+        {"folder": "00_Core", "status": "implemented", "contains": ["Enums", "Events", "Services"]},
+        {"folder": "01_Displays", "status": "not_implemented", "contains": []},
+        {"folder": "02_Fields", "status": "implemented", "contains": ["F_* components", "FieldBase classes", "Wrappers"]},
+        {"folder": "03_Pointers", "status": "partial", "contains": ["_Help pointers (HP_*)"]},
+        {"folder": "04_Actions", "status": "implemented", "contains": ["ABase", "APreBase", "APostBase"]},
+        {"folder": "05_Nodes", "status": "not_implemented", "contains": []},
+        {"folder": "06_Components", "status": "implemented", "contains": ["CP_* components"]},
+        {"folder": "07_Widgets", "status": "minimal", "contains": ["SurveyPrompt"]},
+        {"folder": "08_View", "status": "not_implemented", "contains": []},
+        {"folder": "09_Panels", "status": "not_implemented", "contains": []}
+      ]
+    },
+    {
+      "path": "Shared/_Editor",
+      "purpose": "Editor environment with 00-09 structure",
+      "confidence": 0.90,
+      "layers": [
+        {"folder": "00_Core", "status": "implemented", "contains": ["EditorView_Service", "EditorVisibility_Service", "LogCatcher_Service"]},
+        {"folder": "01_Displays", "status": "unknown", "contains": []},
+        {"folder": "02_Fields", "status": "unknown", "contains": []},
+        {"folder": "02_Properties", "status": "unknown", "contains": []},
+        {"folder": "03_Pointers", "status": "unknown", "contains": []},
+        {"folder": "04_Actions", "status": "unknown", "contains": []},
+        {"folder": "05_Nodes", "status": "planned", "contains": []},
+        {"folder": "06_Components", "status": "unknown", "contains": []},
+        {"folder": "07_Widgets", "status": "unknown", "contains": []},
+        {"folder": "08_View", "status": "unknown", "contains": []},
+        {"folder": "09_Panels", "status": "unknown", "contains": []}
+      ]
+    },
+    {
+      "path": "Shared/_Sites",
+      "purpose": "Public website UI hierarchy source",
+      "confidence": 0.95,
+      "structure": [
+        {"folder": "Components", "contains": ["Background"]},
+        {"folder": "Layouts", "contains": []},
+        {"folder": "Nav", "contains": ["MainPages", "Section"]},
+        {"folder": "Pages", "contains": ["_Core/Base", "_Core/Static"]},
+        {"folder": "Sections", "contains": ["About", "Agenda", "Contact", "Dish", "Gallery", "Welcome", "Widgets", "_Core"]}
+      ]
+    },
+    {
+      "path": "Shared/Plugins/Airtable",
+      "purpose": "Airtable integration plugin",
+      "confidence": 0.95,
+      "layers": [
+        {"folder": "03_Pointers", "status": "implemented", "contains": ["P_FieldsSelector", "P_Workspace", "P_Bookmarks", "P_Field", "P_Table", "P_Row"]},
+        {"folder": "04_Actions", "status": "implemented", "contains": ["A_AirtableSync", "A_TableVars", "A_RowNew"]},
+        {"folder": "06_Components", "status": "implemented", "contains": ["C_RowSingle", "C_Bookmark", "C_TableAir", "C_Rows", "C_InspectorHeader"]},
+        {"folder": "09_Panels", "status": "implemented", "contains": ["PNL_Structure", "PNL_Selection"]}
+      ]
+    },
+    {
+      "path": "Shared/_Modules",
+      "purpose": "Module framework infrastructure",
+      "confidence": 0.40,
+      "status": "minimal_implementation"
+    },
+    {
+      "path": "Shared/_Projects",
+      "purpose": "Project-specific implementations",
+      "confidence": 0.70,
+      "contains": ["FoodEscape"]
+    }
+  ],
+  
+  "discovered_prefixes": [
+    {"prefix": "F_", "layer": "02_Fields", "role": "Form fields", "count": 10, "confidence": 1.0},
+    {"prefix": "FW_", "layer": "02_Fields/_Core", "role": "Field wrappers", "count": 3, "confidence": 1.0},
+    {"prefix": "HP_", "layer": "03_Pointers/_Help", "role": "Help pointers", "count": 4, "confidence": 1.0},
+    {"prefix": "P_", "layer": "03_Pointers", "role": "Pointers", "count": 10, "confidence": 1.0},
+    {"prefix": "A_", "layer": "04_Actions", "role": "Actions", "count": 3, "confidence": 1.0},
+    {"prefix": "ABase", "layer": "04_Actions/_Core", "role": "Action base", "count": 3, "confidence": 1.0},
+    {"prefix": "C_", "layer": "06_Components", "role": "Components", "count": 5, "confidence": 1.0},
+    {"prefix": "CP_", "layer": "06_Components", "role": "Component patterns", "count": 3, "confidence": 1.0},
+    {"prefix": "PNL_", "layer": "09_Panels", "role": "Panels", "count": 2, "confidence": 1.0}
+  ],
+  
+  "services": [
+    {
+      "name": "Pointer_Service",
+      "scope": "scoped",
+      "location": "Shared/_Core/00_Core/Events/Pointer_Service.cs",
+      "purpose": "Pointer/selection state management",
+      "confidence": 0.95
+    },
+    {
+      "name": "LogCatcher_Service",
+      "scope": "scoped",
+      "location": "Shared/_Editor/00_Core/",
+      "purpose": "Log capture and display",
+      "confidence": 0.90
+    },
+    {
+      "name": "EditorView_Service",
+      "scope": "scoped",
+      "location": "Shared/_Editor/00_Core/",
+      "purpose": "Editor view state management",
+      "confidence": 0.90
+    },
+    {
+      "name": "EditorVisibility_Service",
+      "scope": "scoped",
+      "location": "Shared/_Editor/00_Core/",
+      "purpose": "Editor visibility control",
+      "confidence": 0.90
+    }
+  ],
+  
+  "integrations": [
+    {
+      "name": "Airtable API",
+      "type": "external_api",
+      "initialization": "AirtableConfig.Initialize(builder.Configuration)",
+      "location": "Shared/Plugins/Airtable/",
+      "purpose": "Table schema and data synchronization",
+      "failure_policy": "unknown",
+      "confidence": 0.85
+    },
+    {
+      "name": "Blazorise",
+      "type": "ui_framework",
+      "providers": ["Tailwind", "FontAwesome"],
+      "confidence": 1.0
+    }
+  ],
+  
+  "json_schemas": {
+    "location": "Json/",
+    "duplicate_pattern": {
+      "detected": true,
+      "examples": [
+        {"canonical": "pages.json", "duplicate": "pagesJson.json"},
+        {"canonical": "apps.json", "duplicate": "appsJson.json"},
+        {"canonical": "tables.json", "duplicate": "tablesJson.json"},
+        {"canonical": "sections.json", "duplicate": "sectionsJson.json"},
+        {"canonical": "text.json", "duplicate": "textJson.json"},
+        {"canonical": "workspaces.json", "duplicate": "workspacesJson.json"},
+        {"canonical": "colors.json", "duplicate": "colorsJson.json"},
+        {"canonical": "gallery.json", "duplicate": "galleryJson.json"},
+        {"canonical": "galleryFilter.json", "duplicate": "galleryFilterJson.json"},
+        {"canonical": "galleryItem.json", "duplicate": "galleryItemJson.json"},
+        {"canonical": "settings.json", "duplicate": "settingsJson.json"}
+      ],
+      "risk": "high",
+      "impact": "data_drift_maintenance_overhead"
+    },
+    "schema_types": [
+      "workspaces", "tables", "pages", "sections", "apps",
+      "gallery", "galleryFilter", "galleryItem",
+      "text", "colors", "settings",
+      "agenda", "contact", "dishIngredients",
+      "mediaCollectionContent", "mediaCollectionWebsite",
+      "mediaImage", "mediaLottie", "mediaSpline", "mediaVideo", "mediaYoutube"
+    ]
+  },
+  
+  "configuration_files": [
+    {
+      "file": "appsettings.json",
+      "contains": ["Logging", "AllowedHosts"],
+      "secrets_detected": false
+    },
+    {
+      "file": "appsettings.Development.json",
+      "contains": "unknown",
+      "secrets_detected": false
+    },
+    {
+      "file": "Properties/launchSettings.json",
+      "contains": ["Launch profiles"],
+      "secrets_detected": false
+    }
+  ],
+  
+  "tests": {
+    "test_projects": [],
+    "status": "none_found",
+    "confidence": 0.95
+  },
+  
+  "deployment": {
+    "target": "unknown",
+    "environment_support": ["Development", "Production"],
+    "configuration_pattern": "appsettings.json",
+    "confidence": 0.40
+  },
+  
+  "unmapped_areas": [
+    {
+      "area": "Node system (05_Nodes)",
+      "status": "planned",
+      "evidence": "Folders exist but minimal/empty content",
+      "confidence": 0.60
+    },
+    {
+      "area": "Module system (_Modules)",
+      "status": "infrastructure_only",
+      "evidence": "Folder structure present, minimal implementation",
+      "confidence": 0.40
+    },
+    {
+      "area": "Displays layer (01_Displays)",
+      "status": "not_implemented",
+      "evidence": "Empty folders in _Core",
+      "confidence": 0.90
+    },
+    {
+      "area": "Views (08_View)",
+      "status": "minimal",
+      "evidence": "Folders exist, limited content",
+      "confidence": 0.70
+    },
+    {
+      "area": "Panels (09_Panels in _Core)",
+      "status": "not_implemented",
+      "evidence": "Empty folder",
+      "confidence": 0.90
+    }
+  ],
+  
+  "confidence_scores": {
+    "project_type": 0.95,
+    "layer_system": 0.98,
+    "prefix_system": 0.90,
+    "ui_hierarchy": 0.95,
+    "plugin_architecture": 0.85,
+    "duplicate_json": 1.00,
+    "integrations": 0.75,
+    "testing": 0.30,
+    "deployment": 0.40,
+    "overall": 0.85
+  }
+}

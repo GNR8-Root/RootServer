@@ -1,0 +1,109 @@
+{
+  "schema_version": "2.2",
+  "generated_date": "2025-12-16",
+  "project_name": "RootServer",
+  
+  "validation_summary": {
+    "total_pages": 44,
+    "total_internal_links": 176,
+    "broken_links": 0,
+    "orphan_pages": 0,
+    "external_links_count": 6,
+    "pages_with_bottom_nav": 44
+  },
+  
+  "internal_links": [
+    {
+      "from": "rootserver.md",
+      "to": ["rootserver-00-base-index.md", "rootserver-12-arch-index.md", "rootserver-26-ui-index.md", "rootserver-39-appendix-index.md", "rootserver-43-diagrams.md"],
+      "link_type": "index_navigation"
+    },
+    {
+      "from": "rootserver-00-base-index.md",
+      "to": ["rootserver.md", "rootserver-01-base-vision.md", "rootserver-02-base-concepts.md", "rootserver-03-base-boundaries.md", "rootserver-04-base-folder-system.md", "rootserver-05-base-dependency-rules.md", "rootserver-06-base-runtime-execution.md", "rootserver-07-base-lifecycle.md", "rootserver-08-base-integrations.md", "rootserver-09-base-examples.md", "rootserver-10-base-schemas.md", "rootserver-11-base-contracts.md"],
+      "link_type": "layer_index"
+    }
+  ],
+  
+  "external_links_audit": [
+    {
+      "url": "https://learn.microsoft.com/en-us/aspnet/core/blazor/",
+      "found_in_pages": ["rootserver-25-arch-resources.md"],
+      "category": "documentation",
+      "status": "unchecked",
+      "in_allowlist": true,
+      "review_required": false
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/aspnet/core/",
+      "found_in_pages": ["rootserver-25-arch-resources.md"],
+      "category": "documentation",
+      "status": "unchecked",
+      "in_allowlist": true,
+      "review_required": false
+    },
+    {
+      "url": "https://airtable.com/developers/web/api/introduction",
+      "found_in_pages": ["rootserver-25-arch-resources.md"],
+      "category": "api_reference",
+      "status": "unchecked",
+      "in_allowlist": false,
+      "review_required": false,
+      "note": "Official Airtable API documentation"
+    },
+    {
+      "url": "https://github.com/dotnet/aspnetcore/blob/main/src/SignalR/docs/specs/HubProtocol.md",
+      "found_in_pages": ["rootserver-25-arch-resources.md"],
+      "category": "specification",
+      "status": "unchecked",
+      "in_allowlist": true,
+      "review_required": false
+    },
+    {
+      "url": "https://json-schema.org/",
+      "found_in_pages": ["rootserver-25-arch-resources.md"],
+      "category": "specification",
+      "status": "unchecked",
+      "in_allowlist": false,
+      "review_required": false,
+      "note": "JSON Schema official site"
+    },
+    {
+      "url": "https://blazorise.com/",
+      "found_in_pages": ["rootserver-25-arch-resources.md"],
+      "category": "tool",
+      "status": "unchecked",
+      "in_allowlist": false,
+      "review_required": false,
+      "note": "Blazorise UI framework"
+    }
+  ],
+  
+  "broken_links": [],
+  "orphan_pages": [],
+  
+  "bottom_nav_validation": {
+    "pages_checked": 44,
+    "pages_with_bottom_nav": 44,
+    "pages_missing_bottom_nav": 0,
+    "pages_with_back_to_root": 44
+  },
+  
+  "link_coverage_by_page": {
+    "rootserver.md": {
+      "outgoing_links": 5,
+      "incoming_links": 44,
+      "is_orphan": false
+    }
+  },
+  
+  "validation_passed": true,
+  "validation_notes": [
+    "All 44 pages generated",
+    "All internal links are valid (relative paths correct)",
+    "No orphan pages (all pages linked from at least one index)",
+    "All pages have bottom navigation with back-to-root link",
+    "External links limited to curated resources in page 25",
+    "No broken links detected"
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "discovered_areas": [
+    {
+      "id": "entrypoint",
+      "evidence": [
+        "Program.cs"
+      ]
+    },
+    {
+      "id": "ui_sites",
+      "evidence": [
+        "Shared/_Sites/Pages",
+        "Shared/_Sites/Nav"
+      ]
+    },
+    {
+      "id": "layers_core",
+      "evidence": [
+        "Shared/_Core/00_Core",
+        "Shared/_Core/09_Panels"
+      ]
+    },
+    {
+      "id": "layers_editor",
+      "evidence": [
+        "Shared/_Editor/00_Core",
+        "Shared/_Editor/02_Properties"
+      ]
+    },
+    {
+      "id": "plugins_airtable",
+      "evidence": [
+        "Shared/Plugins/Airtable"
+      ]
+    },
+    {
+      "id": "json_assets",
+      "evidence": [
+        "appsettings.json",
+        "Json/pages.json"
+      ]
+    }
+  ],
+  "mapped_pages": [
+    {
+      "area_id": "entrypoint",
+      "pages": [
+        "rootserver-06-base-runtime-execution.md",
+        "rootserver-13-arch.md"
+      ]
+    },
+    {
+      "area_id": "ui_sites",
+      "pages": [
+        "rootserver-27-ui-overview.md",
+        "rootserver-28-ui-hierarchy-model.md"
+      ]
+    },
+    {
+      "area_id": "layers_core",
+      "pages": [
+        "rootserver-29-ui-layer-folders.md",
+        "rootserver-36-ui-components.md"
+      ]
+    },
+    {
+      "area_id": "layers_editor",
+      "pages": [
+        "rootserver-29-ui-layer-folders.md"
+      ]
+    },
+    {
+      "area_id": "plugins_airtable",
+      "pages": [
+        "rootserver-08-base-integrations.md",
+        "rootserver-15-arch-dataflows.md"
+      ]
+    },
+    {
+      "area_id": "json_assets",
+      "pages": [
+        "rootserver-16-arch-json-and-assets.md",
+        "rootserver-42-appendix-duplicate-json-cleanup.md"
+      ]
+    }
+  ],
+  "unmapped_items": [],
+  "coverage_score": 1.0
+}

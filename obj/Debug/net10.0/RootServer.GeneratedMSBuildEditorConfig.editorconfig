@@ -11,605 +11,605 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = RootServer
 build_property.RootNamespace = RootServer
-build_property.ProjectDir = /Users/znzr/Documents/Dropbox/gits-_root/RootServer/
+build_property.ProjectDir = /Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = /Users/znzr/Documents/Dropbox/gits-_root/RootServer
+build_property.MSBuildProjectDirectory = /Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/03_Pointers/P_Bookmarks.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/03_Pointers/P_Bookmarks.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDNfUG9pbnRlcnMvUF9Cb29rbWFya3MucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/03_Pointers/P_Field.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/03_Pointers/P_Field.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDNfUG9pbnRlcnMvUF9GaWVsZC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/03_Pointers/P_FieldsSelector.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/03_Pointers/P_FieldsSelector.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDNfUG9pbnRlcnMvUF9GaWVsZHNTZWxlY3Rvci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/03_Pointers/P_GroupTab.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/03_Pointers/P_GroupTab.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDNfUG9pbnRlcnMvUF9Hcm91cFRhYi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/03_Pointers/P_HomeDropdown.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/03_Pointers/P_HomeDropdown.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDNfUG9pbnRlcnMvUF9Ib21lRHJvcGRvd24ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/03_Pointers/P_Row.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/03_Pointers/P_Row.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDNfUG9pbnRlcnMvUF9Sb3cucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/03_Pointers/P_SelectorDropdown.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/03_Pointers/P_SelectorDropdown.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDNfUG9pbnRlcnMvUF9TZWxlY3RvckRyb3Bkb3duLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/03_Pointers/P_Table.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/03_Pointers/P_Table.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDNfUG9pbnRlcnMvUF9UYWJsZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/03_Pointers/P_VariableButton.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/03_Pointers/P_VariableButton.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDNfUG9pbnRlcnMvUF9WYXJpYWJsZUJ1dHRvbi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/03_Pointers/P_Workspace.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/03_Pointers/P_Workspace.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDNfUG9pbnRlcnMvUF9Xb3Jrc3BhY2UucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/04_Actions/A_AirtableSync.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/04_Actions/A_AirtableSync.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDRfQWN0aW9ucy9BX0FpcnRhYmxlU3luYy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/04_Actions/A_BookmarkDelete.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/04_Actions/A_BookmarkDelete.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDRfQWN0aW9ucy9BX0Jvb2ttYXJrRGVsZXRlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/04_Actions/A_RowBookmark.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/04_Actions/A_RowBookmark.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDRfQWN0aW9ucy9BX1Jvd0Jvb2ttYXJrLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/04_Actions/A_RowDelete.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/04_Actions/A_RowDelete.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDRfQWN0aW9ucy9BX1Jvd0RlbGV0ZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/04_Actions/A_RowDuplicate.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/04_Actions/A_RowDuplicate.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDRfQWN0aW9ucy9BX1Jvd0R1cGxpY2F0ZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/04_Actions/A_RowNew.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/04_Actions/A_RowNew.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDRfQWN0aW9ucy9BX1Jvd05ldy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/04_Actions/A_RowVars.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/04_Actions/A_RowVars.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDRfQWN0aW9ucy9BX1Jvd1ZhcnMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/04_Actions/A_TableBookmark.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/04_Actions/A_TableBookmark.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDRfQWN0aW9ucy9BX1RhYmxlQm9va21hcmsucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/04_Actions/A_TableSearch.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/04_Actions/A_TableSearch.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDRfQWN0aW9ucy9BX1RhYmxlU2VhcmNoLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/04_Actions/A_TableVars.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/04_Actions/A_TableVars.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDRfQWN0aW9ucy9BX1RhYmxlVmFycy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/04_Actions/_Core/ABaseBookmark.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/04_Actions/_Core/ABaseBookmark.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDRfQWN0aW9ucy9fQ29yZS9BQmFzZUJvb2ttYXJrLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/06_Components/C_Bookmark.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/06_Components/C_Bookmark.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDZfQ29tcG9uZW50cy9DX0Jvb2ttYXJrLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/06_Components/C_InspectorHeader.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/06_Components/C_InspectorHeader.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDZfQ29tcG9uZW50cy9DX0luc3BlY3RvckhlYWRlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/06_Components/C_Rows.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/06_Components/C_Rows.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDZfQ29tcG9uZW50cy9DX1Jvd3MucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/06_Components/C_RowSingle.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/06_Components/C_RowSingle.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDZfQ29tcG9uZW50cy9DX1Jvd1NpbmdsZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/06_Components/C_TableAir.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/06_Components/C_TableAir.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDZfQ29tcG9uZW50cy9DX1RhYmxlQWlyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/07_Widgets/W_Tables.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/07_Widgets/W_Tables.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDdfV2lkZ2V0cy9XX1RhYmxlcy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/08_View/V_Workspace.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/08_View/V_Workspace.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDhfVmlldy9WX1dvcmtzcGFjZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/09_Panels/PNL_Selection.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/09_Panels/PNL_Selection.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDlfUGFuZWxzL1BOTF9TZWxlY3Rpb24ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/Plugins/Airtable/09_Panels/PNL_Structure.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/Plugins/Airtable/09_Panels/PNL_Structure.razor]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1BsdWdpbnMvQWlydGFibGUvMDlfUGFuZWxzL1BOTF9TdHJ1Y3R1cmUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/App.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Pages/Editor.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Pages/Editor.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRWRpdG9yLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Pages/Index.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Pages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Pages/TestPage.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Pages/TestPage.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvVGVzdFBhZ2UucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/F_Code.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/F_Code.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9GX0NvZGUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/F_Color.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/F_Color.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9GX0NvbG9yLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/F_DateTime_Field.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/F_DateTime_Field.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9GX0RhdGVUaW1lX0ZpZWxkLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/F_Date_Field.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/F_Date_Field.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9GX0RhdGVfRmllbGQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/F_Numeric_Currency.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/F_Numeric_Currency.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9GX051bWVyaWNfQ3VycmVuY3kucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/F_Numeric_Decimal.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/F_Numeric_Decimal.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9GX051bWVyaWNfRGVjaW1hbC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/F_Numeric_Int.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/F_Numeric_Int.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9GX051bWVyaWNfSW50LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/F_Rating.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/F_Rating.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9GX1JhdGluZy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/F_Text_Email.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/F_Text_Email.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9GX1RleHRfRW1haWwucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/F_Text_Long.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/F_Text_Long.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9GX1RleHRfTG9uZy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/F_Text_Password.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/F_Text_Password.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9GX1RleHRfUGFzc3dvcmQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/F_Text_Phone.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/F_Text_Phone.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9GX1RleHRfUGhvbmUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/F_Text_Search.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/F_Text_Search.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9GX1RleHRfU2VhcmNoLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/F_Text_Short.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/F_Text_Short.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9GX1RleHRfU2hvcnQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/F_Text_Url.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/F_Text_Url.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9GX1RleHRfVXJsLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/F_Time_Field.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/F_Time_Field.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9GX1RpbWVfRmllbGQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/F_Toggle_CheckBox.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/F_Toggle_CheckBox.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9GX1RvZ2dsZV9DaGVja0JveC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/F_Toggle_Switch.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/F_Toggle_Switch.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9GX1RvZ2dsZV9Td2l0Y2gucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/_Core/Base/BaseF_Text.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/_Core/Base/BaseF_Text.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9fQ29yZS9CYXNlL0Jhc2VGX1RleHQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/_Core/Base/FieldBase.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/_Core/Base/FieldBase.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9fQ29yZS9CYXNlL0ZpZWxkQmFzZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/_Core/Base/FieldBase_Color.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/_Core/Base/FieldBase_Color.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9fQ29yZS9CYXNlL0ZpZWxkQmFzZV9Db2xvci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/_Core/Base/FieldBase_Date.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/_Core/Base/FieldBase_Date.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9fQ29yZS9CYXNlL0ZpZWxkQmFzZV9EYXRlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/_Core/Base/FieldBase_Numeric.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/_Core/Base/FieldBase_Numeric.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9fQ29yZS9CYXNlL0ZpZWxkQmFzZV9OdW1lcmljLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/_Core/Base/FieldBase_Rating.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/_Core/Base/FieldBase_Rating.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9fQ29yZS9CYXNlL0ZpZWxkQmFzZV9SYXRpbmcucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/_Core/Base/FieldBase_String.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/_Core/Base/FieldBase_String.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9fQ29yZS9CYXNlL0ZpZWxkQmFzZV9TdHJpbmcucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/_Core/Base/FieldBase_Time.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/_Core/Base/FieldBase_Time.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9fQ29yZS9CYXNlL0ZpZWxkQmFzZV9UaW1lLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/_Core/Base/FieldBase_Toggle.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/_Core/Base/FieldBase_Toggle.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9fQ29yZS9CYXNlL0ZpZWxkQmFzZV9Ub2dnbGUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/_Core/Wrappers/FW_Group.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/_Core/Wrappers/FW_Group.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9fQ29yZS9XcmFwcGVycy9GV19Hcm91cC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/_Core/Wrappers/FW_GroupSub.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/_Core/Wrappers/FW_GroupSub.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9fQ29yZS9XcmFwcGVycy9GV19Hcm91cFN1Yi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/_Core/Wrappers/FW_Main.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/_Core/Wrappers/FW_Main.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9fQ29yZS9XcmFwcGVycy9GV19NYWluLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/02_Fields/_Help/H_AllFields.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/02_Fields/_Help/H_AllFields.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAyX0ZpZWxkcy9fSGVscC9IX0FsbEZpZWxkcy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/03_Pointers/P_Hidden.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/03_Pointers/P_Hidden.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAzX1BvaW50ZXJzL1BfSGlkZGVuLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/03_Pointers/_Core/BasePionter.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/03_Pointers/_Core/BasePionter.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAzX1BvaW50ZXJzL19Db3JlL0Jhc2VQaW9udGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/03_Pointers/_Core/BasePionter_Button.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/03_Pointers/_Core/BasePionter_Button.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAzX1BvaW50ZXJzL19Db3JlL0Jhc2VQaW9udGVyX0J1dHRvbi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/03_Pointers/_Core/BasePionter_Dropdown.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/03_Pointers/_Core/BasePionter_Dropdown.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAzX1BvaW50ZXJzL19Db3JlL0Jhc2VQaW9udGVyX0Ryb3Bkb3duLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/03_Pointers/_Core/BasePionter_Tab.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/03_Pointers/_Core/BasePionter_Tab.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAzX1BvaW50ZXJzL19Db3JlL0Jhc2VQaW9udGVyX1RhYi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/03_Pointers/_Help/HelpPointers.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/03_Pointers/_Help/HelpPointers.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAzX1BvaW50ZXJzL19IZWxwL0hlbHBQb2ludGVycy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/03_Pointers/_Help/_Core/HP_Collection.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/03_Pointers/_Help/_Core/HP_Collection.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAzX1BvaW50ZXJzL19IZWxwL19Db3JlL0hQX0NvbGxlY3Rpb24ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/03_Pointers/_Help/_Core/HP_CurrentItem.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/03_Pointers/_Help/_Core/HP_CurrentItem.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAzX1BvaW50ZXJzL19IZWxwL19Db3JlL0hQX0N1cnJlbnRJdGVtLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/03_Pointers/_Help/_Core/HP_CurrentPath.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/03_Pointers/_Help/_Core/HP_CurrentPath.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAzX1BvaW50ZXJzL19IZWxwL19Db3JlL0hQX0N1cnJlbnRQYXRoLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/03_Pointers/_Help/_Core/HP_Structure.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/03_Pointers/_Help/_Core/HP_Structure.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAzX1BvaW50ZXJzL19IZWxwL19Db3JlL0hQX1N0cnVjdHVyZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/03_Pointers/_Help/_Core/HP__Item.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/03_Pointers/_Help/_Core/HP__Item.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAzX1BvaW50ZXJzL19IZWxwL19Db3JlL0hQX19JdGVtLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/03_Pointers/_Help/_Core/HP__Menu.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/03_Pointers/_Help/_Core/HP__Menu.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzAzX1BvaW50ZXJzL19IZWxwL19Db3JlL0hQX19NZW51LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/04_Actions/_Core/ABase.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/04_Actions/_Core/ABase.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzA0X0FjdGlvbnMvX0NvcmUvQUJhc2UucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/04_Actions/_Core/PostBase/APostBase_LogCatcher.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/04_Actions/_Core/PostBase/APostBase_LogCatcher.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzA0X0FjdGlvbnMvX0NvcmUvUG9zdEJhc2UvQVBvc3RCYXNlX0xvZ0NhdGNoZXIucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/04_Actions/_Core/PreBase/APreBase_EditorView.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/04_Actions/_Core/PreBase/APreBase_EditorView.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzA0X0FjdGlvbnMvX0NvcmUvUHJlQmFzZS9BUHJlQmFzZV9FZGl0b3JWaWV3LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/04_Actions/_Core/PreBase/APreBase_EditorVisibility.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/04_Actions/_Core/PreBase/APreBase_EditorVisibility.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzA0X0FjdGlvbnMvX0NvcmUvUHJlQmFzZS9BUHJlQmFzZV9FZGl0b3JWaXNpYmlsaXR5LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/06_Components/ButtonSimpleIcon.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/06_Components/ButtonSimpleIcon.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzA2X0NvbXBvbmVudHMvQnV0dG9uU2ltcGxlSWNvbi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/06_Components/CP_Dropdown.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/06_Components/CP_Dropdown.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzA2X0NvbXBvbmVudHMvQ1BfRHJvcGRvd24ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/06_Components/CP_DropdownGroup.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/06_Components/CP_DropdownGroup.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzA2X0NvbXBvbmVudHMvQ1BfRHJvcGRvd25Hcm91cC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/06_Components/CP_DropdownItem.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/06_Components/CP_DropdownItem.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzA2X0NvbXBvbmVudHMvQ1BfRHJvcGRvd25JdGVtLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/06_Components/CP_HeadContentWebflow.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/06_Components/CP_HeadContentWebflow.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzA2X0NvbXBvbmVudHMvQ1BfSGVhZENvbnRlbnRXZWJmbG93LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/06_Components/TabSimpleIcon.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/06_Components/TabSimpleIcon.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzA2X0NvbXBvbmVudHMvVGFiU2ltcGxlSWNvbi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/06_Components/TestElement.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/06_Components/TestElement.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzA2X0NvbXBvbmVudHMvVGVzdEVsZW1lbnQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Core/07_Widgets/SurveyPrompt/SurveyPrompt.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Core/07_Widgets/SurveyPrompt/SurveyPrompt.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Db3JlLzA3X1dpZGdldHMvU3VydmV5UHJvbXB0L1N1cnZleVByb21wdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Editor/00_Core/Events/LogCatcher_Listener.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Editor/00_Core/Events/LogCatcher_Listener.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19FZGl0b3IvMDBfQ29yZS9FdmVudHMvTG9nQ2F0Y2hlcl9MaXN0ZW5lci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Editor/03_Pointers/P_LogCatcher.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Editor/03_Pointers/P_LogCatcher.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19FZGl0b3IvMDNfUG9pbnRlcnMvUF9Mb2dDYXRjaGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Editor/04_Actions/A_ExpandToggleAccordion.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Editor/04_Actions/A_ExpandToggleAccordion.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19FZGl0b3IvMDRfQWN0aW9ucy9BX0V4cGFuZFRvZ2dsZUFjY29yZGlvbi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Editor/04_Actions/A_SplitViewBot.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Editor/04_Actions/A_SplitViewBot.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19FZGl0b3IvMDRfQWN0aW9ucy9BX1NwbGl0Vmlld0JvdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Editor/04_Actions/A_SplitViewCenter.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Editor/04_Actions/A_SplitViewCenter.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19FZGl0b3IvMDRfQWN0aW9ucy9BX1NwbGl0Vmlld0NlbnRlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Editor/04_Actions/A_SplitViewTop.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Editor/04_Actions/A_SplitViewTop.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19FZGl0b3IvMDRfQWN0aW9ucy9BX1NwbGl0Vmlld1RvcC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Editor/04_Actions/A_ToggleEditorVisibility.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Editor/04_Actions/A_ToggleEditorVisibility.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19FZGl0b3IvMDRfQWN0aW9ucy9BX1RvZ2dsZUVkaXRvclZpc2liaWxpdHkucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Editor/06_Components/C_DividerSticky.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Editor/06_Components/C_DividerSticky.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19FZGl0b3IvMDZfQ29tcG9uZW50cy9DX0RpdmlkZXJTdGlja3kucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Editor/07_Widgets/W_Console.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Editor/07_Widgets/W_Console.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19FZGl0b3IvMDdfV2lkZ2V0cy9XX0NvbnNvbGUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Editor/08_View/V_Console.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Editor/08_View/V_Console.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19FZGl0b3IvMDhfVmlldy9WX0NvbnNvbGUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Editor/08_View/_Core/BaseView.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Editor/08_View/_Core/BaseView.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19FZGl0b3IvMDhfVmlldy9fQ29yZS9CYXNlVmlldy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Editor/08_View/_Core/Wrappers/VW_TabPanel.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Editor/08_View/_Core/Wrappers/VW_TabPanel.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19FZGl0b3IvMDhfVmlldy9fQ29yZS9XcmFwcGVycy9WV19UYWJQYW5lbC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Editor/09_Panels/PNL_Website.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Editor/09_Panels/PNL_Website.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19FZGl0b3IvMDlfUGFuZWxzL1BOTF9XZWJzaXRlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Editor/09_Panels/_Core/BasePanel.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Editor/09_Panels/_Core/BasePanel.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19FZGl0b3IvMDlfUGFuZWxzL19Db3JlL0Jhc2VQYW5lbC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Editor/09_Panels/_Core/PanelEditor.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Editor/09_Panels/_Core/PanelEditor.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19FZGl0b3IvMDlfUGFuZWxzL19Db3JlL1BhbmVsRWRpdG9yLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Projects/FoodEscape/Style/FE_Style.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Projects/FoodEscape/Style/FE_Style.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19Qcm9qZWN0cy9Gb29kRXNjYXBlL1N0eWxlL0ZFX1N0eWxlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Components/Background/C_Background.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Components/Background/C_Background.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9Db21wb25lbnRzL0JhY2tncm91bmQvQ19CYWNrZ3JvdW5kLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Components/Background/_Core/Background_Color.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Components/Background/_Core/Background_Color.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9Db21wb25lbnRzL0JhY2tncm91bmQvX0NvcmUvQmFja2dyb3VuZF9Db2xvci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Components/Background/_Core/Background_Image.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Components/Background/_Core/Background_Image.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9Db21wb25lbnRzL0JhY2tncm91bmQvX0NvcmUvQmFja2dyb3VuZF9JbWFnZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Components/Background/_Core/Background_Lottie.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Components/Background/_Core/Background_Lottie.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9Db21wb25lbnRzL0JhY2tncm91bmQvX0NvcmUvQmFja2dyb3VuZF9Mb3R0aWUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Components/Background/_Core/Background_Slider.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Components/Background/_Core/Background_Slider.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9Db21wb25lbnRzL0JhY2tncm91bmQvX0NvcmUvQmFja2dyb3VuZF9TbGlkZXIucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Components/Background/_Core/Background_Spline.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Components/Background/_Core/Background_Spline.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9Db21wb25lbnRzL0JhY2tncm91bmQvX0NvcmUvQmFja2dyb3VuZF9TcGxpbmUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Components/Background/_Core/Background_Video.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Components/Background/_Core/Background_Video.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9Db21wb25lbnRzL0JhY2tncm91bmQvX0NvcmUvQmFja2dyb3VuZF9WaWRlby5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Components/Background/_Core/Background_Youtube.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Components/Background/_Core/Background_Youtube.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9Db21wb25lbnRzL0JhY2tncm91bmQvX0NvcmUvQmFja2dyb3VuZF9Zb3V0dWJlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Nav/Section/N_Section.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Nav/Section/N_Section.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9OYXYvU2VjdGlvbi9OX1NlY3Rpb24ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Nav/Section/N_SectionItem.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Nav/Section/N_SectionItem.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9OYXYvU2VjdGlvbi9OX1NlY3Rpb25JdGVtLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Pages/PAGE_Home.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Pages/PAGE_Home.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9QYWdlcy9QQUdFX0hvbWUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Pages/_Core/Base/BasePage.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Pages/_Core/Base/BasePage.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9QYWdlcy9fQ29yZS9CYXNlL0Jhc2VQYWdlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Sections/About/C_AboutSection.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Sections/About/C_AboutSection.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9TZWN0aW9ucy9BYm91dC9DX0Fib3V0U2VjdGlvbi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Sections/Agenda/C_AgendaItem.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Sections/Agenda/C_AgendaItem.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9TZWN0aW9ucy9BZ2VuZGEvQ19BZ2VuZGFJdGVtLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Sections/Agenda/C_AgendaSection.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Sections/Agenda/C_AgendaSection.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9TZWN0aW9ucy9BZ2VuZGEvQ19BZ2VuZGFTZWN0aW9uLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Sections/Contact/C_ContactSection.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Sections/Contact/C_ContactSection.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9TZWN0aW9ucy9Db250YWN0L0NfQ29udGFjdFNlY3Rpb24ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Sections/Dish/C_DishIngredient.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Sections/Dish/C_DishIngredient.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9TZWN0aW9ucy9EaXNoL0NfRGlzaEluZ3JlZGllbnQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Sections/Dish/C_DishSection.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Sections/Dish/C_DishSection.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9TZWN0aW9ucy9EaXNoL0NfRGlzaFNlY3Rpb24ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Sections/Gallery/C_Galleries.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Sections/Gallery/C_Galleries.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9TZWN0aW9ucy9HYWxsZXJ5L0NfR2FsbGVyaWVzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Sections/Gallery/C_Gallery.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Sections/Gallery/C_Gallery.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9TZWN0aW9ucy9HYWxsZXJ5L0NfR2FsbGVyeS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Sections/Gallery/C_GalleryItem.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Sections/Gallery/C_GalleryItem.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9TZWN0aW9ucy9HYWxsZXJ5L0NfR2FsbGVyeUl0ZW0ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Sections/Welcome/C_WelcomeSection.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Sections/Welcome/C_WelcomeSection.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9TZWN0aW9ucy9XZWxjb21lL0NfV2VsY29tZVNlY3Rpb24ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Sections/_Core/Base/SectionBase.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Sections/_Core/Base/SectionBase.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9TZWN0aW9ucy9fQ29yZS9CYXNlL1NlY3Rpb25CYXNlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Sections/_Core/Wrappers/CW_Section.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Sections/_Core/Wrappers/CW_Section.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9TZWN0aW9ucy9fQ29yZS9XcmFwcGVycy9DV19TZWN0aW9uLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/_Imports.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Shared/_Sites/Layouts/MainLayout.razor]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Shared/_Sites/Layouts/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19TaXRlcy9MYXlvdXRzL01haW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-vr4td6d5pk
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Pages/Error.cshtml]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/znzr/Documents/Dropbox/gits-_root/RootServer/Pages/_Host.cshtml]
+[/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/Pages/_Host.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX0hvc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

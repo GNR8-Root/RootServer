@@ -456,11 +456,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/znzr/Documents/Dropbox/gits-_root/RootServer/RootServer.csproj",
+      "projectUniqueName": "/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/RootServer.csproj",
       "projectName": "RootServer",
-      "projectPath": "/Users/znzr/Documents/Dropbox/gits-_root/RootServer/RootServer.csproj",
+      "projectPath": "/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/RootServer.csproj",
       "packagesPath": "/Users/znzr/.nuget/packages/",
-      "outputPath": "/Users/znzr/Documents/Dropbox/gits-_root/RootServer/obj/",
+      "outputPath": "/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/znzr/.nuget/NuGet/NuGet.Config"

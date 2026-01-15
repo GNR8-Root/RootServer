@@ -1,0 +1,100 @@
+{
+  "schema_version": "2.2",
+  "extracted_from": "EXAMPLE-FORMATTING-docsgen.pdf",
+  "extraction_date": "2025-12-16",
+  
+  "formatting_rules": {
+    "headings": {
+      "levels_used": ["#", "##", "###"],
+      "max_depth": 3,
+      "pattern": "Single H1 at top, H2 for major sections, H3 for subsections"
+    },
+    "dividers": {
+      "marker": "---",
+      "usage": "After title block, between major sections, before bottom nav, at end"
+    },
+    "lists": {
+      "bullet_style": "hyphen",
+      "nesting": "hyphens at all levels",
+      "numbered_lists": "rare, only for short sequences"
+    },
+    "links": {
+      "internal_format": "relative (e.g., docsgen-26-ui-index.md)",
+      "emphasis": "bold for primary navigation items",
+      "external_policy": "allowed_with_audit"
+    },
+    "code_blocks": {
+      "fence": "triple backticks",
+      "usage": "minimal, targeted examples only"
+    },
+    "tables": {
+      "usage": "avoid unless unavoidable",
+      "preference": "use lists instead"
+    },
+    "emphasis": {
+      "bold": "for navigation labels and key terms",
+      "italics": "minimal usage"
+    }
+  },
+  
+  "page_layout_contract": {
+    "standard_structure": [
+      "# Title (H1)",
+      "2-8 line introduction",
+      "---",
+      "Main content sections (H2/H3)",
+      "---",
+      "Bottom navigation block (1-5 items)",
+      "---"
+    ],
+    "bottom_nav_rules": {
+      "must_include": "Back to {doc_slug}.md",
+      "typical_items": [
+        "Link back to root",
+        "Link to relevant index",
+        "Links to major sections (Base/Arch/UI/Appendix/Diagrams)"
+      ],
+      "max_items": 5,
+      "format": "hyphen list"
+    }
+  },
+  
+  "index_patterns": {
+    "root_index": {
+      "sections": ["Purpose", "Glossary", "Tech Split", "Scope", "Documentation Index"],
+      "link_format": "1. **[Section Name](file.md)** – brief description"
+    },
+    "layer_indices": {
+      "sections": ["Layer overview", "Page list with descriptions", "Bottom nav"],
+      "link_format": "- **[Page Title](file.md)** – brief description"
+    }
+  },
+  
+  "tone_and_voice": {
+    "style": "professional, direct, implementation-focused",
+    "avoid": ["marketing language", "excessive enthusiasm", "vague placeholders"],
+    "prefer": ["concrete examples", "actionable guidance", "evidence-based claims"]
+  },
+  
+  "terminology_consistency": {
+    "enforcement": "strict",
+    "source_of_truth": "02-terminology-index.json",
+    "forbidden_terms": ["TBD", "TODO", "???", "placeholder"]
+  },
+  
+  "diagram_usage": {
+    "format": "mermaid",
+    "types_used": ["flowchart", "sequence", "graph"],
+    "placement": "43-diagrams.md primarily, inline when essential",
+    "accessibility": "textual description before diagram"
+  },
+  
+  "reference_examples": {
+    "root_entry": "docsgen.md",
+    "base_index": "docsgen-00-base-index.md",
+    "arch_index": "docsgen-12-arch-index.md",
+    "ui_index": "docsgen-26-ui-index.md",
+    "appendix_index": "docsgen-39-appendix-index.md",
+    "diagrams": "docsgen-43-diagrams.md"
+  }
+}

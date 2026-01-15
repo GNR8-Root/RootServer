@@ -1,0 +1,1009 @@
+{
+  "Shared": {
+    "dirs": [
+      "_Sites",
+      "_Editor",
+      "_Core",
+      "Plugins",
+      "_Modules",
+      "_Projects"
+    ],
+    "files": []
+  },
+  "Shared/_Sites": {
+    "dirs": [
+      "Pages",
+      "Sections",
+      "Components",
+      "Layouts",
+      "Nav"
+    ],
+    "files": []
+  },
+  "Shared/_Sites/Pages": {
+    "dirs": [
+      "_Core"
+    ],
+    "files": [
+      "PAGE_Home.razor.cs",
+      "PAGE_Home.razor"
+    ]
+  },
+  "Shared/_Sites/Pages/_Core": {
+    "dirs": [
+      "Base",
+      "Static"
+    ],
+    "files": []
+  },
+  "Shared/_Sites/Pages/_Core/Base": {
+    "dirs": [],
+    "files": [
+      "BasePage.razor",
+      "BasePage.razor.cs"
+    ]
+  },
+  "Shared/_Sites/Pages/_Core/Static": {
+    "dirs": [],
+    "files": [
+      "PagesStatic.cs"
+    ]
+  },
+  "Shared/_Sites/Sections": {
+    "dirs": [
+      "Gallery",
+      "Agenda",
+      "Widgets",
+      "Dish",
+      "_Core",
+      "Welcome",
+      "About",
+      "Contact"
+    ],
+    "files": []
+  },
+  "Shared/_Sites/Sections/Gallery": {
+    "dirs": [],
+    "files": [
+      "C_GalleryItem.razor",
+      "C_Galleries.razor.cs",
+      "C_Gallery.razor",
+      "C_GalleryItem.razor.cs",
+      "C_Gallery.razor.cs",
+      "C_Galleries.razor"
+    ]
+  },
+  "Shared/_Sites/Sections/Agenda": {
+    "dirs": [],
+    "files": [
+      "C_AgendaItem.razor",
+      "C_AgendaItem.razor.cs",
+      "C_AgendaSection.razor",
+      "C_AgendaSection.razor.cs"
+    ]
+  },
+  "Shared/_Sites/Sections/Widgets": {
+    "dirs": [],
+    "files": []
+  },
+  "Shared/_Sites/Sections/Dish": {
+    "dirs": [],
+    "files": [
+      "C_DishSection.razor.cs",
+      "C_DishSection.razor",
+      "C_DishIngredient.razor",
+      "C_DishIngredient.razor.cs"
+    ]
+  },
+  "Shared/_Sites/Sections/_Core": {
+    "dirs": [
+      "Base",
+      "Wrappers"
+    ],
+    "files": []
+  },
+  "Shared/_Sites/Sections/_Core/Base": {
+    "dirs": [],
+    "files": [
+      "SectionBase.razor",
+      "SectionBase.razor.cs"
+    ]
+  },
+  "Shared/_Sites/Sections/_Core/Wrappers": {
+    "dirs": [],
+    "files": [
+      "CW_Section.razor.cs",
+      "CW_Section.razor"
+    ]
+  },
+  "Shared/_Sites/Sections/Welcome": {
+    "dirs": [],
+    "files": [
+      "C_WelcomeSection.razor",
+      "C_WelcomeSection.razor.cs"
+    ]
+  },
+  "Shared/_Sites/Sections/About": {
+    "dirs": [],
+    "files": [
+      "C_AboutSection.razor",
+      "C_AboutSection.razor.cs"
+    ]
+  },
+  "Shared/_Sites/Sections/Contact": {
+    "dirs": [],
+    "files": [
+      "C_ContactSection.razor",
+      "C_ContactSection.razor.cs"
+    ]
+  },
+  "Shared/_Sites/Components": {
+    "dirs": [
+      "Background"
+    ],
+    "files": []
+  },
+  "Shared/_Sites/Components/Background": {
+    "dirs": [
+      "_Core"
+    ],
+    "files": [
+      "C_Background.razor.cs",
+      "C_Background.razor"
+    ]
+  },
+  "Shared/_Sites/Components/Background/_Core": {
+    "dirs": [],
+    "files": [
+      "Background_Color.razor.cs",
+      "Background_Slider.razor.cs",
+      "Background_Image.razor.cs",
+      "BaseBackground.cs",
+      "Background_Lottie.razor",
+      "Background_Video.razor",
+      "Background_Video.razor.cs",
+      "Background_Lottie.razor.cs",
+      "Background_Spline.razor",
+      "Background_Youtube.razor",
+      "Background_Slider.razor",
+      "Background_Youtube.razor.cs",
+      "Background_Spline.razor.cs",
+      "Background_Color.razor",
+      "Background_Image.razor"
+    ]
+  },
+  "Shared/_Sites/Layouts": {
+    "dirs": [],
+    "files": [
+      "MainLayout.razor"
+    ]
+  },
+  "Shared/_Sites/Nav": {
+    "dirs": [
+      "Section",
+      "MainPages"
+    ],
+    "files": []
+  },
+  "Shared/_Sites/Nav/Section": {
+    "dirs": [],
+    "files": [
+      "N_Section.razor",
+      "N_Section.razor.cs",
+      "N_SectionItem.razor.cs",
+      "N_SectionItem.razor"
+    ]
+  },
+  "Shared/_Sites/Nav/MainPages": {
+    "dirs": [],
+    "files": []
+  },
+  "Shared/_Editor": {
+    "dirs": [
+      "00_Core",
+      "06_Components",
+      "03_Pointers",
+      "01_Displays",
+      "08_View",
+      "02_Fields",
+      "09_Panels",
+      "02_Properties",
+      "05_Nodes",
+      "04_Actions",
+      "07_Widgets"
+    ],
+    "files": []
+  },
+  "Shared/_Editor/00_Core": {
+    "dirs": [
+      "Events",
+      "Data"
+    ],
+    "files": []
+  },
+  "Shared/_Editor/00_Core/Events": {
+    "dirs": [],
+    "files": [
+      "LogCatcher_Listener.razor",
+      "LogCatcher_Listener.razor.cs",
+      "EditorView_Service.cs",
+      "LogCatcher_Service.cs",
+      "EditorVisibility_Service.cs"
+    ]
+  },
+  "Shared/_Editor/00_Core/Data": {
+    "dirs": [],
+    "files": [
+      "DataEditor.cs"
+    ]
+  },
+  "Shared/_Editor/06_Components": {
+    "dirs": [],
+    "files": [
+      "C_DividerSticky.razor",
+      "C_DividerSticky.razor.cs"
+    ]
+  },
+  "Shared/_Editor/03_Pointers": {
+    "dirs": [],
+    "files": [
+      "P_LogCatcher.razor",
+      "P_LogCatcher.razor.cs"
+    ]
+  },
+  "Shared/_Editor/01_Displays": {
+    "dirs": [],
+    "files": []
+  },
+  "Shared/_Editor/08_View": {
+    "dirs": [
+      "_Core"
+    ],
+    "files": [
+      "V_Console.razor",
+      "V_Console.razor.cs"
+    ]
+  },
+  "Shared/_Editor/08_View/_Core": {
+    "dirs": [
+      "Base",
+      "Wrappers"
+    ],
+    "files": [
+      "BaseView.razor",
+      "BaseView.razor.cs"
+    ]
+  },
+  "Shared/_Editor/08_View/_Core/Base": {
+    "dirs": [],
+    "files": []
+  },
+  "Shared/_Editor/08_View/_Core/Wrappers": {
+    "dirs": [],
+    "files": [
+      "VW_TabPanel.razor",
+      "VW_TabPanel.razor.cs"
+    ]
+  },
+  "Shared/_Editor/02_Fields": {
+    "dirs": [],
+    "files": []
+  },
+  "Shared/_Editor/09_Panels": {
+    "dirs": [
+      "_Core"
+    ],
+    "files": [
+      "PNL_Website.razor.cs",
+      "PNL_Website.razor"
+    ]
+  },
+  "Shared/_Editor/09_Panels/_Core": {
+    "dirs": [],
+    "files": [
+      "PanelEditor.razor.cs",
+      "BasePanel.razor",
+      "PanelEditor.razor",
+      "BasePanel.razor.cs"
+    ]
+  },
+  "Shared/_Editor/02_Properties": {
+    "dirs": [],
+    "files": []
+  },
+  "Shared/_Editor/05_Nodes": {
+    "dirs": [],
+    "files": []
+  },
+  "Shared/_Editor/04_Actions": {
+    "dirs": [],
+    "files": [
+      "A_ToggleEditorVisibility.razor.cs",
+      "A_ExpandToggleAccordion.razor.cs",
+      "A_SplitViewCenter.razor",
+      "A_SplitViewTop.razor.cs",
+      "A_SplitViewTop.razor",
+      "A_SplitViewBot.razor",
+      "A_SplitViewBot.razor.cs",
+      "A_SplitViewCenter.razor.cs",
+      "A_ToggleEditorVisibility.razor",
+      "A_ExpandToggleAccordion.razor"
+    ]
+  },
+  "Shared/_Editor/07_Widgets": {
+    "dirs": [],
+    "files": [
+      "W_Console.razor",
+      "W_Console.razor.cs"
+    ]
+  },
+  "Shared/_Core": {
+    "dirs": [
+      "00_Core",
+      "06_Components",
+      "03_Pointers",
+      "01_Displays",
+      "08_View",
+      "02_Fields",
+      "09_Panels",
+      "05_Nodes",
+      "04_Actions",
+      "07_Widgets"
+    ],
+    "files": []
+  },
+  "Shared/_Core/00_Core": {
+    "dirs": [
+      "Events",
+      "Enums",
+      "BehaviourTree"
+    ],
+    "files": []
+  },
+  "Shared/_Core/00_Core/Events": {
+    "dirs": [],
+    "files": [
+      "Pointer_Service.cs"
+    ]
+  },
+  "Shared/_Core/00_Core/Enums": {
+    "dirs": [],
+    "files": [
+      "StateVisibility.cs"
+    ]
+  },
+  "Shared/_Core/00_Core/BehaviourTree": {
+    "dirs": [
+      "Tree",
+      "Nodes"
+    ],
+    "files": []
+  },
+  "Shared/_Core/00_Core/BehaviourTree/Tree": {
+    "dirs": [],
+    "files": []
+  },
+  "Shared/_Core/00_Core/BehaviourTree/Nodes": {
+    "dirs": [],
+    "files": []
+  },
+  "Shared/_Core/06_Components": {
+    "dirs": [
+      "Test"
+    ],
+    "files": [
+      "ButtonSimpleIcon.razor.cs",
+      "CP_HeadContentWebflow.razor.cs",
+      "CP_DropdownGroup.razor",
+      "TabSimpleIcon.razor",
+      "CP_Dropdown.razor",
+      "CP_DropdownItem.razor",
+      "TestElement.razor",
+      "CP_Dropdown.razor.cs",
+      "CP_DropdownGroup.razor.cs",
+      "CP_DropdownItem.razor.cs",
+      "TabSimpleIcon.razor.cs",
+      "CP_HeadContentWebflow.razor",
+      "ButtonSimpleIcon.razor",
+      "TestElement.razor.cs"
+    ]
+  },
+  "Shared/_Core/06_Components/Test": {
+    "dirs": [],
+    "files": []
+  },
+  "Shared/_Core/03_Pointers": {
+    "dirs": [
+      "_Help",
+      "_Core"
+    ],
+    "files": [
+      "P_Hidden.razor",
+      "P_Hidden.razor.cs"
+    ]
+  },
+  "Shared/_Core/03_Pointers/_Help": {
+    "dirs": [
+      "_Core"
+    ],
+    "files": [
+      "HelpPointers.razor",
+      "HelpPointers.razor.cs"
+    ]
+  },
+  "Shared/_Core/03_Pointers/_Help/_Core": {
+    "dirs": [],
+    "files": [
+      "HP_CurrentItem.razor.cs",
+      "HP_CurrentItem.razor",
+      "HP_Collection.razor.cs",
+      "HP_CurrentPath.razor.cs",
+      "HP__Item.razor.cs",
+      "HP__Menu.razor",
+      "HP_CurrentPath.razor",
+      "HP_Collection.razor",
+      "HP__Menu.razor.cs",
+      "HP__Item.razor",
+      "HP_Structure.razor",
+      "HP_Structure.razor.cs"
+    ]
+  },
+  "Shared/_Core/03_Pointers/_Core": {
+    "dirs": [],
+    "files": [
+      "BasePionter_Dropdown.razor.cs",
+      "BasePionter_Tab.razor.cs",
+      "BasePionter_Button.razor.cs",
+      "BasePionter_Button.razor",
+      "BasePionter.razor",
+      "BasePionter_Tab.razor",
+      "BasePionter.razor.cs",
+      "BasePionter_Dropdown.razor"
+    ]
+  },
+  "Shared/_Core/01_Displays": {
+    "dirs": [],
+    "files": []
+  },
+  "Shared/_Core/08_View": {
+    "dirs": [],
+    "files": []
+  },
+  "Shared/_Core/02_Fields": {
+    "dirs": [
+      "_Help",
+      "_Core"
+    ],
+    "files": [
+      "F_Text_Password.razor",
+      "F_Code.razor",
+      "F_Time_Field.razor",
+      "F_Text_Short.razor.cs",
+      "F_Text_Phone.razor",
+      "F_Toggle_Switch.razor",
+      "F_Rating.razor",
+      "F_Toggle_CheckBox.razor",
+      "F_Text_Search.razor",
+      "F_Text_Email.razor.cs",
+      "F_Color.razor.cs",
+      "F_Date_Field.razor.cs",
+      "F_Numeric_Currency.razor",
+      "F_Numeric_Decimal.razor.cs",
+      "F_Text_Short.razor",
+      "F_DateTime_Field.razor.cs",
+      "F_Code.razor.cs",
+      "F_Numeric_Int.razor",
+      "F_Text_Url.razor",
+      "F_Text_Phone.razor.cs",
+      "F_Toggle_CheckBox.razor.cs",
+      "F_Text_Long.razor",
+      "F_Text_Password.razor.cs",
+      "F_Numeric_Currency.razor.cs",
+      "F_Rating.razor.cs",
+      "F_Text_Email.razor",
+      "F_Text_Long.razor.cs",
+      "F_Numeric_Decimal.razor",
+      "F_Text_Search.razor.cs",
+      "F_Numeric_Int.razor.cs",
+      "F_Time_Field.razor.cs",
+      "F_Toggle_Switch.razor.cs",
+      "F_Color.razor",
+      "F_Text_Url.razor.cs",
+      "F_DateTime_Field.razor",
+      "F_Date_Field.razor"
+    ]
+  },
+  "Shared/_Core/02_Fields/_Help": {
+    "dirs": [],
+    "files": [
+      "H_AllFields.razor.cs",
+      "H_AllFields.razor"
+    ]
+  },
+  "Shared/_Core/02_Fields/_Core": {
+    "dirs": [
+      "Base",
+      "Wrappers",
+      "FieldWrappers"
+    ],
+    "files": []
+  },
+  "Shared/_Core/02_Fields/_Core/Base": {
+    "dirs": [],
+    "files": [
+      "FieldBase_Toggle.razor",
+      "FieldBase_Rating.razor",
+      "BaseF_Text.razor",
+      "FieldBase_Toggle.razor.cs",
+      "FieldBase_String.razor",
+      "FieldBase_Date.razor.cs",
+      "FieldBase.razor.cs",
+      "FieldBase_Date.razor",
+      "BaseF_Text.razor.cs",
+      "FieldBase_Color.razor",
+      "FieldBase_Numeric.razor.cs",
+      "FieldBase_Numeric.razor",
+      "FieldBase_Time.razor.cs",
+      "FieldBase_Time.razor",
+      "FieldBase_Rating.razor.cs",
+      "FieldBase.razor",
+      "FieldBase_Color.razor.cs",
+      "FieldBase_String.razor.cs"
+    ]
+  },
+  "Shared/_Core/02_Fields/_Core/Wrappers": {
+    "dirs": [],
+    "files": [
+      "FW_Group.razor",
+      "FW_Main.razor.cs",
+      "FW_GroupSub.razor.cs",
+      "FW_Group.razor.cs",
+      "FW_GroupSub.razor",
+      "FW_Main.razor"
+    ]
+  },
+  "Shared/_Core/02_Fields/_Core/FieldWrappers": {
+    "dirs": [],
+    "files": []
+  },
+  "Shared/_Core/09_Panels": {
+    "dirs": [],
+    "files": []
+  },
+  "Shared/_Core/05_Nodes": {
+    "dirs": [],
+    "files": []
+  },
+  "Shared/_Core/04_Actions": {
+    "dirs": [
+      "_Core"
+    ],
+    "files": []
+  },
+  "Shared/_Core/04_Actions/_Core": {
+    "dirs": [
+      "PreBase",
+      "PostBase"
+    ],
+    "files": [
+      "ABase.razor",
+      "ABase.razor.cs"
+    ]
+  },
+  "Shared/_Core/04_Actions/_Core/PreBase": {
+    "dirs": [],
+    "files": [
+      "APreBase_EditorVisibility.razor.cs",
+      "APreBase_EditorView.razor",
+      "APreBase_EditorView.razor.cs",
+      "APreBase_EditorVisibility.razor"
+    ]
+  },
+  "Shared/_Core/04_Actions/_Core/PostBase": {
+    "dirs": [],
+    "files": [
+      "APostBase_LogCatcher.razor.cs",
+      "APostBase_LogCatcher.razor"
+    ]
+  },
+  "Shared/_Core/07_Widgets": {
+    "dirs": [
+      "SurveyPrompt"
+    ],
+    "files": []
+  },
+  "Shared/_Core/07_Widgets/SurveyPrompt": {
+    "dirs": [],
+    "files": [
+      "SurveyPrompt.razor",
+      "SurveyPrompt.razor.cs"
+    ]
+  },
+  "Shared/Plugins": {
+    "dirs": [
+      "Airtable"
+    ],
+    "files": []
+  },
+  "Shared/Plugins/Airtable": {
+    "dirs": [
+      "00_Core",
+      "06_Components",
+      "03_Pointers",
+      "01_Displays",
+      "08_View",
+      "02_Fields",
+      "09_Panels",
+      "05_Nodes",
+      "04_Actions",
+      "07_Widgets"
+    ],
+    "files": []
+  },
+  "Shared/Plugins/Airtable/00_Core": {
+    "dirs": [
+      "Static",
+      "_Core",
+      "Tables",
+      "Enums"
+    ],
+    "files": []
+  },
+  "Shared/Plugins/Airtable/00_Core/Static": {
+    "dirs": [],
+    "files": [
+      "StaticPointers.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/00_Core/_Core": {
+    "dirs": [],
+    "files": [
+      "AirtableTableBase.cs",
+      "Airtable.cs",
+      "AirtableTable.cs",
+      "AirtableVarAsStringExtention.cs",
+      "AirtableConfig.cs",
+      "AirtableTableService.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/00_Core/Tables": {
+    "dirs": [
+      "MediaCollectionContent",
+      "Text",
+      "Gallery",
+      "Agenda",
+      "Apps",
+      "Section",
+      "MediaCollectionWebsite",
+      "Colors",
+      "GalleryFilter",
+      "GalleryItem",
+      "Pages",
+      "MediaYoutube",
+      "MediaImage",
+      "DishIngredients",
+      "MediaSpline",
+      "_Core",
+      "Tables",
+      "MediaVideo",
+      "Settings",
+      "Workspaces",
+      "MediaLottie",
+      "Contact"
+    ],
+    "files": []
+  },
+  "Shared/Plugins/Airtable/00_Core/Tables/MediaCollectionContent": {
+    "dirs": [],
+    "files": [
+      "TableMediaCollectionContent.cs",
+      "MediaCollectionContentService.cs",
+      "MediaCollectionContentData.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/00_Core/Tables/Text": {
+    "dirs": [],
+    "files": [
+      "TextService.cs",
+      "TableText.cs",
+      "TextData.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/00_Core/Tables/Gallery": {
+    "dirs": [],
+    "files": [
+      "TableGallery.cs",
+      "GalleryService.cs",
+      "GalleryData.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/00_Core/Tables/Agenda": {
+    "dirs": [],
+    "files": [
+      "TableAgenda.cs",
+      "AgendaService.cs",
+      "AgendaData.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/00_Core/Tables/Apps": {
+    "dirs": [],
+    "files": [
+      "TableApps.cs",
+      "AppsService.cs",
+      "AppsData.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/00_Core/Tables/Section": {
+    "dirs": [],
+    "files": [
+      "TableSections.cs",
+      "SectionData.cs",
+      "SectionService.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/00_Core/Tables/MediaCollectionWebsite": {
+    "dirs": [],
+    "files": [
+      "MediaCollectionWebsiteData.cs",
+      "TableMediaCollectionWebsite.cs",
+      "MediaCollectionWebsiteService.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/00_Core/Tables/Colors": {
+    "dirs": [],
+    "files": [
+      "ColorsData.cs",
+      "TableColors.cs",
+      "ColorsService.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/00_Core/Tables/GalleryFilter": {
+    "dirs": [],
+    "files": [
+      "GalleryFilterService.cs",
+      "GalleryFilterData.cs",
+      "TableGalleryFilter.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/00_Core/Tables/GalleryItem": {
+    "dirs": [],
+    "files": [
+      "GalleryItemData.cs",
+      "GalleryItemService.cs",
+      "TableGalleryItem.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/00_Core/Tables/Pages": {
+    "dirs": [],
+    "files": [
+      "PagesService.cs",
+      "PagesData.cs",
+      "TablePages.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/00_Core/Tables/MediaYoutube": {
+    "dirs": [],
+    "files": [
+      "MediaYoutubeData.cs",
+      "MediaYoutubeService.cs",
+      "TableMediaYoutube.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/00_Core/Tables/MediaImage": {
+    "dirs": [],
+    "files": [
+      "TableMediaImage.cs",
+      "MediaImageService.cs",
+      "MediaImageData.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/00_Core/Tables/DishIngredients": {
+    "dirs": [],
+    "files": [
+      "TableDishIngredients.cs",
+      "DishIngredientsData.cs",
+      "DishIngredientsService.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/00_Core/Tables/MediaSpline": {
+    "dirs": [],
+    "files": [
+      "MediaSplineData.cs",
+      "MediaSplineService.cs",
+      "TableSplineImage.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/00_Core/Tables/_Core": {
+    "dirs": [],
+    "files": [
+      "BaseMediaType.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/00_Core/Tables/Tables": {
+    "dirs": [],
+    "files": [
+      "TablesData.cs",
+      "TableTables.cs",
+      "TablesService.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/00_Core/Tables/MediaVideo": {
+    "dirs": [],
+    "files": [
+      "MediaVideoData.cs",
+      "MediaVideoService.cs",
+      "TableVideoImage.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/00_Core/Tables/Settings": {
+    "dirs": [],
+    "files": [
+      "SettingsService.cs",
+      "TableSettings.cs",
+      "SettingsData.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/00_Core/Tables/Workspaces": {
+    "dirs": [],
+    "files": [
+      "WorkspacesData.cs",
+      "WorkspacesService.cs",
+      "TableWorkspaces.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/00_Core/Tables/MediaLottie": {
+    "dirs": [],
+    "files": [
+      "TableLottieImage.cs",
+      "MediaLottieData.cs",
+      "MediaLottieService.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/00_Core/Tables/Contact": {
+    "dirs": [],
+    "files": [
+      "TableContact.cs",
+      "ContactService.cs",
+      "ContactData.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/00_Core/Enums": {
+    "dirs": [],
+    "files": [
+      "EmptyEnumeration.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/06_Components": {
+    "dirs": [],
+    "files": [
+      "C_TableAir.razor.cs",
+      "C_Rows.razor",
+      "C_Bookmark.razor.cs",
+      "C_Rows.razor.cs",
+      "C_InspectorHeader.razor",
+      "C_RowSingle.razor",
+      "C_TableAir.razor",
+      "C_Bookmark.razor",
+      "C_InspectorHeader.razor.cs",
+      "C_RowSingle.razor.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/03_Pointers": {
+    "dirs": [],
+    "files": [
+      "P_GroupTab.razor.cs",
+      "P_Table.razor",
+      "P_FieldsSelector.razor.cs",
+      "P_Workspace.razor",
+      "P_Table.razor.cs",
+      "P_Bookmarks.razor.cs",
+      "P_FieldsSelector.razor",
+      "P_Field.razor.cs",
+      "P_VariableButton.razor",
+      "P_SelectorDropdown.razor.cs",
+      "P_HomeDropdown.razor.cs",
+      "P_Row.razor.cs",
+      "P_SelectorDropdown.razor",
+      "P_Bookmarks.razor",
+      "P_Workspace.razor.cs",
+      "P_GroupTab.razor",
+      "P_HomeDropdown.razor",
+      "P_Field.razor",
+      "P_VariableButton.razor.cs",
+      "P_Row.razor"
+    ]
+  },
+  "Shared/Plugins/Airtable/01_Displays": {
+    "dirs": [],
+    "files": []
+  },
+  "Shared/Plugins/Airtable/08_View": {
+    "dirs": [],
+    "files": [
+      "V_Workspace.razor",
+      "V_Workspace.razor.cs"
+    ]
+  },
+  "Shared/Plugins/Airtable/02_Fields": {
+    "dirs": [],
+    "files": []
+  },
+  "Shared/Plugins/Airtable/09_Panels": {
+    "dirs": [],
+    "files": [
+      "PNL_Structure.razor.cs",
+      "PNL_Selection.razor",
+      "PNL_Selection.razor.cs",
+      "PNL_Structure.razor"
+    ]
+  },
+  "Shared/Plugins/Airtable/05_Nodes": {
+    "dirs": [],
+    "files": []
+  },
+  "Shared/Plugins/Airtable/04_Actions": {
+    "dirs": [
+      "_Core"
+    ],
+    "files": [
+      "A_RowBookmark.razor.cs",
+      "A_TableVars.razor",
+      "A_TableSearch.razor.cs",
+      "A_RowNew.razor.cs",
+      "A_RowVars.razor.cs",
+      "A_TableVars.razor.cs",
+      "A_RowVars.razor",
+      "A_AirtableSync.razor",
+      "A_TableBookmark.razor",
+      "A_RowNew.razor",
+      "CountryData.cs",
+      "A_RowDuplicate.razor",
+      "A_BookmarkDelete.razor.cs",
+      "A_RowDelete.razor.cs",
+      "A_BookmarkDelete.razor",
+      "A_TableSearch.razor",
+      "A_RowDuplicate.razor.cs",
+      "A_AirtableSync.razor.cs",
+      "A_TableBookmark.razor.cs",
+      "A_RowDelete.razor",
+      "A_RowBookmark.razor"
+    ]
+  },
+  "Shared/Plugins/Airtable/04_Actions/_Core": {
+    "dirs": [],
+    "files": [
+      "ABaseBookmark.razor.cs",
+      "ABaseBookmark.razor"
+    ]
+  },
+  "Shared/Plugins/Airtable/07_Widgets": {
+    "dirs": [],
+    "files": [
+      "W_Tables.razor.cs",
+      "W_Tables.razor"
+    ]
+  },
+  "Shared/_Modules": {
+    "dirs": [],
+    "files": []
+  },
+  "Shared/_Projects": {
+    "dirs": [
+      "FoodEscape"
+    ],
+    "files": []
+  },
+  "Shared/_Projects/FoodEscape": {
+    "dirs": [
+      "Style"
+    ],
+    "files": []
+  },
+  "Shared/_Projects/FoodEscape/Style": {
+    "dirs": [],
+    "files": [
+      "FE_Style.razor.cs",
+      "FE_Style.razor"
+    ]
+  }
+}

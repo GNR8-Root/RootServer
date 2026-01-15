@@ -1,0 +1,56 @@
+{
+  "terms": [
+    {
+      "term": "Host",
+      "definition": "The RootServer application that owns runtime boot, DI wiring, shared services, and module/plugin discovery.",
+      "synonyms": []
+    },
+    {
+      "term": "Module",
+      "definition": "A cohesive capability package intended to be always-active within the Host and directly referenceable by other modules.",
+      "synonyms": []
+    },
+    {
+      "term": "Plugin",
+      "definition": "An extension unit that can reference Modules and Host surfaces, but the Host should not take a compile-time dependency on plugins.",
+      "synonyms": []
+    },
+    {
+      "term": "Shared/_Sites",
+      "definition": "Primary UI hierarchy source folder containing Pages/Layouts/Components/Sections/Nav.",
+      "synonyms": [
+        "Sites hierarchy"
+      ]
+    },
+    {
+      "term": "Layer folders (00..09)",
+      "definition": "Numbered micro\u2192macro folder convention used in Shared/_Core and Shared/_Editor (e.g., 00_Core, 02_Fields, 09_Panels).",
+      "synonyms": [
+        "00..09 layers"
+      ]
+    },
+    {
+      "term": "Prefix system",
+      "definition": "Component filename prefixes indicating role (e.g., F_ for Fields, P_ for Pointers, A_ for Actions).",
+      "synonyms": [
+        "UI prefixes"
+      ]
+    },
+    {
+      "term": "Airtable Base/Table/Row/Field",
+      "definition": "Vertical data model used in the Airtable integration: Base contains Tables; Tables contain Rows; Rows contain Fields.",
+      "synonyms": []
+    }
+  ],
+  "forbidden_terms": [
+    "TBD",
+    "TODO",
+    "???"
+  ],
+  "synonyms": [
+    {
+      "from": "Sites hierarchy",
+      "to": "Shared/_Sites"
+    }
+  ]
+}

@@ -1,0 +1,415 @@
+{
+  "schema_version": "2.2",
+  "project_name": "RootServer",
+  "doc_slug": "rootserver",
+  "project_type": "host",
+  "generation_timestamp": "2025-12-16T13:17:00Z",
+  "total_pages": 44,
+  
+  "ordered_files": [
+    {
+      "number": null,
+      "filename": "rootserver.md",
+      "role": "root_entry",
+      "required": true,
+      "applicability": "always",
+      "description": "Main entry point with overview, glossary, and navigation to major indices"
+    },
+    {
+      "number": "00",
+      "filename": "rootserver-00-base-index.md",
+      "role": "base_index",
+      "required": true,
+      "applicability": "always",
+      "description": "Base layer navigation index (pages 01-11)"
+    },
+    {
+      "number": "01",
+      "filename": "rootserver-01-base-vision.md",
+      "role": "base_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "Vision, purpose, audience, scope boundaries"
+    },
+    {
+      "number": "02",
+      "filename": "rootserver-02-base-concepts.md",
+      "role": "base_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "Core terminology, abstractions, mental model"
+    },
+    {
+      "number": "03",
+      "filename": "rootserver-03-base-boundaries.md",
+      "role": "base_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "Host/Module/Plugin boundaries and dependency rules"
+    },
+    {
+      "number": "04",
+      "filename": "rootserver-04-base-folder-system.md",
+      "role": "base_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "Top-level layout, Shared/ structure, 00-09 layer system"
+    },
+    {
+      "number": "05",
+      "filename": "rootserver-05-base-dependency-rules.md",
+      "role": "base_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "Dependency graph, reference rules, plugin isolation"
+    },
+    {
+      "number": "06",
+      "filename": "rootserver-06-base-runtime-execution.md",
+      "role": "base_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "Program.cs, DI registration, middleware pipeline, Blazor Server startup"
+    },
+    {
+      "number": "07",
+      "filename": "rootserver-07-base-lifecycle.md",
+      "role": "base_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "Service lifecycle, scoped services, component activation"
+    },
+    {
+      "number": "08",
+      "filename": "rootserver-08-base-integrations.md",
+      "role": "base_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "Airtable integration, Blazorise, external dependencies"
+    },
+    {
+      "number": "09",
+      "filename": "rootserver-09-base-examples.md",
+      "role": "base_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "Common workflows, extension patterns, pitfalls"
+    },
+    {
+      "number": "10",
+      "filename": "rootserver-10-base-schemas.md",
+      "role": "base_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "JSON schema inventory, versioning, duplicate detection"
+    },
+    {
+      "number": "11",
+      "filename": "rootserver-11-base-contracts.md",
+      "role": "base_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "Public contracts, service interfaces, plugin API surface"
+    },
+    {
+      "number": "12",
+      "filename": "rootserver-12-arch-index.md",
+      "role": "arch_index",
+      "required": true,
+      "applicability": "always",
+      "description": "Architecture layer navigation index (pages 13-25)"
+    },
+    {
+      "number": "13",
+      "filename": "rootserver-13-arch.md",
+      "role": "arch_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "System architecture overview with boundary diagram"
+    },
+    {
+      "number": "14",
+      "filename": "rootserver-14-arch-ui-framework.md",
+      "role": "arch_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "Blazor Server architecture, rendering lifecycle, SignalR"
+    },
+    {
+      "number": "15",
+      "filename": "rootserver-15-arch-dataflows.md",
+      "role": "arch_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "Data flow patterns, service communication, state propagation"
+    },
+    {
+      "number": "16",
+      "filename": "rootserver-16-arch-json-and-assets.md",
+      "role": "arch_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "JSON cache system, duplicate file issue, asset management"
+    },
+    {
+      "number": "17",
+      "filename": "rootserver-17-arch-js-interop.md",
+      "role": "arch_layer",
+      "required": true,
+      "applicability": "blazor_specific",
+      "description": "JavaScript interop patterns (if used)"
+    },
+    {
+      "number": "18",
+      "filename": "rootserver-18-arch-rendering-and-state.md",
+      "role": "arch_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "Component rendering, state containers, service-driven updates"
+    },
+    {
+      "number": "19",
+      "filename": "rootserver-19-arch-update-and-sync.md",
+      "role": "arch_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "Airtable sync, JSON update mechanisms, cache invalidation"
+    },
+    {
+      "number": "20",
+      "filename": "rootserver-20-arch-composition.md",
+      "role": "arch_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "Plugin composition, module wiring, extension points"
+    },
+    {
+      "number": "21",
+      "filename": "rootserver-21-arch-validation-rules.md",
+      "role": "arch_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "Field validation, data integrity, user-visible validation"
+    },
+    {
+      "number": "22",
+      "filename": "rootserver-22-arch-performance-and-observability.md",
+      "role": "arch_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "Performance targets, hotspots, logging, observability"
+    },
+    {
+      "number": "23",
+      "filename": "rootserver-23-arch-testing-and-qa.md",
+      "role": "arch_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "Testing strategy, coverage, QA approach"
+    },
+    {
+      "number": "24",
+      "filename": "rootserver-24-arch-deployment-and-config.md",
+      "role": "arch_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "Deployment model, configuration, local development setup"
+    },
+    {
+      "number": "25",
+      "filename": "rootserver-25-arch-resources.md",
+      "role": "arch_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "External references, documentation links, specifications"
+    },
+    {
+      "number": "26",
+      "filename": "rootserver-26-ui-index.md",
+      "role": "ui_index",
+      "required": true,
+      "applicability": "always",
+      "description": "UI layer navigation index (pages 27-38)"
+    },
+    {
+      "number": "27",
+      "filename": "rootserver-27-ui-overview.md",
+      "role": "ui_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "UI architecture overview, navigation model"
+    },
+    {
+      "number": "28",
+      "filename": "rootserver-28-ui-hierarchy-model.md",
+      "role": "ui_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "Shared/_Sites hierarchy, composition rules"
+    },
+    {
+      "number": "29",
+      "filename": "rootserver-29-ui-layer-folders.md",
+      "role": "ui_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "00-09 layer folders, discovered implementation status"
+    },
+    {
+      "number": "30",
+      "filename": "rootserver-30-ui-prefix-system.md",
+      "role": "ui_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "Component prefix conventions (F_, P_, A_, C_, etc.)"
+    },
+    {
+      "number": "31",
+      "filename": "rootserver-31-ui-displays.md",
+      "role": "ui_layer",
+      "required": true,
+      "applicability": "conditional",
+      "description": "01_Displays layer (status: not yet implemented)"
+    },
+    {
+      "number": "32",
+      "filename": "rootserver-32-ui-fields.md",
+      "role": "ui_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "02_Fields layer components and patterns"
+    },
+    {
+      "number": "33",
+      "filename": "rootserver-33-ui-pointers.md",
+      "role": "ui_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "03_Pointers layer, Pointer_Service, selection patterns"
+    },
+    {
+      "number": "34",
+      "filename": "rootserver-34-ui-actions.md",
+      "role": "ui_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "04_Actions layer, action base classes, patterns"
+    },
+    {
+      "number": "35",
+      "filename": "rootserver-35-ui-nodes.md",
+      "role": "ui_layer",
+      "required": true,
+      "applicability": "conditional",
+      "description": "05_Nodes layer (status: planned/experimental)"
+    },
+    {
+      "number": "36",
+      "filename": "rootserver-36-ui-components.md",
+      "role": "ui_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "06_Components layer, composition patterns"
+    },
+    {
+      "number": "37",
+      "filename": "rootserver-37-ui-widgets-and-views.md",
+      "role": "ui_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "07_Widgets and 08_View layers"
+    },
+    {
+      "number": "38",
+      "filename": "rootserver-38-ui-panels-and-navigation.md",
+      "role": "ui_layer",
+      "required": true,
+      "applicability": "always",
+      "description": "09_Panels layer, editor panels, navigation shells"
+    },
+    {
+      "number": "39",
+      "filename": "rootserver-39-appendix-index.md",
+      "role": "appendix_index",
+      "required": true,
+      "applicability": "always",
+      "description": "Appendix navigation index (pages 40-42)"
+    },
+    {
+      "number": "40",
+      "filename": "rootserver-40-appendix-risks-and-vulnerabilities.md",
+      "role": "appendix",
+      "required": true,
+      "applicability": "always",
+      "description": "Security risks, vulnerabilities, remediation plans"
+    },
+    {
+      "number": "41",
+      "filename": "rootserver-41-appendix-source-to-docs-mapping.md",
+      "role": "appendix",
+      "required": true,
+      "applicability": "always",
+      "description": "Folder-to-page mapping, new contributor guide"
+    },
+    {
+      "number": "42",
+      "filename": "rootserver-42-appendix-duplicate-json-cleanup.md",
+      "role": "appendix",
+      "required": true,
+      "applicability": "always",
+      "description": "Duplicate JSON cleanup plan and remediation"
+    },
+    {
+      "number": "43",
+      "filename": "rootserver-43-diagrams.md",
+      "role": "diagrams",
+      "required": true,
+      "applicability": "always",
+      "description": "System diagrams, architecture visualizations"
+    }
+  ],
+  
+  "counts": {
+    "total_files": 44,
+    "root_entry": 1,
+    "indices": 4,
+    "base_layer": 11,
+    "arch_layer": 13,
+    "ui_layer": 12,
+    "appendices": 3,
+    "diagrams": 1
+  },
+  
+  "page_roles": {
+    "root_entry": ["rootserver.md"],
+    "indices": ["00", "12", "26", "39"],
+    "base_layer": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11"],
+    "arch_layer": ["13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25"],
+    "ui_layer": ["27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38"],
+    "appendices": ["40", "41", "42"],
+    "diagrams": ["43"]
+  },
+  
+  "applicability_rules": {
+    "always": "Generate with discovered content; if area not present, document as not implemented with evidence",
+    "conditional": "Generate if applicable; if not present, document absence with investigation plan",
+    "blazor_specific": "Relevant for Blazor projects; document if JS interop is used"
+  },
+  
+  "not_applicable_policy": {
+    "allowed": true,
+    "must_be_explicit": true,
+    "minimum_content": [
+      "State what was searched for",
+      "Explain why absent (not found vs not applicable vs planned)",
+      "Provide 2-3 sentence minimum explanation",
+      "Reference evidence from inventory"
+    ],
+    "forbidden_words": ["TBD", "TODO", "???"]
+  },
+  
+  "content_hash": {
+    "note": "Content hashes will be calculated after generation for change tracking",
+    "algorithm": "SHA256"
+  }
+}

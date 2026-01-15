@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "FvcgCtGcUMw=",
+  "dgSpecHash": "05XdgwDVIww=",
   "success": true,
-  "projectFilePath": "/Users/znzr/Documents/Dropbox/gits-_root/RootServer/RootServer.csproj",
+  "projectFilePath": "/Users/znzr/Documents/Dropbox/gits-gnr8-root/RootServer/RootServer.csproj",
   "expectedPackageFiles": [
     "/Users/znzr/.nuget/packages/airtable/1.4.0/airtable.1.4.0.nupkg.sha512",
     "/Users/znzr/.nuget/packages/blazorise/1.8.7/blazorise.1.8.7.nupkg.sha512",

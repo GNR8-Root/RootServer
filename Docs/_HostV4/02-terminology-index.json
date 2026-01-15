@@ -1,0 +1,242 @@
+{
+  "schema_version": "2.2",
+  "generated_from": "rootserver-02-base-concepts.md",
+  "last_updated": "2025-12-16",
+  
+  "terms": [
+    {
+      "term": "Host",
+      "definition": "The RootServer application that provides infrastructure, DI services, lifecycle management, and routing for modules and plugins.",
+      "first_used_in": "rootserver-01-base-vision.md",
+      "context": "architectural_role",
+      "synonyms": ["RootServer", "Host Application"],
+      "disambiguation": "Distinct from ASP.NET Core 'host' - refers to the application-level container"
+    },
+    {
+      "term": "Plugin",
+      "definition": "Self-contained extension implementing specific functionality (e.g., Airtable integration). Plugins follow the cross-layer pattern but only implement needed layers.",
+      "first_used_in": "rootserver-01-base-vision.md",
+      "context": "architectural_component",
+      "synonyms": [],
+      "examples": ["Airtable plugin in Shared/Plugins/Airtable"]
+    },
+    {
+      "term": "Module",
+      "definition": "Planned infrastructure for shared services and contracts. Currently minimal implementation in Shared/_Modules.",
+      "first_used_in": "rootserver-01-base-vision.md",
+      "context": "architectural_component",
+      "synonyms": [],
+      "status": "infrastructure_only"
+    },
+    {
+      "term": "Cross-Layer Hierarchy",
+      "definition": "The 00_Core → 09_Panels organizational pattern for UI components, moving from foundational primitives to composed layouts.",
+      "first_used_in": "rootserver.md",
+      "context": "organizational_pattern",
+      "synonyms": ["Layer System", "00-09 Pattern"],
+      "examples": ["Shared/_Core/00_Core through 09_Panels"]
+    },
+    {
+      "term": "Layer",
+      "definition": "A numbered folder (00-09) representing a level of abstraction in the component hierarchy.",
+      "first_used_in": "rootserver.md",
+      "context": "organizational_unit",
+      "synonyms": ["Layer Folder"],
+      "examples": ["02_Fields", "04_Actions", "09_Panels"]
+    },
+    {
+      "term": "Prefix System",
+      "definition": "Component naming convention (F_, P_, A_, C_, PNL_, etc.) indicating role and layer assignment.",
+      "first_used_in": "rootserver.md",
+      "context": "naming_convention",
+      "synonyms": ["Component Prefix Convention"],
+      "examples": ["F_Text_Email", "P_Workspace", "A_AirtableSync", "PNL_Structure"]
+    },
+    {
+      "term": "Schema-Driven",
+      "definition": "UI and behavior generated from JSON metadata rather than hardcoded implementations.",
+      "first_used_in": "rootserver.md",
+      "context": "design_pattern",
+      "synonyms": ["Metadata-Driven", "Data-Driven UI"],
+      "disambiguation": "Runtime interpretation, not code generation"
+    },
+    {
+      "term": "Editor Environment",
+      "definition": "Internal tooling in Shared/_Editor for browsing tables, inspecting data, managing Airtable sync, and workspace navigation.",
+      "first_used_in": "rootserver.md",
+      "context": "subsystem",
+      "synonyms": ["Editor", "Internal Editor"],
+      "location": "Shared/_Editor"
+    },
+    {
+      "term": "Sites",
+      "definition": "Public-facing website architecture in Shared/_Sites using section-based composition for page rendering.",
+      "first_used_in": "rootserver.md",
+      "context": "subsystem",
+      "synonyms": ["_Sites", "Public Website"],
+      "location": "Shared/_Sites"
+    },
+    {
+      "term": "Pointer_Service",
+      "definition": "Scoped service managing pointer/selection state across the application. Central to interaction patterns.",
+      "first_used_in": "rootserver-06-base-runtime-execution.md",
+      "context": "service",
+      "type": "scoped",
+      "location": "Shared/_Core/00_Core/Events/Pointer_Service.cs"
+    },
+    {
+      "term": "EditorView_Service",
+      "definition": "Scoped service managing editor view state and navigation.",
+      "first_used_in": "rootserver-06-base-runtime-execution.md",
+      "context": "service",
+      "type": "scoped",
+      "location": "Shared/_Editor/00_Core/"
+    },
+    {
+      "term": "EditorVisibility_Service",
+      "definition": "Scoped service controlling visibility of editor UI elements.",
+      "first_used_in": "rootserver-06-base-runtime-execution.md",
+      "context": "service",
+      "type": "scoped",
+      "location": "Shared/_Editor/00_Core/"
+    },
+    {
+      "term": "LogCatcher_Service",
+      "definition": "Scoped service for capturing and displaying log messages within the editor environment.",
+      "first_used_in": "rootserver-06-base-runtime-execution.md",
+      "context": "service",
+      "type": "scoped",
+      "location": "Shared/_Editor/00_Core/"
+    },
+    {
+      "term": "Airtable Plugin",
+      "definition": "Primary plugin implementation providing Airtable API integration with local JSON caching.",
+      "first_used_in": "rootserver-08-base-integrations.md",
+      "context": "plugin_instance",
+      "location": "Shared/Plugins/Airtable"
+    },
+    {
+      "term": "JSON Caching",
+      "definition": "Local storage of Airtable data as JSON files to enable offline development and reduce API calls.",
+      "first_used_in": "rootserver-08-base-integrations.md",
+      "context": "integration_pattern",
+      "location": "Json/"
+    },
+    {
+      "term": "Duplicate JSON Pattern",
+      "definition": "Detected duplication of JSON files with different naming conventions (e.g., pages.json vs pagesJson.json).",
+      "first_used_in": "rootserver-42-appendix-duplicate-json-cleanup.md",
+      "context": "technical_debt",
+      "risk": "high"
+    },
+    {
+      "term": "Field",
+      "definition": "Form input component in the 02_Fields layer. Handles read/write user input.",
+      "first_used_in": "rootserver-32-ui-fields.md",
+      "context": "component_type",
+      "prefix": "F_",
+      "layer": "02_Fields",
+      "examples": ["F_Text_Email", "F_Color", "F_Date_Field", "F_Rating"]
+    },
+    {
+      "term": "Pointer",
+      "definition": "Interaction helper component in the 03_Pointers layer. Manages selection, navigation, bookmarks.",
+      "first_used_in": "rootserver-33-ui-pointers.md",
+      "context": "component_type",
+      "prefix": "P_",
+      "layer": "03_Pointers",
+      "examples": ["P_Workspace", "P_Table", "P_Row", "P_Field"]
+    },
+    {
+      "term": "Action",
+      "definition": "User or system action component in the 04_Actions layer. Triggers state changes, API calls, sync operations.",
+      "first_used_in": "rootserver-34-ui-actions.md",
+      "context": "component_type",
+      "prefix": "A_",
+      "layer": "04_Actions",
+      "examples": ["A_AirtableSync", "A_TableVars", "A_RowNew"]
+    },
+    {
+      "term": "Component",
+      "definition": "Composed layout in the 06_Components layer. Combines fields, pointers, actions into reusable units.",
+      "first_used_in": "rootserver-36-ui-components.md",
+      "context": "component_type",
+      "prefix": "C_",
+      "layer": "06_Components",
+      "examples": ["C_RowSingle", "C_TableAir", "C_InspectorHeader"]
+    },
+    {
+      "term": "Panel",
+      "definition": "High-level layout container in the 09_Panels layer. Groups multiple views and provides navigation shell.",
+      "first_used_in": "rootserver-38-ui-panels-and-navigation.md",
+      "context": "component_type",
+      "prefix": "PNL_",
+      "layer": "09_Panels",
+      "examples": ["PNL_Structure", "PNL_Selection"]
+    },
+    {
+      "term": "Node System",
+      "definition": "Planned infrastructure for plugin-to-plugin communication via node-based workflows. Currently experimental.",
+      "first_used_in": "rootserver-35-ui-nodes.md",
+      "context": "planned_feature",
+      "status": "infrastructure_present_minimal_implementation",
+      "layer": "05_Nodes"
+    },
+    {
+      "term": "Section",
+      "definition": "Content section in Shared/_Sites architecture. Modular page building block for public website.",
+      "first_used_in": "rootserver-28-ui-hierarchy-model.md",
+      "context": "sites_component",
+      "location": "Shared/_Sites/Sections",
+      "examples": ["About", "Agenda", "Contact", "Gallery", "Welcome"]
+    },
+    {
+      "term": "Blazorise",
+      "definition": "UI component framework providing Bootstrap 5 and Tailwind CSS integration for Blazor.",
+      "first_used_in": "rootserver-14-arch-ui-framework.md",
+      "context": "external_dependency",
+      "type": "ui_framework"
+    },
+    {
+      "term": "Scoped Service",
+      "definition": "DI service lifetime scoped to a single user request/connection in Blazor Server.",
+      "first_used_in": "rootserver-06-base-runtime-execution.md",
+      "context": "di_pattern",
+      "usage": "State management services (Pointer_Service, EditorView_Service, etc.)"
+    }
+  ],
+  
+  "forbidden_terms": [
+    "TBD",
+    "TODO",
+    "???",
+    "placeholder",
+    "coming soon",
+    "to be determined"
+  ],
+  
+  "synonym_groups": [
+    {
+      "primary": "Host",
+      "synonyms": ["RootServer", "Host Application"],
+      "note": "Use 'Host' in architectural discussions, 'RootServer' when referring to the specific project"
+    },
+    {
+      "primary": "Cross-Layer Hierarchy",
+      "synonyms": ["Layer System", "00-09 Pattern"],
+      "note": "Use 'Cross-Layer Hierarchy' in formal descriptions, '00-09' when referring to folder names"
+    },
+    {
+      "primary": "Schema-Driven",
+      "synonyms": ["Metadata-Driven", "Data-Driven UI"],
+      "note": "Prefer 'Schema-Driven' for consistency"
+    }
+  ],
+  
+  "contextual_notes": {
+    "layer_numbering": "Always use leading zero: 02_Fields, not 2_Fields",
+    "prefix_formatting": "Always include underscore: F_, not F",
+    "file_extensions": ".razor for UI components, .cs for code-behind or pure C#",
+    "path_separators": "Use forward slashes in documentation: Shared/_Core/02_Fields"
+  }
+}

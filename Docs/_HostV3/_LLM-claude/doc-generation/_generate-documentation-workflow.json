@@ -1,0 +1,1495 @@
+{
+	"system_version": "2.2",
+	"system_name": "Strict Existing Codebase Documentation Workflow, .md, no other formats like pdf or epub",
+	"agent_orchestration_model": "sequential_with_parallelization_and_strict_gates",
+	"description": "Generate a strict, navigable documentation set for an existing Host / Module / Plugin codebase (e.g., RootServer.zip). The workflow first extracts formatting rules from an example docset, then inventories the real source tree, asks only blocking questions, locks a deterministic file plan (fixed numbering), generates the full docset, and runs link/coverage/security validations before bundling.",
+
+	"global_configuration": {
+		"execution_modes": {
+			"review_mode": {
+				"type": "enum",
+				"values": ["interactive", "batch"],
+				"default": "interactive",
+				"description": "Interactive pauses at gates (recommended). Batch runs all phases then emits a review pack with decision points logged."
+			},
+			"validation_strictness": {
+				"type": "enum",
+				"values": ["strict", "lenient"],
+				"default": "strict",
+				"description": "Strict blocks on required checks; lenient continues but logs all gaps and remediation steps."
+			},
+			"batch_mode_behavior": {
+				"emit_decision_log": true,
+				"pause_points": [
+					"after_preflight_if_blocking_questions",
+					"after_inventory_if_major_unknowns",
+					"after_fileplan_lock",
+					"after_final_validation"
+				],
+				"auto_proceed_conditions": [
+					"all_blocking_questions_answered_in_answers_bundle",
+					"inventory_confidence_score >= 0.85",
+					"no_security_critical_findings"
+				]
+			}
+		},
+
+		"determinism_rules": {
+			"single_source_of_truth": [
+				"01-planned-files.json",
+				"04-link-map.json",
+				"03-coverage-map.json",
+				"02-terminology-index.json"
+			],
+			"no_silent_regeneration": true,
+			"patch_behavior": {
+				"allowed": true,
+				"scope": "only files impacted by the user's new inputs or corrected assumptions",
+				"must_emit": "06-change-log.md",
+				"diff_generation": {
+					"enabled": true,
+					"format": "unified_diff",
+					"include_in_changelog": true
+				},
+				"revalidation_required": [
+					"link_validation",
+					"coverage_validation",
+					"terminology_validation"
+				],
+				"incremental_update_workflow": {
+					"trigger": "user provides new source or corrections",
+					"steps": [
+						"Compare current 01-inventory-index.json with new scan",
+						"Identify changed/added/removed areas",
+						"Map impacts to affected pages via 03-coverage-map.json",
+						"Regenerate only impacted pages",
+						"Update link-map and coverage-map",
+						"Run validators on changed pages + their dependents",
+						"Emit 06-change-log.md with before/after summary"
+					],
+					"preserve": [
+						"User-added notes in appendices",
+						"Custom diagrams (mark as user-maintained)",
+						"Manual overrides (if flagged in metadata)"
+					]
+				}
+			},
+			"version_tracking": {
+				"enabled": true,
+				"schema_version_in": "00-preflight-summary.md",
+				"content_hash_in": "01-planned-files.json",
+				"change_history_in": "06-change-log.md",
+				"purpose": "Track documentation evolution and enable rollback"
+			}
+		},
+
+		"question_protocol": {
+			"ask_only_when_missing_or_ambiguous": true,
+			"ask_in_rounds": true,
+			"max_questions_per_round": 12,
+			"question_categories": [
+				"BLOCKING_PATHS",
+				"BLOCKING_SCOPE",
+				"BLOCKING_TEMPLATE_RULES",
+				"BLOCKING_DISAMBIGUATIONS",
+				"NON_BLOCKING_CONTEXT",
+				"NON_BLOCKING_NAMING"
+			],
+			"default_assumptions_if_unanswered": [
+				{
+					"id": "A_SCOPE_DEPTH",
+					"assume": "balanced",
+					"used_when": "user does not specify depth",
+					"must_log_in": "00-preflight-summary.md"
+				},
+				{
+					"id": "A_EXTERNAL_LINKS",
+					"assume": "allowed_with_audit",
+					"used_when": "user does not explicitly configure",
+					"must_log_in": "00-preflight-summary.md",
+					"note": "Changed from disallowed to allowed_with_audit for modern docs needs"
+				},
+				{
+					"id": "A_AMBIGUOUS_CONVENTIONS",
+					"assume": "discover_and_document_as_found",
+					"used_when": "UI conventions differ from expected (00-09 layers, prefix system)",
+					"must_log_in": "00-preflight-summary.md"
+				}
+			],
+			"reask_behavior": {
+				"allowed": true,
+				"only_if": [
+					"answer conflicts with discovered facts",
+					"answer is incomplete for strict blockers",
+					"multiple paths/targets exist and cannot be disambiguated by discovery"
+				],
+				"max_reask_rounds": 2,
+				"escalation": "If still ambiguous after 2 rounds, document the ambiguity in 05-final-issues.md with investigation plan"
+			}
+		},
+
+		"security_and_safety": {
+			"never_output_secrets": true,
+			"secret_detection": {
+				"enabled": true,
+				"scan_targets": [
+					"*.json",
+					"*.cs",
+					"*.razor",
+					"*.config",
+					"*.yml",
+					"*.yaml",
+					"*.env",
+					"appsettings*.json",
+					"*.xml",
+					"*.props",
+					"*.targets"
+				],
+				"patterns": [
+					"apikey",
+					"api_key",
+					"token",
+					"secret",
+					"connectionstring",
+					"connection_string",
+					"privatekey",
+					"client_secret",
+					"sas",
+					"bearer",
+					"password",
+					"pwd",
+					"credential"
+				],
+				"reporting_rules": {
+					"report_location": true,
+					"report_risk": true,
+					"never_print_value": true,
+					"severity_levels": {
+						"critical": "actual secrets in code/config",
+						"high": "secrets in example files without .example suffix",
+						"medium": "potential secrets in comments",
+						"low": "secret-like variable names (false positives ok)"
+					}
+				}
+			},
+			"filesystem_policy": {
+				"read_scope": "project_source only",
+				"write_scope": "save_output_to only",
+				"no_writes_outside_output": true,
+				"no_execution_by_default": true,
+				"exception_for_health_check": {
+					"allowed": true,
+					"purpose": "validate existing documentation integrity",
+					"restricted_to": "read operations only"
+				}
+			},
+			"external_links_policy": {
+				"default": "allowed_with_audit",
+				"audit_requirements": {
+					"track_all_external_urls": true,
+					"log_location": "04-link-map.json",
+					"categorize_by": ["documentation", "api_reference", "specification", "tool", "unknown"],
+					"review_flags": [
+						"domain_not_in_allowlist",
+						"link_returns_404",
+						"link_redirects",
+						"insecure_http"
+					]
+				},
+				"allowlist_domains": [
+					"docs.microsoft.com",
+					"learn.microsoft.com",
+					"github.com",
+					"developer.mozilla.org",
+					"w3.org",
+					"ietf.org",
+					"rfc-editor.org"
+				],
+				"restricted_pages": {
+					"most_pages": "external links allowed but must be audited",
+					"{doc_slug}-25-arch-resources.md": "primary location for external references with categorization"
+				},
+				"link_format": {
+					"must_include": "title or context",
+					"recommended": "External: [Title](url) - brief description",
+					"accessibility": "ensure link text is descriptive"
+				}
+			}
+		},
+
+		"formatting_and_style": {
+			"template_reference": "example_docs_source",
+			"headings": ["#", "##", "###"],
+			"max_heading_depth": 3,
+			"divider": "---",
+			"lists": "hyphen_bullets",
+			"tables": "avoid_unless_unavoidable",
+			"code_blocks": "minimal_and_targeted",
+			"links": "relative_links_for_internal",
+			"page_layout_contract": {
+				"required_order": [
+					"Title (H1)",
+					"Short intro (2–8 lines)",
+					"Divider",
+					"Main sections",
+					"Divider",
+					"Bottom navigation block (1–5 items)",
+					"Trailing divider"
+				],
+				"bottom_nav_rules": {
+					"must_include": ["Back to {doc_slug}.md"],
+					"must_include_one_of": [
+						"Back to {doc_slug}-00-base-index.md",
+						"Back to {doc_slug}-12-arch-index.md",
+						"Back to {doc_slug}-26-ui-index.md",
+						"Back to {doc_slug}-39-appendix-index.md"
+					],
+					"max_items": 5,
+					"format": "hyphen list with relative links"
+				}
+			},
+			"accessibility": {
+				"link_text": "must be descriptive (no 'click here' or bare URLs)",
+				"heading_hierarchy": "must not skip levels (no H1 → H3)",
+				"alt_text_for_diagrams": "include textual description in prose before diagram"
+			}
+		},
+
+		"ui_conventions_discovery": {
+			"expected_patterns": {
+				"layer_folders": {
+					"expected": ["00_Core", "01_Displays", "02_Fields", "03_Pointers", "04_Actions", "05_Nodes", "06_Components", "07_Widgets", "08_View", "09_Panels"],
+					"description": "Cross-layer numbered folder hierarchy (micro → macro)",
+					"discovery_mode": "scan and compare to expected, document actual findings"
+				},
+				"component_prefixes": {
+					"expected": ["D_", "F_", "P_", "A_", "N_", "C_", "W_", "V_", "PNL_"],
+					"description": "Component prefix system and roles",
+					"discovery_mode": "regex scan for patterns, document actual findings"
+				},
+				"ui_hierarchy_source": {
+					"expected": "Shared/_Sites",
+					"description": "Source of UI hierarchy",
+					"discovery_mode": "check existence, document alternative if found"
+				}
+			},
+			"discovery_behavior": {
+				"if_matches_expected": "Document as conforming to conventions",
+				"if_differs": [
+					"Document actual findings explicitly",
+					"Note deviations from expected patterns",
+					"Do not force-fit actual structure into expected template",
+					"Update relevant UI pages (29, 30) with discovered reality"
+				],
+				"if_absent": [
+					"Mark UI layer pages as 'Not present in this codebase'",
+					"Include brief explanation of what was searched for",
+					"No placeholder content or speculation about future implementation"
+				]
+			},
+			"validation": {
+				"consistency_check": "Ensure UI pages (27-38) accurately reflect discovered conventions, not expected ones",
+				"cross_reference": "Link between 01-source-inventory.md findings and UI documentation"
+			}
+		}
+	},
+
+	"inputs": {
+		"inputs_required": [
+			{ "name": "project_name", "type": "string", "required": true },
+			{
+				"name": "project_type",
+				"type": "enum",
+				"required": true,
+				"values": ["host", "module", "plugin"],
+				"description": "Primary project type; if mixed, user must specify which to emphasize"
+			},
+			{ "name": "project_source", "type": "zip|tree|path", "required": true },
+			{ "name": "save_output_to", "type": "path", "required": true },
+			{ "name": "example_docs_source", "type": "zip|tree|path", "required": true }
+		],
+		"inputs_optional": [
+			{
+				"name": "answers_bundle",
+				"type": "text|json",
+				"required": false,
+				"description": "Large user prompt with answers + context. Used to reduce questions."
+			},
+			{
+				"name": "scope_overrides",
+				"type": "json",
+				"required": false,
+				"description": "Include/exclude paths, topics, or pages."
+			},
+			{
+				"name": "depth",
+				"type": "enum",
+				"required": false,
+				"values": ["high_level", "balanced", "deep"],
+				"default": "balanced"
+			},
+			{
+				"name": "external_links_config",
+				"type": "object",
+				"required": false,
+				"default": {"mode": "allowed_with_audit", "allowlist_additions": []},
+				"description": "Configure external link handling; mode can be 'disallowed', 'allowed_with_audit', or 'unrestricted'"
+			},
+			{
+				"name": "existing_docs_path",
+				"type": "path",
+				"required": false,
+				"description": "Path to existing documentation for health check or incremental update"
+			}
+		]
+	},
+
+	"docset_identity": {
+		"doc_slug_rules": {
+			"doc_slug": "{lowercase(project_name)}",
+			"enforce_lowercase": true,
+			"allowed_chars": "a-z0-9-"
+		},
+		"fixed_numbering": {
+			"rule": "00..43 fixed ascending; no duplicates; do not renumber within a run.",
+			"must_generate_all_numbered_files": true,
+			"not_applicable_policy": {
+				"allowed": true,
+				"must_be_explicit": true,
+				"forbidden_words": ["TBD", "TODO", "???"],
+				"required_phrase_pattern": "Not present in this codebase (as discovered in inventory).",
+				"minimum_content": [
+					"State what was searched for",
+					"Explain why it's absent (not found vs. not applicable vs. planned)",
+					"If planned, reference evidence (roadmap, comments, issue tracker)",
+					"Provide 2-3 sentence explanation minimum"
+				],
+				"consolidation_strategy": {
+					"enabled": false,
+					"rationale": "Fixed numbering provides navigational stability; keep all pages even if N/A",
+					"alternative": "Rich N/A pages with context are more valuable than consolidation"
+				}
+			}
+		},
+		"page_lifecycle": {
+			"generation": "all 44 pages (00-43) generated in first run",
+			"updates": "incremental updates via patch_behavior",
+			"deprecation": "pages never removed; mark as deprecated if permanently N/A in future versions",
+			"evolution": "if new page types needed, propose in 05-final-issues.md for next schema version"
+		}
+	},
+
+	"capabilities": {
+		"default_allowed": ["READ_PROJECT_SOURCE", "WRITE_DOC_OUTPUT", "ZIP_OUTPUT", "GENERATE_MERMAID"],
+		"not_allowed_without_explicit_user_approval": [
+			"RUN_BUILD",
+			"RUN_TESTS",
+			"PROCESS_EXECUTION",
+			"NETWORK_EGRESS",
+			"GIT_OPERATIONS"
+		],
+		"health_check_mode": {
+			"enabled": true,
+			"purpose": "Validate existing documentation integrity without regeneration",
+			"capabilities": ["READ_EXISTING_DOCS", "READ_PROJECT_SOURCE", "VALIDATE_ONLY"],
+			"outputs": ["health-check-report.md"],
+			"checks": [
+				"All 44 pages exist",
+				"No broken internal links",
+				"Coverage map still valid (source hasn't significantly changed)",
+				"Terminology consistent across pages",
+				"Bottom nav present on all pages",
+				"No secret values present",
+				"Style consistency with template"
+			],
+			"scoring": {
+				"health_score_range": [0.0, 1.0],
+				"thresholds": {
+					"healthy": 0.95,
+					"needs_attention": 0.85,
+					"needs_regeneration": 0.75
+				}
+			}
+		}
+	},
+
+	"artifacts": {
+		"generated_artifacts": [
+			"00-template-profile.json",
+			"00-preflight-summary.md",
+			"00-preflight-questions.md",
+			"01-source-inventory.md",
+			"01-inventory-index.json",
+			"01-planned-files.json",
+			"02-terminology-index.json",
+			"03-coverage-map.json",
+			"04-link-map.json",
+			"05-final-validation-report.md",
+			"05-final-issues.md",
+			"06-change-log.md",
+			"health-check-report.md"
+		],
+		"artifact_contracts": {
+			"00-template-profile.json": {
+				"must_include": [
+					"reference_file_list",
+					"nav_block_pattern",
+					"index_link_style",
+					"heading_density",
+					"diagram_style_preferences",
+					"extracted_formatting_rules"
+				]
+			},
+			"01-planned-files.json": {
+				"must_include": [
+					"ordered_files[]",
+					"counts",
+					"page_roles",
+					"project_type",
+					"schema_version",
+					"generation_timestamp",
+					"content_hash_per_file"
+				]
+			},
+			"02-terminology-index.json": {
+				"must_include": ["terms[]", "forbidden_terms[]", "synonyms[]", "context_per_term"],
+				"term_structure": {
+					"term": "string",
+					"definition": "string",
+					"first_used_in": "page_reference",
+					"synonyms": ["array"],
+					"context": "brief explanation of usage",
+					"disambiguation": "if multiple meanings exist"
+				},
+				"synonym_handling": {
+					"validation_mode": "synonyms are allowed; validate primary term is used in key places",
+					"conflict_resolution": "if two terms are synonyms, mark one as primary and cross-reference"
+				}
+			},
+			"03-coverage-map.json": {
+				"must_include": [
+					"discovered_areas[]",
+					"mapped_pages[]",
+					"unmapped_items[]",
+					"coverage_score",
+					"coverage_formula_applied",
+					"scoring_breakdown"
+				],
+				"coverage_formula": {
+					"description": "Transparent formula for coverage scoring",
+					"components": [
+						{
+							"name": "architectural_coverage",
+							"weight": 0.30,
+							"calculation": "count(discovered_architectural_areas_with_pages) / count(all_discovered_architectural_areas)"
+						},
+						{
+							"name": "integration_coverage",
+							"weight": 0.20,
+							"calculation": "count(documented_integrations) / count(discovered_integrations)"
+						},
+						{
+							"name": "ui_coverage",
+							"weight": 0.20,
+							"calculation": "count(documented_ui_components_and_patterns) / count(discovered_ui_components_and_patterns)"
+						},
+						{
+							"name": "lifecycle_coverage",
+							"weight": 0.15,
+							"calculation": "count(documented_lifecycle_stages) / count(discovered_lifecycle_stages)"
+						},
+						{
+							"name": "operational_coverage",
+							"weight": 0.15,
+							"calculation": "count(documented_operational_concerns) / count(key_operational_concerns)"
+						}
+					],
+					"formula": "coverage_score = sum(component_score * weight for all components)",
+					"thresholds": {
+						"strict": 0.92,
+						"lenient": 0.75
+					},
+					"example": {
+						"architectural_coverage": 0.95,
+						"integration_coverage": 0.85,
+						"ui_coverage": 0.90,
+						"lifecycle_coverage": 1.0,
+						"operational_coverage": 0.80,
+						"calculation": "(0.95*0.30) + (0.85*0.20) + (0.90*0.20) + (1.0*0.15) + (0.80*0.15) = 0.895"
+					}
+				}
+			},
+			"04-link-map.json": {
+				"must_include": [
+					"from_to_edges[]",
+					"broken_links[]",
+					"orphan_pages[]",
+					"external_links_audit[]"
+				],
+				"external_links_audit_structure": {
+					"url": "string",
+					"found_in_pages": ["array"],
+					"category": "enum[documentation|api_reference|specification|tool|unknown]",
+					"status": "enum[ok|404|redirect|insecure|unchecked]",
+					"in_allowlist": "boolean",
+					"review_required": "boolean"
+				}
+			},
+			"06-change-log.md": {
+				"must_include": [
+					"timestamp",
+					"change_type[initial_generation|incremental_update|patch|health_check]",
+					"affected_pages[]",
+					"reason_for_change",
+					"diff_summary",
+					"revalidation_results"
+				]
+			},
+			"health-check-report.md": {
+				"must_include": [
+					"health_score",
+					"check_results[]",
+					"broken_items[]",
+					"recommendations[]",
+					"regeneration_needed_flag"
+				]
+			}
+		}
+	},
+
+	"file_plan": {
+		"fixed_pages": {
+			"root_entry": "{doc_slug}.md",
+
+			"indices": [
+				"{doc_slug}-00-base-index.md",
+				"{doc_slug}-12-arch-index.md",
+				"{doc_slug}-26-ui-index.md",
+				"{doc_slug}-39-appendix-index.md"
+			],
+
+			"base_layer_01_11": [
+				"{doc_slug}-01-base-vision.md",
+				"{doc_slug}-02-base-concepts.md",
+				"{doc_slug}-03-base-boundaries.md",
+				"{doc_slug}-04-base-folder-system.md",
+				"{doc_slug}-05-base-dependency-rules.md",
+				"{doc_slug}-06-base-runtime-execution.md",
+				"{doc_slug}-07-base-lifecycle.md",
+				"{doc_slug}-08-base-integrations.md",
+				"{doc_slug}-09-base-examples.md",
+				"{doc_slug}-10-base-schemas.md",
+				"{doc_slug}-11-base-contracts.md"
+			],
+
+			"arch_layer_13_25": [
+				"{doc_slug}-13-arch.md",
+				"{doc_slug}-14-arch-ui-framework.md",
+				"{doc_slug}-15-arch-dataflows.md",
+				"{doc_slug}-16-arch-json-and-assets.md",
+				"{doc_slug}-17-arch-js-interop.md",
+				"{doc_slug}-18-arch-rendering-and-state.md",
+				"{doc_slug}-19-arch-update-and-sync.md",
+				"{doc_slug}-20-arch-composition.md",
+				"{doc_slug}-21-arch-validation-rules.md",
+				"{doc_slug}-22-arch-performance-and-observability.md",
+				"{doc_slug}-23-arch-testing-and-qa.md",
+				"{doc_slug}-24-arch-deployment-and-config.md",
+				"{doc_slug}-25-arch-resources.md"
+			],
+
+			"ui_layer_27_38": [
+				"{doc_slug}-27-ui-overview.md",
+				"{doc_slug}-28-ui-hierarchy-model.md",
+				"{doc_slug}-29-ui-layer-folders.md",
+				"{doc_slug}-30-ui-prefix-system.md",
+				"{doc_slug}-31-ui-displays.md",
+				"{doc_slug}-32-ui-fields.md",
+				"{doc_slug}-33-ui-pointers.md",
+				"{doc_slug}-34-ui-actions.md",
+				"{doc_slug}-35-ui-nodes.md",
+				"{doc_slug}-36-ui-components.md",
+				"{doc_slug}-37-ui-widgets-and-views.md",
+				"{doc_slug}-38-ui-panels-and-navigation.md"
+			],
+
+			"appendices_40_42": [
+				"{doc_slug}-40-appendix-risks-and-vulnerabilities.md",
+				"{doc_slug}-41-appendix-source-to-docs-mapping.md",
+				"{doc_slug}-42-appendix-duplicate-json-cleanup.md"
+			],
+
+			"diagrams_43": ["{doc_slug}-43-diagrams.md"]
+		},
+
+		"project_type_variants": {
+			"host": {
+				"must_emphasize": [
+					"Host ↔ Modules ↔ Plugins architecture",
+					"module/plugin discovery + lifecycle",
+					"Shared/_Sites UI hierarchy if present",
+					"observability/performance targets",
+					"deployment/config",
+					"testing strategy",
+					"integration failure policies at host level"
+				]
+			},
+			"module": {
+				"must_emphasize": [
+					"public API surface",
+					"contracts consumed by plugins/host",
+					"stability/versioning expectations",
+					"integration touchpoints (if any)"
+				]
+			},
+			"plugin": {
+				"must_emphasize": [
+					"host wiring and entry points",
+					"dependency boundary (avoid Host→Plugin coupling)",
+					"UI entry views/panels and actions",
+					"configuration hooks",
+					"failure policies and safe defaults"
+				]
+			}
+		}
+	},
+
+	"page_content_contracts": {
+		"common_requirements": {
+			"must_include": [
+				"Short intro",
+				"At least 2 sections",
+				"Bottom navigation block",
+				"No placeholders (TBD/TODO/???)"
+			],
+			"must_reference_artifacts": [
+				"02-terminology-index.json (when using defined terms)",
+				"01-source-inventory.md (when making architectural claims)"
+			],
+			"evidence_policy": {
+				"rule": "Claims about structure must cite discovered evidence",
+				"evidence_types": ["folder path", "file path", "namespace pattern", "project name", "configuration file name", "code snippet reference", "comment reference"],
+				"if_unknown": "State unknown explicitly + add investigation steps to 05-final-issues.md",
+				"confidence_levels": {
+					"certain": "directly observed in source",
+					"inferred": "logically derived from observed patterns",
+					"uncertain": "ambiguous, needs verification"
+				}
+			}
+		},
+
+		"indices_contracts": {
+			"{doc_slug}.md": {
+				"required_sections": [
+					"What this documentation set contains",
+					"How to navigate",
+					"Key indices",
+					"Status / Coverage summary"
+				],
+				"must_link_to": [
+					"{doc_slug}-00-base-index.md",
+					"{doc_slug}-12-arch-index.md",
+					"{doc_slug}-26-ui-index.md",
+					"{doc_slug}-39-appendix-index.md"
+				],
+				"must_include_mermaid": false,
+				"must_include": [
+					"Coverage score with brief interpretation",
+					"Known gaps or limitations",
+					"Recommended reading order for different audiences"
+				]
+			},
+
+			"{doc_slug}-00-base-index.md": {
+				"required_sections": ["Base layer map", "Reading order", "Key concepts"],
+				"must_link_to_numbers": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+			},
+			"{doc_slug}-12-arch-index.md": {
+				"required_sections": ["Architecture layer map", "Diagrams references", "Operational concerns"],
+				"must_link_to_numbers": [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 43]
+			},
+			"{doc_slug}-26-ui-index.md": {
+				"required_sections": ["UI layer map", "Layer folders (00..09 or actual discovered)", "Prefix system (or actual discovered)"],
+				"must_link_to_numbers": [27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38],
+				"flexibility_note": "Adjust section descriptions based on discovered UI conventions"
+			},
+			"{doc_slug}-39-appendix-index.md": {
+				"required_sections": ["Appendix overview", "Maintenance checklists"],
+				"must_link_to_numbers": [40, 41, 42]
+			}
+		},
+
+		"base_contracts": {
+			"{doc_slug}-01-base-vision.md": {
+				"required_sections": ["Purpose", "Audience", "Non-goals", "High-level map"],
+				"must_include": ["Scope boundaries for project_type"]
+			},
+			"{doc_slug}-02-base-concepts.md": {
+				"required_sections": ["Core terms", "Key abstractions", "Mental model"],
+				"must_generate_or_update": ["02-terminology-index.json"]
+			},
+			"{doc_slug}-03-base-boundaries.md": {
+				"required_sections": ["Boundary rules", "Allowed dependencies", "Forbidden dependencies"],
+				"must_include": ["Host/Module/Plugin dependency policy (even if 'not applicable')"]
+			},
+			"{doc_slug}-04-base-folder-system.md": {
+				"required_sections": ["Top-level layout", "Key folders", "Conventions discovered"],
+				"must_include": ["Discovered numbered layers (00..09) or explicit absence", "Actual folder structure, not expected template"]
+			},
+			"{doc_slug}-05-base-dependency-rules.md": {
+				"required_sections": ["Dependency graph summary", "Reference rules", "Planned/future rules"],
+				"must_include": ["Host should not depend on plugins (if host exists)"]
+			},
+			"{doc_slug}-06-base-runtime-execution.md": {
+				"required_sections": ["Runtime overview", "Startup/boot", "Key services"],
+				"must_include_one_of": ["Program.cs wiring", "DI registration patterns", "Startup equivalents"]
+			},
+			"{doc_slug}-07-base-lifecycle.md": {
+				"required_sections": ["Activation", "Deactivation/unload (if any)", "State ownership"],
+				"must_include": ["Where lifecycle decisions live (files/folders) or explicit unknown with investigation plan"]
+			},
+			"{doc_slug}-08-base-integrations.md": {
+				"required_sections": ["Integrations inventory", "Failure policies", "Data ownership"],
+				"must_include": ["Timeout/retry/backoff/circuit breaker notes or explicit unknown with investigation plan"]
+			},
+			"{doc_slug}-09-base-examples.md": {
+				"required_sections": ["Common workflows", "Common extension patterns", "Common pitfalls"],
+				"must_include": ["At least 2 concrete examples from discovered source"]
+			},
+			"{doc_slug}-10-base-schemas.md": {
+				"required_sections": ["Schema inventory", "Versioning/evolution", "Validation strategy"],
+				"must_include": ["Duplicate JSON detection hook (ties to appendix 42)"]
+			},
+			"{doc_slug}-11-base-contracts.md": {
+				"required_sections": ["Public contracts", "Internal contracts", "DI/service contracts"],
+				"must_include": ["How consumers should integrate (host/module/plugin)"]
+			}
+		},
+
+		"arch_contracts": {
+			"{doc_slug}-13-arch.md": {
+				"required_sections": ["System architecture", "Boundaries", "Key flows"],
+				"must_include_mermaid": true,
+				"required_mermaid": ["boundary diagram"]
+			},
+			"{doc_slug}-14-arch-ui-framework.md": {
+				"required_sections": ["UI framework integration", "Rendering lifecycle", "State model"],
+				"not_applicable_allowed": true
+			},
+			"{doc_slug}-15-arch-dataflows.md": {
+				"required_sections": ["Data flow map", "Caching", "State ownership"],
+				"must_include": ["At least 1 end-to-end dataflow narrative"]
+			},
+			"{doc_slug}-16-arch-json-and-assets.md": {
+				"required_sections": ["JSON assets inventory", "Duplication risks", "Asset pipelines"],
+				"must_include": ["Links to appendix 42 when duplication exists"]
+			},
+			"{doc_slug}-17-arch-js-interop.md": {
+				"required_sections": ["Interop boundary", "Call patterns", "Safety notes"],
+				"not_applicable_allowed": true
+			},
+			"{doc_slug}-18-arch-rendering-and-state.md": {
+				"required_sections": ["State containers", "Re-render triggers", "Async patterns"],
+				"not_applicable_allowed": true
+			},
+			"{doc_slug}-19-arch-update-and-sync.md": {
+				"required_sections": ["Update mechanisms", "Sync actions", "Consistency rules"],
+				"not_applicable_allowed": true
+			},
+			"{doc_slug}-20-arch-composition.md": {
+				"required_sections": ["Composition model", "Module/plugin wiring", "Extension points"],
+				"must_include": ["Explicit boundary reminders"]
+			},
+			"{doc_slug}-21-arch-validation-rules.md": {
+				"required_sections": ["Validation invariants", "Failure modes", "User-visible validation"],
+				"must_include": ["Where rules are enforced (files/folders) or explicit unknown with investigation plan"]
+			},
+			"{doc_slug}-22-arch-performance-and-observability.md": {
+				"required_sections": ["Targets", "Hotspots", "Observability/logging"],
+				"strict_mode_rule": "Must exist even if targets are unknown; include investigation plan.",
+				"must_include": [
+					"Performance targets (or statement that none are defined)",
+					"Known or potential hotspots from code review",
+					"Logging/telemetry infrastructure (or absence)",
+					"Actionable next steps for establishing observability"
+				]
+			},
+			"{doc_slug}-23-arch-testing-and-qa.md": {
+				"required_sections": ["Test strategy", "Coverage notes", "CI/CD hooks (if any)"],
+				"strict_mode_rule": "Must exist; if no tests, say so explicitly + remediation plan.",
+				"must_include": [
+					"Test project inventory (or absence)",
+					"Testing philosophy (unit/integration/e2e)",
+					"Coverage metrics (if available)",
+					"Quality gates in CI/CD (or absence)",
+					"Recommended testing approach if none exists"
+				]
+			},
+			"{doc_slug}-24-arch-deployment-and-config.md": {
+				"required_sections": ["Deployment targets", "Configuration", "Feature flags"],
+				"strict_mode_rule": "Must exist; include local dev steps if found.",
+				"must_include": [
+					"Deployment model (self-hosted/cloud/hybrid)",
+					"Configuration sources (appsettings, env vars, etc.)",
+					"Feature flag system (or absence)",
+					"Local development setup steps"
+				]
+			},
+			"{doc_slug}-25-arch-resources.md": {
+				"required_sections": ["Internal references", "External references (categorized)"],
+				"external_links_rule": "External links allowed with audit trail",
+				"categorization": [
+					"Official documentation",
+					"API references",
+					"Specifications/RFCs",
+					"Tools and utilities",
+					"Community resources"
+				]
+			}
+		},
+
+		"ui_contracts": {
+			"{doc_slug}-27-ui-overview.md": {
+				"required_sections": ["UI overview", "Navigation model", "User journeys"],
+				"not_applicable_allowed": true,
+				"if_present": "Document discovered UI architecture"
+			},
+			"{doc_slug}-28-ui-hierarchy-model.md": {
+				"required_sections": ["Hierarchy source folder", "Composition rules", "Examples"],
+				"must_include": ["Shared/_Sites findings or discovered equivalent", "Actual folder structure, not assumed template"]
+			},
+			"{doc_slug}-29-ui-layer-folders.md": {
+				"required_sections": ["Discovered layer roles", "Folder-to-role mapping", "Practical usage"],
+				"must_include": [
+					"Discovered layer folder set (may differ from 00..09 template)",
+					"If naming/numbering differs, document actual system",
+					"Explicit comparison to expected template if deviations exist"
+				]
+			},
+			"{doc_slug}-30-ui-prefix-system.md": {
+				"required_sections": ["Prefix list", "Roles", "Examples from source"],
+				"must_include": [
+					"Discovered prefixes (may differ from D_, F_, P_, etc. template)",
+					"If prefix system differs, document actual system",
+					"Pattern extraction from actual component names"
+				]
+			},
+			"{doc_slug}-31-ui-displays.md": {
+				"required_sections": ["Display responsibilities", "Rendering patterns", "Examples"],
+				"not_applicable_allowed": true
+			},
+			"{doc_slug}-32-ui-fields.md": {
+				"required_sections": ["Field responsibilities", "Validation", "Examples"],
+				"not_applicable_allowed": true
+			},
+			"{doc_slug}-33-ui-pointers.md": {
+				"required_sections": ["Pointer responsibilities", "Navigation helpers", "Examples"],
+				"not_applicable_allowed": true
+			},
+			"{doc_slug}-34-ui-actions.md": {
+				"required_sections": ["Actions responsibilities", "State changes", "Async patterns"],
+				"not_applicable_allowed": true
+			},
+			"{doc_slug}-35-ui-nodes.md": {
+				"required_sections": ["Node system status", "Current capabilities", "Planned capabilities"],
+				"not_applicable_allowed": true
+			},
+			"{doc_slug}-36-ui-components.md": {
+				"required_sections": ["Component composition", "Reusability rules", "Examples"],
+				"not_applicable_allowed": true
+			},
+			"{doc_slug}-37-ui-widgets-and-views.md": {
+				"required_sections": ["Widgets vs Views", "Composition patterns", "Examples"],
+				"not_applicable_allowed": true
+			},
+			"{doc_slug}-38-ui-panels-and-navigation.md": {
+				"required_sections": ["Panels", "Navigation shells", "Common layout patterns"],
+				"not_applicable_allowed": true
+			}
+		},
+
+		"appendix_contracts": {
+			"{doc_slug}-40-appendix-risks-and-vulnerabilities.md": {
+				"required_sections": [
+					"Potential secrets",
+					"Boundary violations",
+					"Perf/memory risks",
+					"Integration failure risks",
+					"Remediation plan"
+				],
+				"must_include": ["No secrets printed rule reminder", "Severity categorization", "Prioritized action items"]
+			},
+			"{doc_slug}-41-appendix-source-to-docs-mapping.md": {
+				"required_sections": ["Folder-to-page map", "Key file map", "Where to start (new contributor)"],
+				"must_include": ["At least 10 mapping entries if the project is non-trivial", "Reverse index (page → source areas)"]
+			},
+			"{doc_slug}-42-appendix-duplicate-json-cleanup.md": {
+				"required_sections": [
+					"Duplication pattern",
+					"Impact/risk",
+					"Canonical naming plan",
+					"Deprecation timeline",
+					"CI guardrail idea"
+				],
+				"not_applicable_allowed": true,
+				"if_applicable": "Include concrete file pairs, impact analysis, and phased cleanup plan"
+			}
+		},
+
+		"diagrams_contracts": {
+			"{doc_slug}-43-diagrams.md": {
+				"required_sections": [
+					"Diagram index",
+					"System boundaries",
+					"Runtime sequences",
+					"UI hierarchy (if present)"
+				],
+				"required_mermaid": [
+					"flowchart boundary diagram",
+					"sequence diagram for a primary flow",
+					"hierarchy diagram (if UI present)"
+				],
+				"accessibility": "Include textual description before each diagram"
+			}
+		}
+	},
+
+	"validators": {
+		"link_validation": {
+			"enabled": true,
+			"must_pass_in_strict_mode": true,
+			"rules": [
+				"No broken internal links",
+				"Every generated page is linked from at least one index",
+				"No orphan pages",
+				"Bottom navigation exists on every page",
+				"External links audited and categorized"
+			],
+			"output": "04-link-map.json"
+		},
+		"numbering_validation": {
+			"enabled": true,
+			"must_pass_in_strict_mode": true,
+			"rules": [
+				"00..43 fixed ascending",
+				"no duplicates",
+				"all files exist"
+			]
+		},
+		"terminology_validation": {
+			"enabled": true,
+			"must_pass_in_strict_mode": true,
+			"rules": [
+				"Terms used are defined in 02-terminology-index.json or explicitly marked 'new term' with definition",
+				"Forbidden terms not used",
+				"Synonyms handled consistently",
+				"Primary terms used in key locations (indices, architecture pages)"
+			]
+		},
+		"coverage_validation": {
+			"enabled": true,
+			"scoring": {
+				"coverage_score_range": [0.0, 1.0],
+				"strict_threshold": 0.92,
+				"lenient_threshold": 0.75,
+				"formula_transparency": "See 03-coverage-map.json for detailed formula and component breakdown"
+			},
+			"rules": [
+				"Key discovered areas mapped to pages",
+				"Unmapped items listed with a remediation plan",
+				"Coverage score calculated using transparent formula",
+				"Component scores tracked individually"
+			],
+			"output": "03-coverage-map.json"
+		},
+		"security_validation": {
+			"enabled": true,
+			"must_pass_in_strict_mode": false,
+			"rules": [
+				"No secret values reproduced",
+				"If suspected secrets exist, report locations and risks in appendix 40",
+				"Severity levels assigned to findings",
+				"No false positives for obviously safe patterns"
+			]
+		},
+		"style_validation": {
+			"enabled": true,
+			"must_pass_in_strict_mode": true,
+			"rules": [
+				"Page layout contract respected",
+				"Headings depth <= H3",
+				"Relative links for internal, audited external links",
+				"Dividers used consistently",
+				"Accessibility guidelines followed"
+			]
+		}
+	},
+
+	"orchestration_flow": {
+		"parallelization_opportunities": {
+			"phase_2_and_3": {
+				"parallel": ["terminology_extraction", "integration_discovery", "ui_convention_scan"],
+				"sequential_dependency": "all complete before fileplan lock"
+			},
+			"phase_5_6_7": {
+				"parallel": ["base_layer_generation", "arch_layer_generation", "ui_layer_generation"],
+				"constraint": "terminology index must be available to all",
+				"benefit": "30-40% time reduction for large docsets"
+			},
+			"phase_9_validation": {
+				"parallel": ["link_validation", "coverage_validation", "security_validation", "style_validation"],
+				"sequential_dependency": "all complete before final report"
+			}
+		},
+		"sequence": [
+			{ "phase": 0, "agent_id": "template_extractor", "gate": { "mode": "auto" } },
+			{ "phase": 1, "agent_id": "preflight_and_questions", "gate": { "mode": "interactive_if_blocking_questions" } },
+			{
+				"phase": 2,
+				"agent_id": "source_discovery_inventory",
+				"gate": { "mode": "interactive_in_strict_mode" },
+				"sub_agents": ["structure_scanner", "convention_discoverer", "integration_identifier"],
+				"parallelizable": true
+			},
+			{ "phase": 3, "agent_id": "fileplan_and_contract_locker", "gate": { "mode": "interactive" } },
+			{ "phase": 4, "agent_id": "generate_indices_and_root", "gate": { "mode": "interactive" } },
+			{
+				"phase": 5,
+				"agent_id": "generate_base_layer",
+				"gate": { "mode": "interactive" },
+				"parallelizable_with": [6, 7],
+				"shared_resources": ["02-terminology-index.json", "01-source-inventory.md"]
+			},
+			{
+				"phase": 6,
+				"agent_id": "generate_arch_layer",
+				"gate": { "mode": "interactive" },
+				"parallelizable_with": [5, 7],
+				"shared_resources": ["02-terminology-index.json", "01-source-inventory.md"]
+			},
+			{
+				"phase": 7,
+				"agent_id": "generate_ui_layer",
+				"gate": { "mode": "interactive_in_strict_mode" },
+				"parallelizable_with": [5, 6],
+				"shared_resources": ["02-terminology-index.json", "01-source-inventory.md"]
+			},
+			{ "phase": 8, "agent_id": "generate_appendices", "gate": { "mode": "interactive_in_strict_mode" } },
+			{
+				"phase": 9,
+				"agent_id": "generate_diagrams_and_validate",
+				"gate": { "mode": "interactive" },
+				"sub_agents": ["diagram_generator", "link_validator", "coverage_validator", "security_validator", "style_validator"],
+				"parallelizable": ["validators"]
+			}
+		]
+	},
+
+	"agents": [
+		{
+			"agent_id": "template_extractor",
+			"phase": 0,
+			"role": "Template Extractor",
+			"responsibility": "Analyze example_docs_source and extract concrete style constraints (nav patterns, section rhythm, index formatting). Output a template profile used by all later generators.",
+			"outputs": [
+				{
+					"file": "00-template-profile.json",
+					"contains": [
+						"reference_docset_structure",
+						"heading_patterns",
+						"divider_frequency",
+						"bottom_nav_examples",
+						"index_style_rules",
+						"diagram_usage_patterns",
+						"extracted_formatting_rules",
+						"tone_and_voice_notes"
+					]
+				}
+			]
+		},
+
+		{
+			"agent_id": "preflight_and_questions",
+			"phase": 1,
+			"role": "Preflight Validator + Question Builder",
+			"responsibility": "Validate required inputs and ask only blocking questions. Parse answers_bundle if provided and extract resolved values.",
+			"blocking_checks": [
+				"project_source readable",
+				"save_output_to writable",
+				"example_docs_source readable",
+				"project_type resolved",
+				"validation_strictness and review_mode resolved (defaults allowed)"
+			],
+			"questions": {
+				"blocking": [
+					{
+						"id": "Q_CONFIRM_PATHS",
+						"category": "BLOCKING_PATHS",
+						"question": "Confirm these are correct: project_source, save_output_to, example_docs_source. If not, provide corrected paths."
+					},
+					{
+						"id": "Q_SCOPE_INCLUDE",
+						"category": "BLOCKING_SCOPE",
+						"question": "Any folders that must be excluded (generated artifacts, node_modules, bin/obj) or included (Docs/, Shared/_Sites)? Provide include/exclude rules."
+					},
+					{
+						"id": "Q_PROJECT_TYPE_ASSERTION",
+						"category": "BLOCKING_SCOPE",
+						"question": "Confirm project_type is correct (host/module/plugin). If the source contains multiple, pick primary."
+					},
+					{
+						"id": "Q_DISAMBIGUATE_MULTIPLE_TARGETS",
+						"category": "BLOCKING_DISAMBIGUATIONS",
+						"question": "If multiple entry points/projects exist, which is primary for documentation focus?",
+						"only_if": "multiple_valid_targets_discovered"
+					}
+				],
+				"non_blocking": [
+					{
+						"id": "Q_AUDIENCE",
+						"category": "NON_BLOCKING_CONTEXT",
+						"question": "Primary audience? (new contributor / reviewer / internal maintainers / external users)."
+					},
+					{
+						"id": "Q_EXTERNAL_LINKS",
+						"category": "NON_BLOCKING_TEMPLATE_RULES",
+						"question": "External link preference? (disallowed / allowed_with_audit / unrestricted). Default is allowed_with_audit."
+					}
+				]
+			},
+			"outputs": [
+				{
+					"file": "00-preflight-summary.md",
+					"contains": [
+						"resolved_inputs",
+						"assumptions_used",
+						"scope_overrides_applied",
+						"external_links_config",
+						"depth",
+						"review_mode",
+						"validation_strictness",
+						"confidence_in_inputs"
+					]
+				},
+				{
+					"file": "00-preflight-questions.md",
+					"when": "blocking_inputs_missing",
+					"action": "STOP_AND_WAIT_FOR_USER",
+					"contains": ["missing_items", "ambiguities", "questions[]", "suggested_answers_for_common_cases"]
+				}
+			],
+			"next_agent": "source_discovery_inventory"
+		},
+
+		{
+			"agent_id": "source_discovery_inventory",
+			"phase": 2,
+			"role": "Source Discovery + Inventory",
+			"responsibility": "Scan project_source and produce a factual inventory of structure, conventions, entry points, DI, integrations, configs, and risks. Use discoverable approach for UI conventions.",
+			"sub_agents": [
+				{
+					"name": "structure_scanner",
+					"purpose": "Map folder/file structure, identify projects, namespaces"
+				},
+				{
+					"name": "convention_discoverer",
+					"purpose": "Discover actual UI conventions (layers, prefixes) without forcing template assumptions"
+				},
+				{
+					"name": "integration_identifier",
+					"purpose": "Identify external integrations, APIs, databases"
+				}
+			],
+			"discovery_mode": {
+				"ui_conventions": "scan_and_document_actual_not_expected",
+				"confidence_scoring": "assign confidence levels to findings (certain/inferred/uncertain)"
+			},
+			"outputs": [
+				{
+					"file": "01-source-inventory.md",
+					"contains": [
+						"tree_summary",
+						"key_projects",
+						"key_folders",
+						"entry_points",
+						"ui_hierarchy_findings_actual",
+						"layer_folder_findings_actual",
+						"prefix_findings_actual",
+						"integrations_found",
+						"config_and_deploy_files",
+						"error_handling_patterns",
+						"test_presence",
+						"secret_scan_summary",
+						"confidence_notes"
+					]
+				},
+				{
+					"file": "01-inventory-index.json",
+					"contains": [
+						"folders[]",
+						"key_files[]",
+						"entrypoints[]",
+						"services[]",
+						"integrations[]",
+						"configs[]",
+						"ui_prefixes_discovered[]",
+						"layer_folders_discovered[]",
+						"tests[]",
+						"confidence_scores{}"
+					]
+				}
+			],
+			"gate": {
+				"strict_blockers": [
+					"source not scannable",
+					"inventory missing entrypoints and key folders",
+					"confidence_score < 0.70 on critical findings"
+				],
+				"on_fail": {
+					"file": "01-discovery-questions.md",
+					"action": "STOP_AND_WAIT_FOR_USER"
+				}
+			},
+			"next_agent": "fileplan_and_contract_locker"
+		},
+
+		{
+			"agent_id": "fileplan_and_contract_locker",
+			"phase": 3,
+			"role": "Fileplan + Contracts Locker",
+			"responsibility": "Write 01-planned-files.json as the canonical, ordered file list with roles and applicability rules. Lock page contracts for this run (no renumbering).",
+			"outputs": [
+				{
+					"file": "01-planned-files.json",
+					"contains": [
+						"ordered_files[]",
+						"page_roles",
+						"applicability_rules",
+						"project_type",
+						"doc_slug",
+						"counts",
+						"schema_version",
+						"generation_timestamp",
+						"content_hash_per_file"
+					]
+				}
+			],
+			"gate": {
+				"checks": [
+					"All 00..43 files are listed exactly once",
+					"Filenames match doc_slug",
+					"Indices point only to planned files",
+					"Not-applicable policy defined",
+					"Version and timestamp present"
+				],
+				"on_fail": { "file": "02-fileplan-issues.md", "action": "STOP_AND_WAIT_FOR_USER" }
+			},
+			"next_agent": "generate_indices_and_root"
+		},
+
+		{
+			"agent_id": "generate_indices_and_root",
+			"phase": 4,
+			"role": "Root + Index Generator",
+			"responsibility": "Generate {doc_slug}.md and the four index files. Ensure they contain correct links and navigation consistent with template profile. Include coverage summary.",
+			"outputs": [
+				{
+					"files": [
+						"{doc_slug}.md",
+						"{doc_slug}-00-base-index.md",
+						"{doc_slug}-12-arch-index.md",
+						"{doc_slug}-26-ui-index.md",
+						"{doc_slug}-39-appendix-index.md"
+					]
+				}
+			],
+			"gate": {
+				"checks": [
+					"Index pages link to all pages in their layer",
+					"No broken links",
+					"Bottom nav present",
+					"Style matches template profile",
+					"Root page includes coverage summary placeholder"
+				]
+			},
+			"next_agent": "generate_base_layer"
+		},
+
+		{
+			"agent_id": "generate_base_layer",
+			"phase": 5,
+			"role": "Base Layer Generator (01–11)",
+			"responsibility": "Generate base pages and the terminology index from real discovered facts.",
+			"parallelizable_with": ["generate_arch_layer", "generate_ui_layer"],
+			"outputs": [
+				{ "files": "{fixed_pages.base_layer_01_11}" },
+				{ "file": "02-terminology-index.json" }
+			],
+			"gate": {
+				"checks": [
+					"All base files exist",
+					"Terminology index created with proper structure",
+					"No placeholders",
+					"Bottom nav present on all pages",
+					"Evidence citations present"
+				]
+			},
+			"next_agent": "generate_arch_layer"
+		},
+
+		{
+			"agent_id": "generate_arch_layer",
+			"phase": 6,
+			"role": "Architecture Layer Generator (13–25)",
+			"responsibility": "Generate architecture pages, with explicit evidence pointers to discovered structure, and include performance/testing/deploy sections even if minimal.",
+			"parallelizable_with": ["generate_base_layer", "generate_ui_layer"],
+			"outputs": [{ "files": "{fixed_pages.arch_layer_13_25}" }],
+			"gate": {
+				"checks": [
+					"All arch files exist",
+					"Performance/testing/deployment pages contain required sections with actionable content",
+					"External links obey policy and are audited",
+					"Terminology consistent",
+					"Evidence citations present"
+				]
+			},
+			"next_agent": "generate_ui_layer"
+		},
+
+		{
+			"agent_id": "generate_ui_layer",
+			"phase": 7,
+			"role": "UI Layer Generator (27–38)",
+			"responsibility": "Generate UI layer pages based on discovered UI hierarchy and conventions (not template assumptions). If UI not present, produce explicit not-applicable pages (no placeholders).",
+			"parallelizable_with": ["generate_base_layer", "generate_arch_layer"],
+			"discovery_mode": "use_actual_discovered_conventions",
+			"outputs": [{ "files": "{fixed_pages.ui_layer_27_38}" }],
+			"gate": {
+				"checks": [
+					"All UI files exist",
+					"If UI absent, pages explicitly state absence with discovered evidence",
+					"Prefix/layer numbering documented based on actual discovery, not template",
+					"Deviations from expected template explicitly noted",
+					"No forced fitting of actual structure into expected template"
+				]
+			},
+			"next_agent": "generate_appendices"
+		},
+
+		{
+			"agent_id": "generate_appendices",
+			"phase": 8,
+			"role": "Appendix Generator (40–42)",
+			"responsibility": "Generate risks/vulnerabilities, source-to-docs mapping, and duplicate JSON cleanup appendix (or explicit not-applicable).",
+			"outputs": [{ "files": "{fixed_pages.appendices_40_42}" }],
+			"gate": {
+				"checks": [
+					"No sensitive values printed",
+					"Source-to-docs mapping contains actionable links (>=10 entries for non-trivial projects)",
+					"Duplicate JSON appendix includes phased plan (or explicit not-applicable)",
+					"Risk assessment includes severity levels and prioritization"
+				]
+			},
+			"next_agent": "generate_diagrams_and_validate"
+		},
+
+		{
+			"agent_id": "generate_diagrams_and_validate",
+			"phase": 9,
+			"role": "Diagrams + Final Validator + Bundle",
+			"responsibility": "Generate diagrams page (43), build coverage-map + link-map, run validators in parallel, output final reports, and zip the documentation bundle.",
+			"sub_agents": [
+				{"name": "diagram_generator", "parallelizable": false},
+				{"name": "link_validator", "parallelizable": true},
+				{"name": "coverage_validator", "parallelizable": true},
+				{"name": "security_validator", "parallelizable": true},
+				{"name": "style_validator", "parallelizable": true}
+			],
+			"outputs": [
+				{ "files": "{fixed_pages.diagrams_43}" },
+				{ "file": "03-coverage-map.json" },
+				{ "file": "04-link-map.json" },
+				{ "file": "05-final-validation-report.md" },
+				{ "file": "05-final-issues.md" },
+				{ "file": "06-change-log.md" }
+			],
+			"bundle_output": {
+				"enabled": true,
+				"filename": "{doc_slug}-documentation-bundle.zip",
+				"includes": [
+					"all_generated_md_files",
+					"00-template-profile.json",
+					"01-planned-files.json",
+					"02-terminology-index.json",
+					"03-coverage-map.json",
+					"04-link-map.json",
+					"05-final-validation-report.md",
+					"05-final-issues.md",
+					"06-change-log.md"
+				]
+			},
+			"final_gate": {
+				"strict_pass_conditions": [
+					"All files 00..43 exist",
+					"No broken internal links",
+					"No placeholders",
+					"Numbering unique and ascending",
+					"Coverage_score >= strict_threshold (with formula transparency)",
+					"External links policy respected and audited",
+					"Secret values not reproduced",
+					"UI conventions documented as discovered, not as assumed"
+				],
+				"lenient_pass_conditions": [
+					"All index pages have no broken links",
+					"All missing or weak coverage areas logged in 05-final-issues.md with remediation plans",
+					"Coverage_score >= lenient_threshold"
+				]
+			}
+		}
+	],
+
+	"health_check_workflow": {
+		"trigger": "user provides existing_docs_path",
+		"purpose": "Validate existing documentation without regeneration",
+		"steps": [
+			"Load 01-planned-files.json and verify all files exist",
+			"Run link_validation",
+			"Run terminology_validation",
+			"Check for broken external links",
+			"Verify style consistency",
+			"Scan for secrets that may have been accidentally added",
+			"Compare 01-inventory-index.json with current source (if provided)",
+			"Calculate health score",
+			"Generate health-check-report.md"
+		],
+		"outputs": ["health-check-report.md"],
+		"recommendations": {
+			"health_score >= 0.95": "Documentation is healthy. No action needed.",
+			"0.85 <= health_score < 0.95": "Minor issues found. Review health-check-report.md and address items.",
+			"health_score < 0.85": "Significant issues found. Consider incremental update or partial regeneration."
+		}
+	},
+
+	"usage_prompt_companion": {
+		"title": "RootServer Host Documentation — Workflow Prompt (companion)",
+		"behavior": "User provides inputs + optionally an answers_bundle. The system asks only blocking questions, then generates the full docset.",
+		"fields": [
+			"project_name",
+			"project_type",
+			"project_source",
+			"save_output_to",
+			"example_docs_source",
+			"validation_strictness",
+			"review_mode",
+			"external_links_config (optional)",
+			"scope_overrides (optional)",
+			"answers_bundle (optional)",
+			"existing_docs_path (optional, for health check or incremental update)"
+		],
+		"commands": {
+			"generate": "Generate full documentation from scratch",
+			"health_check": "Validate existing documentation without regeneration",
+			"incremental_update": "Update documentation based on source changes"
+		}
+	}
+}

@@ -1,0 +1,1154 @@
+{
+	"system_version": "2.3",
+	"system_name": "Strict Existing Codebase Documentation Workflow with Improvements Tracking and Extensive Text Diagrams",
+	"agent_orchestration_model": "sequential_with_parallelization_and_strict_gates",
+	"description": "Generate a strict, navigable documentation set for an existing Host / Module / Plugin codebase. Enhanced with comprehensive improvement tracking appendix and extensive text-based diagrams for all architectural relationships, class hierarchies, and system connections.",
+
+	"changelog_from_2_2": {
+		"version": "2.3",
+		"date": "2025-12-16",
+		"changes": [
+			"Added appendix-44-improvements-roadmap.md for 10/10 project quality tracking",
+			"Enhanced diagrams-43 to require extensive text-based diagrams (15+ diagrams minimum)",
+			"Removed all mermaid diagram support - text-only ASCII diagrams required",
+			"Added class hierarchy diagrams, dependency graphs, sequence flows, and module relationships",
+			"Added diagram validation rules to ensure comprehensive visual documentation",
+			"Added improvement scoring system with actionable recommendations",
+			"Expanded fixed_pages from 44 to 45 pages (00-44)"
+		]
+	},
+
+	"global_configuration": {
+		"execution_modes": {
+			"review_mode": {
+				"type": "enum",
+				"values": ["interactive", "batch"],
+				"default": "interactive",
+				"description": "Interactive pauses at gates (recommended). Batch runs all phases then emits a review pack with decision points logged."
+			},
+			"validation_strictness": {
+				"type": "enum",
+				"values": ["strict", "lenient"],
+				"default": "strict",
+				"description": "Strict blocks on required checks; lenient continues but logs all gaps and remediation steps."
+			},
+			"batch_mode_behavior": {
+				"emit_decision_log": true,
+				"pause_points": [
+					"after_preflight_if_blocking_questions",
+					"after_inventory_if_major_unknowns",
+					"after_fileplan_lock",
+					"after_final_validation"
+				],
+				"auto_proceed_conditions": [
+					"all_blocking_questions_answered_in_answers_bundle",
+					"inventory_confidence_score >= 0.85",
+					"no_security_critical_findings"
+				]
+			}
+		},
+
+		"determinism_rules": {
+			"single_source_of_truth": [
+				"01-planned-files.json",
+				"04-link-map.json",
+				"03-coverage-map.json",
+				"02-terminology-index.json",
+				"07-improvements-map.json"
+			],
+			"no_silent_regeneration": true,
+			"patch_behavior": {
+				"allowed": true,
+				"scope": "only files impacted by the user's new inputs or corrected assumptions",
+				"must_emit": "06-change-log.md",
+				"diff_generation": {
+					"enabled": true,
+					"format": "unified_diff",
+					"include_in_changelog": true
+				},
+				"revalidation_required": [
+					"link_validation",
+					"coverage_validation",
+					"terminology_validation",
+					"diagram_validation",
+					"improvements_validation"
+				],
+				"incremental_update_workflow": {
+					"trigger": "user provides new source or corrections",
+					"steps": [
+						"Compare current 01-inventory-index.json with new scan",
+						"Identify changed/added/removed areas",
+						"Map impacts to affected pages via 03-coverage-map.json",
+						"Regenerate only impacted pages",
+						"Update link-map, coverage-map, and improvements-map",
+						"Run validators on changed pages + their dependents",
+						"Update diagram pages if structural changes detected",
+						"Emit 06-change-log.md with before/after summary"
+					],
+					"preserve": [
+						"User-added notes in appendices",
+						"Custom diagrams (mark as user-maintained)",
+						"Manual overrides (if flagged in metadata)"
+					]
+				}
+			},
+			"version_tracking": {
+				"enabled": true,
+				"schema_version_in": "00-preflight-summary.md",
+				"content_hash_in": "01-planned-files.json",
+				"change_history_in": "06-change-log.md",
+				"purpose": "Track documentation evolution and enable rollback"
+			}
+		},
+
+		"question_protocol": {
+			"ask_only_when_missing_or_ambiguous": true,
+			"ask_in_rounds": true,
+			"max_questions_per_round": 12,
+			"question_categories": [
+				"BLOCKING_PATHS",
+				"BLOCKING_SCOPE",
+				"BLOCKING_TEMPLATE_RULES",
+				"BLOCKING_DISAMBIGUATIONS",
+				"NON_BLOCKING_CONTEXT",
+				"NON_BLOCKING_NAMING"
+			],
+			"default_assumptions_if_unanswered": [
+				{
+					"id": "A_SCOPE_DEPTH",
+					"assume": "balanced",
+					"used_when": "user does not specify depth",
+					"must_log_in": "00-preflight-summary.md"
+				},
+				{
+					"id": "A_EXTERNAL_LINKS",
+					"assume": "allowed_with_audit",
+					"used_when": "user does not explicitly configure",
+					"must_log_in": "00-preflight-summary.md"
+				},
+				{
+					"id": "A_AMBIGUOUS_CONVENTIONS",
+					"assume": "discover_and_document_as_found",
+					"used_when": "UI conventions differ from expected (00-09 layers, prefix system)",
+					"must_log_in": "00-preflight-summary.md"
+				}
+			],
+			"reask_behavior": {
+				"allowed": true,
+				"only_if": [
+					"answer conflicts with discovered facts",
+					"answer is incomplete for strict blockers",
+					"multiple paths/targets exist and cannot be disambiguated by discovery"
+				],
+				"max_reask_rounds": 2,
+				"escalation": "If still ambiguous after 2 rounds, document the ambiguity in 05-final-issues.md with investigation plan"
+			}
+		},
+
+		"security_and_safety": {
+			"never_output_secrets": true,
+			"secret_detection": {
+				"enabled": true,
+				"scan_targets": [
+					"*.json",
+					"*.cs",
+					"*.razor",
+					"*.config",
+					"*.yml",
+					"*.yaml",
+					"*.env",
+					"appsettings*.json",
+					"*.xml",
+					"*.props",
+					"*.targets"
+				],
+				"patterns": [
+					"apikey",
+					"api_key",
+					"token",
+					"secret",
+					"connectionstring",
+					"connection_string",
+					"privatekey",
+					"client_secret",
+					"sas",
+					"bearer",
+					"password",
+					"pwd",
+					"credential"
+				],
+				"reporting_rules": {
+					"report_location": true,
+					"report_risk": true,
+					"never_print_value": true,
+					"severity_levels": {
+						"critical": "actual secrets in code/config",
+						"high": "secrets in example files without .example suffix",
+						"medium": "potential secrets in comments",
+						"low": "secret-like variable names (false positives ok)"
+					}
+				}
+			},
+			"filesystem_policy": {
+				"read_scope": "project_source only",
+				"write_scope": "save_output_to only",
+				"no_writes_outside_output": true,
+				"no_execution_by_default": true,
+				"exception_for_health_check": {
+					"allowed": true,
+					"purpose": "validate existing documentation integrity",
+					"restricted_to": "read operations only"
+				}
+			},
+			"external_links_policy": {
+				"default": "allowed_with_audit",
+				"audit_requirements": {
+					"track_all_external_urls": true,
+					"log_location": "04-link-map.json",
+					"categorize_by": ["documentation", "api_reference", "specification", "tool", "unknown"],
+					"review_flags": [
+						"domain_not_in_allowlist",
+						"link_returns_404",
+						"link_redirects",
+						"insecure_http"
+					]
+				},
+				"allowlist_domains": [
+					"docs.microsoft.com",
+					"learn.microsoft.com",
+					"github.com",
+					"developer.mozilla.org",
+					"w3.org",
+					"ietf.org",
+					"rfc-editor.org"
+				],
+				"restricted_pages": {
+					"most_pages": "external links allowed but must be audited",
+					"{doc_slug}-25-arch-resources.md": "primary location for external references with categorization"
+				},
+				"link_format": {
+					"must_include": "title or context",
+					"recommended": "External: [Title](url) - brief description",
+					"accessibility": "ensure link text is descriptive"
+				}
+			}
+		},
+
+		"formatting_and_style": {
+			"template_reference": "example_docs_source",
+			"headings": ["#", "##", "###"],
+			"max_heading_depth": 3,
+			"divider": "---",
+			"lists": "hyphen_bullets",
+			"tables": "avoid_unless_unavoidable",
+			"code_blocks": "minimal_and_targeted",
+			"links": "relative_links_for_internal",
+			"diagrams": {
+				"format": "text_only_ascii",
+				"forbidden_formats": ["mermaid", "graphviz", "plantuml", "svg"],
+				"required_format": "```text ... ```",
+				"minimum_diagrams_per_docset": 15,
+				"style_guidelines": {
+					"use_box_drawing_characters": true,
+					"unicode_allowed": ["─", "│", "┌", "┐", "└", "┘", "├", "┤", "┬", "┴", "┼", "▼", "▲", "◄", "►"],
+					"max_width": 80,
+					"prefer_clarity_over_complexity": true,
+					"include_legend_when_needed": true
+				}
+			},
+			"page_layout_contract": {
+				"required_order": [
+					"Title (H1)",
+					"Short intro (2–8 lines)",
+					"Divider",
+					"Main sections",
+					"Divider",
+					"Bottom navigation block (1–5 items)",
+					"Trailing divider"
+				],
+				"bottom_nav_rules": {
+					"must_include": ["Back to {doc_slug}.md"],
+					"must_include_one_of": [
+						"Back to {doc_slug}-00-base-index.md",
+						"Back to {doc_slug}-12-arch-index.md",
+						"Back to {doc_slug}-26-ui-index.md",
+						"Back to {doc_slug}-39-appendix-index.md"
+					],
+					"max_items": 5,
+					"format": "hyphen list with relative links"
+				}
+			},
+			"accessibility": {
+				"link_text": "must be descriptive (no 'click here' or bare URLs)",
+				"heading_hierarchy": "must not skip levels (no H1 → H3)",
+				"alt_text_for_diagrams": "include textual description in prose before diagram"
+			}
+		},
+
+		"ui_conventions_discovery": {
+			"expected_patterns": {
+				"layer_folders": {
+					"expected": ["00_Core", "01_Displays", "02_Fields", "03_Pointers", "04_Actions", "05_Nodes", "06_Components", "07_Widgets", "08_View", "09_Panels"],
+					"description": "Cross-layer numbered folder hierarchy (micro → macro)",
+					"discovery_mode": "scan and compare to expected, document actual findings"
+				},
+				"component_prefixes": {
+					"expected": ["D_", "F_", "P_", "A_", "N_", "C_", "W_", "V_", "PNL_"],
+					"description": "Component prefix system and roles",
+					"discovery_mode": "regex scan for patterns, document actual findings"
+				},
+				"ui_hierarchy_source": {
+					"expected": "Shared/_Sites",
+					"description": "Source of UI hierarchy",
+					"discovery_mode": "check existence, document alternative if found"
+				}
+			},
+			"discovery_behavior": {
+				"if_matches_expected": "Document as conforming to conventions",
+				"if_differs": [
+					"Document actual findings explicitly",
+					"Note deviations from expected patterns",
+					"Do not force-fit actual structure into expected template",
+					"Update relevant UI pages (29, 30) with discovered reality"
+				],
+				"if_absent": [
+					"Mark UI layer pages as 'Not present in this codebase'",
+					"Include brief explanation of what was searched for",
+					"No placeholder content or speculation about future implementation"
+				]
+			},
+			"validation": {
+				"consistency_check": "Ensure UI pages (27-38) accurately reflect discovered conventions, not expected ones",
+				"cross_reference": "Link between 01-source-inventory.md findings and UI documentation"
+			}
+		},
+
+		"improvements_tracking": {
+			"enabled": true,
+			"purpose": "Systematically identify and document actionable improvements to reach 10/10 project quality",
+			"scoring_system": {
+				"dimensions": [
+					{
+						"name": "Architecture Quality",
+						"weight": 0.20,
+						"criteria": ["boundaries", "composition", "extensibility", "testability"]
+					},
+					{
+						"name": "Code Quality",
+						"weight": 0.15,
+						"criteria": ["readability", "maintainability", "consistency", "documentation"]
+					},
+					{
+						"name": "Testing",
+						"weight": 0.20,
+						"criteria": ["coverage", "quality", "automation", "types"]
+					},
+					{
+						"name": "Operations",
+						"weight": 0.15,
+						"criteria": ["deployment", "monitoring", "resilience", "security"]
+					},
+					{
+						"name": "Documentation",
+						"weight": 0.15,
+						"criteria": ["completeness", "accuracy", "usability", "maintenance"]
+					},
+					{
+						"name": "Developer Experience",
+						"weight": 0.15,
+						"criteria": ["onboarding", "tooling", "feedback_loops", "contribution_process"]
+					}
+				],
+				"scale": "0.0 to 10.0",
+				"target": 10.0
+			},
+			"improvement_categories": [
+				"CRITICAL",
+				"HIGH_IMPACT",
+				"MEDIUM_IMPACT",
+				"LOW_IMPACT",
+				"NICE_TO_HAVE"
+			],
+			"phasing": {
+				"phase_1_foundation": "0-3 months",
+				"phase_2_maturity": "3-6 months",
+				"phase_3_excellence": "6-12 months",
+				"phase_4_optimization": "12+ months"
+			}
+		},
+
+		"diagram_requirements": {
+			"mandatory_diagram_types": [
+				{
+					"type": "system_architecture",
+					"description": "Overall system boundaries and major components",
+					"minimum_count": 1
+				},
+				{
+					"type": "class_hierarchy",
+					"description": "Inheritance trees for major class families",
+					"minimum_count": 3,
+					"examples": ["Core base classes", "UI component hierarchy", "Service classes"]
+				},
+				{
+					"type": "dependency_graph",
+					"description": "Dependencies between projects, modules, and major namespaces",
+					"minimum_count": 2,
+					"directions": ["top-down", "left-right"]
+				},
+				{
+					"type": "data_flow",
+					"description": "How data moves through the system",
+					"minimum_count": 2,
+					"examples": ["Sync flow", "Render flow", "State update flow"]
+				},
+				{
+					"type": "component_relationships",
+					"description": "How components connect and communicate",
+					"minimum_count": 2,
+					"examples": ["Service dependencies", "Component composition"]
+				},
+				{
+					"type": "sequence_diagram",
+					"description": "Step-by-step interaction sequences",
+					"minimum_count": 2,
+					"examples": ["User action flow", "Initialization sequence"]
+				},
+				{
+					"type": "layer_structure",
+					"description": "00-09 layer organization and relationships",
+					"minimum_count": 1
+				},
+				{
+					"type": "folder_structure",
+					"description": "Physical file/folder organization",
+					"minimum_count": 1
+				},
+				{
+					"type": "deployment_topology",
+					"description": "How system deploys across environments",
+					"minimum_count": 1
+				}
+			],
+			"total_minimum_diagrams": 15,
+			"diagram_placement": {
+				"primary_location": "{doc_slug}-43-diagrams.md",
+				"allowed_inline": "architecture and UI pages may include 1-2 focused diagrams inline",
+				"cross_reference": "all diagrams must be indexed in page 43"
+			},
+			"diagram_standards": {
+				"format": "text_only_ascii_in_code_blocks",
+				"code_block_format": "```text\n...\n```",
+				"forbidden": ["```mermaid", "```dot", "```plantuml", "image embeds"],
+				"width_limit": 80,
+				"include_title": true,
+				"include_legend_if_complex": true,
+				"textual_description_required": "before each diagram"
+			}
+		}
+	},
+
+	"inputs": {
+		"inputs_required": [
+			{ "name": "project_name", "type": "string", "required": true },
+			{
+				"name": "project_type",
+				"type": "enum",
+				"required": true,
+				"values": ["host", "module", "plugin"],
+				"description": "Primary project type; if mixed, user must specify which to emphasize"
+			},
+			{ "name": "project_source", "type": "zip|tree|path", "required": true },
+			{ "name": "save_output_to", "type": "path", "required": true },
+			{ "name": "example_docs_source", "type": "zip|tree|path", "required": true }
+		],
+		"inputs_optional": [
+			{
+				"name": "answers_bundle",
+				"type": "text|json",
+				"required": false,
+				"description": "Large user prompt with answers + context. Used to reduce questions."
+			},
+			{
+				"name": "scope_overrides",
+				"type": "json",
+				"required": false,
+				"description": "Include/exclude paths, topics, or pages."
+			},
+			{
+				"name": "depth",
+				"type": "enum",
+				"required": false,
+				"values": ["high_level", "balanced", "deep"],
+				"default": "balanced"
+			},
+			{
+				"name": "external_links_config",
+				"type": "object",
+				"required": false,
+				"default": {"mode": "allowed_with_audit", "allowlist_additions": []},
+				"description": "Configure external link handling"
+			},
+			{
+				"name": "existing_docs_path",
+				"type": "path",
+				"required": false,
+				"description": "Path to existing documentation for health check or incremental update"
+			},
+			{
+				"name": "improvement_focus_areas",
+				"type": "array",
+				"required": false,
+				"description": "Specific areas to emphasize in improvements roadmap"
+			}
+		]
+	},
+
+	"docset_identity": {
+		"doc_slug_rules": {
+			"doc_slug": "{lowercase(project_name)}",
+			"enforce_lowercase": true,
+			"allowed_chars": "a-z0-9-"
+		},
+		"fixed_numbering": {
+			"rule": "00..44 fixed ascending; no duplicates; do not renumber within a run.",
+			"must_generate_all_numbered_files": true,
+			"not_applicable_policy": {
+				"allowed": true,
+				"must_be_explicit": true,
+				"forbidden_words": ["TBD", "TODO", "???"],
+				"required_phrase_pattern": "Not present in this codebase (as discovered in inventory).",
+				"minimum_content": [
+					"State what was searched for",
+					"Explain why it's absent (not found vs. not applicable vs. planned)",
+					"If planned, reference evidence (roadmap, comments, issue tracker)",
+					"Provide 2-3 sentence explanation minimum"
+				]
+			}
+		},
+		"page_lifecycle": {
+			"generation": "all 45 pages (00-44) generated in first run",
+			"updates": "incremental updates via patch_behavior",
+			"deprecation": "pages never removed; mark as deprecated if permanently N/A in future versions",
+			"evolution": "if new page types needed, propose in 05-final-issues.md for next schema version"
+		}
+	},
+
+	"capabilities": {
+		"default_allowed": ["READ_PROJECT_SOURCE", "WRITE_DOC_OUTPUT", "ZIP_OUTPUT", "GENERATE_TEXT_DIAGRAMS"],
+		"explicitly_forbidden": ["GENERATE_MERMAID", "GENERATE_GRAPHVIZ", "GENERATE_PLANTUML", "EMBED_IMAGES"],
+		"not_allowed_without_explicit_user_approval": [
+			"RUN_BUILD",
+			"RUN_TESTS",
+			"PROCESS_EXECUTION",
+			"NETWORK_EGRESS",
+			"GIT_OPERATIONS"
+		],
+		"health_check_mode": {
+			"enabled": true,
+			"purpose": "Validate existing documentation integrity without regeneration",
+			"capabilities": ["READ_EXISTING_DOCS", "READ_PROJECT_SOURCE", "VALIDATE_ONLY"],
+			"outputs": ["health-check-report.md"],
+			"checks": [
+				"All 45 pages exist",
+				"No broken internal links",
+				"Coverage map still valid",
+				"Terminology consistent",
+				"Bottom nav present on all pages",
+				"No secret values present",
+				"Style consistency with template",
+				"Minimum 15 diagrams present in text format",
+				"Improvements roadmap up to date"
+			]
+		}
+	},
+
+	"artifacts": {
+		"generated_artifacts": [
+			"00-template-profile.json",
+			"00-preflight-summary.md",
+			"00-preflight-questions.md",
+			"01-source-inventory.md",
+			"01-inventory-index.json",
+			"01-planned-files.json",
+			"02-terminology-index.json",
+			"03-coverage-map.json",
+			"04-link-map.json",
+			"05-final-validation-report.md",
+			"05-final-issues.md",
+			"06-change-log.md",
+			"07-improvements-map.json",
+			"health-check-report.md"
+		],
+		"artifact_contracts": {
+			"07-improvements-map.json": {
+				"must_include": [
+					"current_score_per_dimension",
+					"gap_analysis",
+					"prioritized_improvements[]",
+					"phased_roadmap",
+					"effort_estimates",
+					"expected_impact",
+					"dependencies_between_improvements"
+				],
+				"improvement_structure": {
+					"id": "string (IMP-001, IMP-002, etc.)",
+					"title": "string",
+					"description": "string",
+					"category": "enum[CRITICAL|HIGH_IMPACT|MEDIUM_IMPACT|LOW_IMPACT|NICE_TO_HAVE]",
+					"dimension": "string",
+					"current_score": "float",
+					"target_score": "float",
+					"impact": "float (0-10)",
+					"effort": "enum[LOW|MEDIUM|HIGH|VERY_HIGH]",
+					"phase": "enum[1|2|3|4]",
+					"dependencies": ["array of improvement IDs"],
+					"acceptance_criteria": ["array"],
+					"resources_needed": ["array"],
+					"risks": ["array"]
+				}
+			}
+		}
+	},
+
+	"file_plan": {
+		"fixed_pages": {
+			"root_entry": "{doc_slug}.md",
+
+			"indices": [
+				"{doc_slug}-00-base-index.md",
+				"{doc_slug}-12-arch-index.md",
+				"{doc_slug}-26-ui-index.md",
+				"{doc_slug}-39-appendix-index.md"
+			],
+
+			"base_layer_01_11": [
+				"{doc_slug}-01-base-vision.md",
+				"{doc_slug}-02-base-concepts.md",
+				"{doc_slug}-03-base-boundaries.md",
+				"{doc_slug}-04-base-folder-system.md",
+				"{doc_slug}-05-base-dependency-rules.md",
+				"{doc_slug}-06-base-runtime-execution.md",
+				"{doc_slug}-07-base-lifecycle.md",
+				"{doc_slug}-08-base-integrations.md",
+				"{doc_slug}-09-base-examples.md",
+				"{doc_slug}-10-base-schemas.md",
+				"{doc_slug}-11-base-contracts.md"
+			],
+
+			"arch_layer_13_25": [
+				"{doc_slug}-13-arch.md",
+				"{doc_slug}-14-arch-ui-framework.md",
+				"{doc_slug}-15-arch-dataflows.md",
+				"{doc_slug}-16-arch-json-and-assets.md",
+				"{doc_slug}-17-arch-js-interop.md",
+				"{doc_slug}-18-arch-rendering-and-state.md",
+				"{doc_slug}-19-arch-update-and-sync.md",
+				"{doc_slug}-20-arch-composition.md",
+				"{doc_slug}-21-arch-validation-rules.md",
+				"{doc_slug}-22-arch-performance-and-observability.md",
+				"{doc_slug}-23-arch-testing-and-qa.md",
+				"{doc_slug}-24-arch-deployment-and-config.md",
+				"{doc_slug}-25-arch-resources.md"
+			],
+
+			"ui_layer_27_38": [
+				"{doc_slug}-27-ui-overview.md",
+				"{doc_slug}-28-ui-hierarchy-model.md",
+				"{doc_slug}-29-ui-layer-folders.md",
+				"{doc_slug}-30-ui-prefix-system.md",
+				"{doc_slug}-31-ui-displays.md",
+				"{doc_slug}-32-ui-fields.md",
+				"{doc_slug}-33-ui-pointers.md",
+				"{doc_slug}-34-ui-actions.md",
+				"{doc_slug}-35-ui-nodes.md",
+				"{doc_slug}-36-ui-components.md",
+				"{doc_slug}-37-ui-widgets-and-views.md",
+				"{doc_slug}-38-ui-panels-and-navigation.md"
+			],
+
+			"appendices_40_44": [
+				"{doc_slug}-40-appendix-risks-and-vulnerabilities.md",
+				"{doc_slug}-41-appendix-source-to-docs-mapping.md",
+				"{doc_slug}-42-appendix-duplicate-json-cleanup.md",
+				"{doc_slug}-44-appendix-improvements-roadmap.md"
+			],
+
+			"diagrams_43": ["{doc_slug}-43-diagrams.md"]
+		}
+	},
+
+	"page_content_contracts": {
+		"appendix_contracts": {
+			"{doc_slug}-44-appendix-improvements-roadmap.md": {
+				"purpose": "Comprehensive roadmap of improvements needed to reach 10/10 project quality",
+				"required_sections": [
+					"Current State Assessment",
+					"Quality Scoring Matrix",
+					"Critical Improvements (Phase 1)",
+					"High-Impact Improvements (Phase 2)",
+					"Medium-Impact Improvements (Phase 3)",
+					"Nice-to-Have Improvements (Phase 4)",
+					"Quick Wins (High Impact, Low Effort)",
+					"Dependencies and Sequencing",
+					"Effort Estimates",
+					"Success Metrics",
+					"Maintenance and Evolution"
+				],
+				"must_include": [
+					"Current score per dimension (0-10 scale)",
+					"Gap analysis showing path to 10/10",
+					"Prioritized list of at least 20 actionable improvements",
+					"Effort estimates (person-days or story points)",
+					"Expected impact on quality score",
+					"Phase assignments (1-4)",
+					"Concrete acceptance criteria for each improvement",
+					"Dependencies between improvements",
+					"Risk assessment for major improvements"
+				],
+				"scoring_display": {
+					"format": "text table or ASCII visualization",
+					"show_current_and_target": true,
+					"show_gap": true,
+					"show_priority": true
+				},
+				"improvement_format": {
+					"id": "IMP-001, IMP-002, etc.",
+					"structure": [
+						"Title (clear, actionable)",
+						"Description (what and why)",
+						"Current state",
+						"Target state",
+						"Impact (0-10)",
+						"Effort (LOW/MEDIUM/HIGH/VERY_HIGH)",
+						"Phase (1-4)",
+						"Dependencies",
+						"Acceptance criteria",
+						"Resources needed",
+						"Risks and mitigation"
+					]
+				},
+				"categories_to_cover": [
+					"Architecture improvements",
+					"Code quality improvements",
+					"Testing improvements",
+					"Documentation improvements",
+					"DevOps and deployment improvements",
+					"Security improvements",
+					"Performance improvements",
+					"Developer experience improvements",
+					"Monitoring and observability improvements",
+					"Resilience and error handling improvements"
+				],
+				"example_improvements": [
+					"Implement unit testing framework",
+					"Add integration tests for Airtable sync",
+					"Create CI/CD pipeline",
+					"Document API with OpenAPI/Swagger",
+					"Implement error handling and retry policies",
+					"Add performance monitoring",
+					"Create deployment automation",
+					"Implement security scanning",
+					"Add code quality metrics",
+					"Create developer onboarding guide"
+				]
+			}
+		},
+
+		"diagrams_contracts": {
+			"{doc_slug}-43-diagrams.md": {
+				"purpose": "Comprehensive visual documentation of all system relationships and structures",
+				"required_sections": [
+					"Diagram Index (table of contents)",
+					"System Architecture Diagrams",
+					"Class Hierarchy Diagrams",
+					"Dependency Graphs",
+					"Data Flow Diagrams",
+					"Component Relationship Diagrams",
+					"Sequence Diagrams",
+					"Layer Structure Diagrams",
+					"Folder Structure Diagrams",
+					"Deployment Topology"
+				],
+				"minimum_diagrams": 15,
+				"mandatory_diagram_types": [
+					{
+						"type": "System Boundaries",
+						"count": 1,
+						"description": "Overall system architecture with boundaries"
+					},
+					{
+						"type": "Class Hierarchies",
+						"count": 3,
+						"examples": [
+							"Core base class inheritance tree",
+							"UI component inheritance tree",
+							"Service class hierarchy"
+						]
+					},
+					{
+						"type": "Dependency Graphs",
+						"count": 2,
+						"orientations": ["top-down showing layers", "left-right showing modules"]
+					},
+					{
+						"type": "Data Flows",
+						"count": 2,
+						"examples": [
+							"Airtable sync flow",
+							"UI render pipeline",
+							"State update flow"
+						]
+					},
+					{
+						"type": "Component Relationships",
+						"count": 2,
+						"examples": [
+							"Service dependency graph",
+							"Component composition tree"
+						]
+					},
+					{
+						"type": "Sequence Diagrams",
+						"count": 2,
+						"examples": [
+							"User action sequence",
+							"Initialization sequence",
+							"Sync operation sequence"
+						]
+					},
+					{
+						"type": "Layer Structure",
+						"count": 1,
+						"description": "00-09 layer organization"
+					},
+					{
+						"type": "Folder Structure",
+						"count": 1,
+						"description": "Physical organization"
+					},
+					{
+						"type": "Deployment Topology",
+						"count": 1,
+						"description": "Environment and deployment structure"
+					}
+				],
+				"diagram_format_requirements": {
+					"format": "text_only_ascii",
+					"code_block": "```text\n...\n```",
+					"forbidden": ["mermaid", "graphviz", "plantuml", "svg", "image files"],
+					"max_width": 80,
+					"characters_allowed": [
+						"Box drawing: ─│┌┐└┘├┤┬┴┼",
+						"Arrows: ▼▲◄►→←↓↑",
+						"Other: *+-=|/\\"
+					]
+				},
+				"diagram_template_examples": [
+					{
+						"name": "Class Hierarchy (Top-Down)",
+						"example": "```text\n┌─────────────┐\n│  BaseClass  │\n└──────┬──────┘\n       │\n   ┌───┴───┐\n   │       │\n   ▼       ▼\n┌────┐  ┌────┐\n│ A  │  │ B  │\n└────┘  └────┘\n```"
+					},
+					{
+						"name": "Dependency Graph (Left-Right)",
+						"example": "```text\n┌────────┐     ┌────────┐     ┌────────┐\n│ Module │────►│ Module │────►│ Module │\n│   A    │     │   B    │     │   C    │\n└────────┘     └────────┘     └────────┘\n```"
+					},
+					{
+						"name": "Sequence Flow",
+						"example": "```text\nUser        UI          Service     API\n │           │            │          │\n │─Click────►│            │          │\n │           │──Update───►│          │\n │           │            │──Fetch──►│\n │           │            │◄─Data────│\n │           │◄─Render────│          │\n │◄─Display──│            │          │\n```"
+					}
+				],
+				"each_diagram_must_include": [
+					"Title (H3 heading)",
+					"Textual description before diagram",
+					"The diagram in ```text code block",
+					"Legend if symbols need explanation",
+					"Key relationships or flows explained below"
+				],
+				"cross_references": {
+					"to_architecture_pages": "Link diagrams to relevant architecture pages",
+					"from_architecture_pages": "Architecture pages should reference specific diagrams",
+					"to_improvements": "Link to improvement roadmap for identified gaps"
+				}
+			}
+		}
+	},
+
+	"validators": {
+		"diagram_validation": {
+			"enabled": true,
+			"must_pass_in_strict_mode": true,
+			"rules": [
+				"Minimum 15 diagrams present",
+				"All diagrams in ```text format only",
+				"No mermaid, graphviz, plantuml, or image embeds",
+				"Each diagram has title and description",
+				"All mandatory diagram types present",
+				"Diagrams width <= 80 characters",
+				"Diagrams use only allowed characters",
+				"Index present listing all diagrams",
+				"Cross-references to architecture pages"
+			],
+			"output": "diagram-validation-results in 05-final-validation-report.md"
+		},
+		"improvements_validation": {
+			"enabled": true,
+			"must_pass_in_strict_mode": true,
+			"rules": [
+				"Improvements roadmap page exists",
+				"Current scores calculated for all dimensions",
+				"At least 20 improvements identified",
+				"All improvements have effort estimates",
+				"All improvements have impact scores",
+				"All improvements assigned to phases",
+				"Dependencies mapped",
+				"Acceptance criteria defined",
+				"Gap analysis shows path to 10/10"
+			],
+			"output": "improvements-validation-results in 05-final-validation-report.md"
+		}
+	},
+
+	"orchestration_flow": {
+		"sequence": [
+			{ "phase": 0, "agent_id": "template_extractor" },
+			{ "phase": 1, "agent_id": "preflight_and_questions" },
+			{ "phase": 2, "agent_id": "source_discovery_inventory" },
+			{ "phase": 3, "agent_id": "fileplan_and_contract_locker" },
+			{ "phase": 4, "agent_id": "generate_indices_and_root" },
+			{ "phase": 5, "agent_id": "generate_base_layer" },
+			{ "phase": 6, "agent_id": "generate_arch_layer" },
+			{ "phase": 7, "agent_id": "generate_ui_layer" },
+			{ "phase": 8, "agent_id": "generate_appendices" },
+			{ "phase": 9, "agent_id": "generate_improvements_roadmap" },
+			{ "phase": 10, "agent_id": "generate_comprehensive_diagrams" },
+			{ "phase": 11, "agent_id": "final_validation_and_bundle" }
+		]
+	},
+
+	"agents": [
+		{
+			"agent_id": "generate_improvements_roadmap",
+			"phase": 9,
+			"role": "Improvements Roadmap Generator",
+			"responsibility": "Analyze the project against industry best practices and generate a comprehensive roadmap of improvements needed to reach 10/10 quality. Score current state, identify gaps, prioritize improvements, estimate effort, and create phased implementation plan.",
+			"inputs": [
+				"01-source-inventory.md",
+				"03-coverage-map.json",
+				"All generated documentation pages",
+				"Testing findings",
+				"Deployment findings",
+				"Security findings"
+			],
+			"analysis_steps": [
+				"Score current state across all quality dimensions",
+				"Identify gaps between current and 10/10 target",
+				"Extract improvement opportunities from all documentation",
+				"Categorize by impact and effort",
+				"Identify dependencies between improvements",
+				"Assign to phases (1-4)",
+				"Estimate effort and resources",
+				"Define acceptance criteria",
+				"Assess risks"
+			],
+			"outputs": [
+				{
+					"file": "{doc_slug}-44-appendix-improvements-roadmap.md",
+					"must_include": [
+						"Current quality scores with visualization",
+						"Gap analysis per dimension",
+						"At least 20 prioritized improvements",
+						"Phase assignments (1-4)",
+						"Effort estimates",
+						"Impact assessments",
+						"Dependency graph",
+						"Quick wins section",
+						"Success metrics",
+						"Maintenance plan"
+					]
+				},
+				{
+					"file": "07-improvements-map.json",
+					"structure": "detailed JSON with all improvements data"
+				}
+			],
+			"quality_dimensions_to_assess": [
+				"Architecture (boundaries, composition, extensibility)",
+				"Code Quality (readability, maintainability, consistency)",
+				"Testing (coverage, automation, types)",
+				"Operations (deployment, monitoring, resilience)",
+				"Documentation (completeness, accuracy, usability)",
+				"Developer Experience (onboarding, tooling, feedback)",
+				"Security (authentication, authorization, secrets)",
+				"Performance (response times, resource usage)",
+				"Error Handling (resilience, retry, circuit breaker)",
+				"Data Management (caching, persistence, consistency)"
+			],
+			"next_agent": "generate_comprehensive_diagrams"
+		},
+		{
+			"agent_id": "generate_comprehensive_diagrams",
+			"phase": 10,
+			"role": "Comprehensive Diagram Generator",
+			"responsibility": "Generate extensive text-based ASCII diagrams covering all aspects of system architecture, class hierarchies, dependencies, data flows, and component relationships. Minimum 15 diagrams required.",
+			"inputs": [
+				"01-source-inventory.md",
+				"All architecture pages",
+				"All UI pages",
+				"Class hierarchy analysis",
+				"Dependency analysis"
+			],
+			"diagram_generation_strategy": {
+				"step_1": "Analyze codebase structure and extract relationships",
+				"step_2": "Identify all class inheritance hierarchies",
+				"step_3": "Map dependencies between components and modules",
+				"step_4": "Document data flow paths",
+				"step_5": "Create sequence diagrams for key operations",
+				"step_6": "Generate layer and folder structure diagrams",
+				"step_7": "Create deployment topology diagrams",
+				"step_8": "Build index of all diagrams",
+				"step_9": "Add textual descriptions and legends",
+				"step_10": "Validate against requirements (15+ diagrams, text format only)"
+			},
+			"required_diagrams": [
+				{
+					"name": "System Architecture Overview",
+					"type": "boundary_diagram",
+					"shows": "Host, modules, plugins, external systems"
+				},
+				{
+					"name": "Core Class Hierarchy",
+					"type": "class_hierarchy",
+					"shows": "Inheritance tree for base classes"
+				},
+				{
+					"name": "UI Component Hierarchy",
+					"type": "class_hierarchy",
+					"shows": "Inheritance tree for UI components"
+				},
+				{
+					"name": "Service Class Hierarchy",
+					"type": "class_hierarchy",
+					"shows": "Service class relationships"
+				},
+				{
+					"name": "Top-Down Dependency Graph",
+					"type": "dependency_graph",
+					"shows": "Layer dependencies from top to bottom"
+				},
+				{
+					"name": "Left-Right Module Dependencies",
+					"type": "dependency_graph",
+					"shows": "Module/plugin dependencies horizontally"
+				},
+				{
+					"name": "Airtable Sync Data Flow",
+					"type": "data_flow",
+					"shows": "Data movement from API to UI"
+				},
+				{
+					"name": "UI Render Pipeline",
+					"type": "data_flow",
+					"shows": "How UI rendering flows through layers"
+				},
+				{
+					"name": "Service Dependency Graph",
+					"type": "component_relationships",
+					"shows": "How services depend on each other"
+				},
+				{
+					"name": "Component Composition Tree",
+					"type": "component_relationships",
+					"shows": "How components compose into larger units"
+				},
+				{
+					"name": "User Action Sequence",
+					"type": "sequence",
+					"shows": "Step-by-step user interaction"
+				},
+				{
+					"name": "Initialization Sequence",
+					"type": "sequence",
+					"shows": "System startup and DI registration"
+				},
+				{
+					"name": "Layer Structure (00-09)",
+					"type": "layer_structure",
+					"shows": "The 00-09 layer organization"
+				},
+				{
+					"name": "Folder Structure",
+					"type": "folder_structure",
+					"shows": "Physical file/folder organization"
+				},
+				{
+					"name": "Deployment Topology",
+					"type": "deployment",
+					"shows": "Local dev vs production deployment"
+				}
+			],
+			"outputs": [
+				{
+					"file": "{doc_slug}-43-diagrams.md",
+					"must_include": [
+						"Diagram index (table of contents)",
+						"Minimum 15 diagrams in ```text format",
+						"No mermaid or other diagram languages",
+						"Each diagram with title, description, legend",
+						"Cross-references to architecture pages",
+						"Cross-references to improvements roadmap"
+					]
+				}
+			],
+			"validation": [
+				"Count >= 15 diagrams",
+				"All in ```text format",
+				"No forbidden formats",
+				"All mandatory types present",
+				"Width <= 80 chars",
+				"Index complete"
+			],
+			"next_agent": "final_validation_and_bundle"
+		},
+		{
+			"agent_id": "final_validation_and_bundle",
+			"phase": 11,
+			"role": "Final Validator + Bundle Creator",
+			"responsibility": "Run all validators including new diagram and improvements validators. Generate final validation report and bundle all documentation.",
+			"sub_agents": [
+				{"name": "link_validator"},
+				{"name": "coverage_validator"},
+				{"name": "terminology_validator"},
+				{"name": "security_validator"},
+				{"name": "style_validator"},
+				{"name": "diagram_validator"},
+				{"name": "improvements_validator"}
+			],
+			"outputs": [
+				{ "file": "05-final-validation-report.md" },
+				{ "file": "05-final-issues.md" },
+				{ "file": "06-change-log.md" },
+				{
+					"bundle": "{doc_slug}-documentation-bundle.zip",
+					"includes": [
+						"all 45 markdown files (00-44)",
+						"all JSON artifacts",
+						"all validation reports"
+					]
+				}
+			],
+			"final_gate": {
+				"strict_pass_conditions": [
+					"All 45 files exist (00-44)",
+					"No broken internal links",
+					"No placeholders",
+					"Minimum 15 diagrams in text format",
+					"No mermaid or forbidden diagram formats",
+					"Improvements roadmap complete with 20+ items",
+					"Coverage score >= strict_threshold",
+					"All validators pass"
+				]
+			}
+		}
+	]
+}
